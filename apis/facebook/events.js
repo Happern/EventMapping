@@ -2,7 +2,6 @@ var appConstants = require("../../modules/core/appConstants");
 var values = require("./values");
 var makeFbRequest = require("./index").makeFbRequest;
 var fbUtils = require("./utils");
-var param = require("jquery-param");
 
 var placesRecentlyUpdated = false;
 var places;
@@ -15,7 +14,7 @@ function getEventsInIstanbul(startDate, endDate) {
   if (placesRecentlyUpdated) {
     eventsPromise = searchEventsWithPlaceData(places);
     eventsPromise.then(function (values) {
-      console.log(fbUtils.processValues(values).length);
+      console.log(fbUtils.processValues(values));
     })
   } else {
     getPlacesInIstanbul(function (resp) {
@@ -23,7 +22,7 @@ function getEventsInIstanbul(startDate, endDate) {
       places = resp.data;
       var eventsPromise = searchEventsWithPlaceData(resp.data);
       eventsPromise.then(function (values) {
-        return fbUtils.processValues(values);
+        console.log(fbUtils.processValues(values));
       })
     });
   }
@@ -42,7 +41,7 @@ function getPlacesInIstanbul (successCallback, errorCallback) {
     access_token: values.fbApp.accessToken
   }
 
-  makeFbRequest(path + "?" + param(queryParams), true, successCallback, errorCallback);
+  makeFbRequest(path, queryParams, true, successCallback, errorCallback);
 }
 
 function searchEventsWithPlaceData (places) {
@@ -76,10 +75,14 @@ function searchForEvents (idsArray, events) {
       var currBatch = idsArray[batchIndex];
 
       promises.push(new Promise( function (resolve, reject) {
-        urlParams = "/?ids=" + currBatch.join(",") + "&access_token=" +
-        values.fbApp.accessToken + "&fields=" + fields.join(",");
+        var path = "/";
+        var queryParams = {
+          ids: currBatch.join(","),
+          access_token: values.fbApp.accessToken,
+          fields: fields.join(",")
+        }
 
-        makeFbRequest(urlParams, true, function (resp) {
+        makeFbRequest(path, queryParams, true, function (resp) {
           resolve(resp);
         }, function (resp) {
           console.log("error", resp);

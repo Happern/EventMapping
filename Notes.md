@@ -24,13 +24,14 @@
 	- Is this going to be fixed or changing (ie with zoom level)
 		- all events in istanbul first
 		- then events will be filtered out by location
-- Query *event*s by places
+- Query 'events' by places
 	- Syntax: https://graph.facebook.com/[version]/ids[idArray]&access_token=[access token]&fields=[fields].since([since]).until([until])
 	- With place and start/end times
 	- How are we going to set the times?
 		- initially 1 week, then sometime in the coming month as the user uses the filter
 		- no past events for now
-- Extract event description, venue, time,
+- Extract event description, venue, time
+
 ### What Do I Need ###
 - Access token
 
@@ -84,6 +85,9 @@
 - I don't know yet what distance radius is covered by each request
 - If we use this API we need to include a reference to it.
 - If we are going to use Air Pollution Data from OpenWeatherMap (see below) we might consider getting weather data from there as well.
+
+- more details:
+	- alerts returned in the forecast request, could be useful?
 
 ## Air Pollution Data ##
 - Example: [http://aqicn.org/map/turkey/#@g/41.0632/29.0178/12z](http://aqicn.org/map/turkey/#@g/41.0632/29.0178/12z)
