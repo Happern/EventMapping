@@ -6,25 +6,30 @@ function makeRequest (config) {
 
     var data = "";
     resp.setEncoding('utf8');
+
     resp.on('data', (chunk) => {
-      data += chunk;
+      if (!config.isChunked) {
+        data += chunk;
+      } else {
+        config.successCallback(chunk);
+      }
     });
 
     resp.on('end', () => {
-      if (config.successCallback) {
-        if (config.expectJSON) {
-          data = JSON.parse(data);
-        }
+      if (config.expectJSON) {
+        data = JSON.parse(data);
+      }
 
-        if (config.errorCodes && config.errorCodes.indexOf(status) >= 0) {
-          var errorMessage = constructErrorMessage(data, "problem with request",
-           config.errorMessageField);
-          onError(data, errorMessage, config.errorCallback);
-
-        } else if (config.successCallback) {
+      if (config.errorCodes && config.errorCodes.indexOf(status) >= 0) {
+        var errorMessage = constructErrorMessage(data, "problem with request",
+        config.errorMessageField);
+        onError(data, errorMessage, config.errorCallback);
+      } else if (config.successCallback) {
+        if (!config.isChunked) {
           config.successCallback(data);
         }
       }
+
     });
   });
 
@@ -41,6 +46,7 @@ function makeRequest (config) {
 
   // write data to request body
   if (config.postData) {
+    console.log("writing", config.postData);
     req.write(config.postData);
   }
 
@@ -48,26 +54,26 @@ function makeRequest (config) {
 };
 
 function constructErrorMessage(resp, defaultMessage, errorMessageField) {
-    var errorMessage = defaultMessage;
+  var errorMessage = defaultMessage;
 
-    if (errorMessageField) {
-      var errorFieldComponents = errorMessageField.split(".");
-      var errorFieldDepth = errorFieldComponents.length;
-      var currLevel = resp;
+  if (errorMessageField) {
+    var errorFieldComponents = errorMessageField.split(".");
+    var errorFieldDepth = errorFieldComponents.length;
+    var currLevel = resp;
 
-      for (var depth = 0; depth < errorFieldDepth; depth++) {
-        currLevel = currLevel[errorFieldComponents[depth]];
-      }
-
-      errorMessage += ", " + currLevel;
+    for (var depth = 0; depth < errorFieldDepth; depth++) {
+      currLevel = currLevel[errorFieldComponents[depth]];
     }
 
-    return errorMessage;
+    errorMessage += ", " + currLevel;
+  }
+
+  return errorMessage;
 }
 
 function onError (resp, message, errorCallback) {
   if (errorCallback) {
-      errorCallback(resp);
+    errorCallback(resp);
   }
 }
 
