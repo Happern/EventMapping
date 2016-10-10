@@ -30,7 +30,7 @@
 	- How are we going to set the times?
 		- initially 1 week, then sometime in the coming month as the user uses the filter
 		- no past events for now
-- Extract event description, venue, time, 
+- Extract event description, venue, time,
 ### What Do I Need ###
 - Access token
 
@@ -40,6 +40,8 @@
 ### Useful Sources ###
 - [https://www.mapbox.com/blog/twitter-map-every-tweet/](https://www.mapbox.com/blog/twitter-map-every-tweet/)
 ### Method Outline ###
+- Auth (complicated :( )
+	-[https://dev.twitter.com/oauth/overview/authorizing-requests](https://dev.twitter.com/oauth/overview/authorizing-requests)
 - Get statuses of people
 	- Syntax: https://stream.twitter.com/1.1/statuses/filter.json?track=[track]&locations=[locations] etc.
 	- With locations data (Istanbul)
@@ -51,18 +53,23 @@
 	-  Banding in iPhone's- each unique lat, lng appear only once
 	-  Eric Fischer stated that when this filtering is applied ~9% of tweets appear on the map, are we OK with that?
 	- Filtering won't be applied at first, will be tested out as the project goes on
+- Timing
+	- initially tweets from the past 15 minutes will be taken into consideration, this might change
+	- a system should be designed to convey this information
+		- will the data be written and stored in a file?
+		- should we use a web socket to communicate with front-end?
 - Visualization
 	- Different types of data should be returned for trying out different visualization techniques
-		- ie for location the number of people who tweeted at that location can be reurned
+		- ie for location the number of people who tweeted at that location can be returned
 		- or an entry can be returned for each place.
 ### What Do I Need ###
-- Access token
+- Access token (done)
 
 ## Weather Data ##
 ### Some Questions ###
 - How often are we going to get weather data?
 	- Forecasts are available by minute, hour, day
-		- Minute by minute for the next hr, hour for next 2 days, day for the next week 
+		- Minute by minute for the next hr, hour for next 2 days, day for the next week
 	- new query per user or store the data in backend
 	- we can also get the current weather data
 - By what units will we  require the forecast?

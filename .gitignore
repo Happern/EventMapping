@@ -1,3 +1,6 @@
 .DS_Store
 npm-debug.log
 node_modules
+keymaps
+apis/facebook/values.js
+apis/twitter/constants.js

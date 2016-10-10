@@ -2,14 +2,15 @@ var appConstants = require("../../modules/core/appConstants");
 var values = require("./values");
 var makeFbRequest = require("./index").makeFbRequest;
 var fbUtils = require("./utils");
+var param = require("jquery-param");
 
 var placesRecentlyUpdated = false;
 var places;
 
 function getEventsInIstanbul(startDate, endDate) {
-  //TODO it is not neccessary to get the places again and again
-  //store places somehere and add new one's if there is any in the response
-  //or periodically get events
+  /*TODO it is not neccessary to get the places again and again
+  store places somehere and add new one's if there is any in the response
+  or periodically get events*/
   var eventsPromise;
   if (placesRecentlyUpdated) {
     eventsPromise = searchEventsWithPlaceData(places);
@@ -22,18 +23,26 @@ function getEventsInIstanbul(startDate, endDate) {
       places = resp.data;
       var eventsPromise = searchEventsWithPlaceData(resp.data);
       eventsPromise.then(function (values) {
-        console.log(fbUtils.processValues(values).length);
+        return fbUtils.processValues(values);
       })
     });
   }
 }
 
 function getPlacesInIstanbul (successCallback, errorCallback) {
-  urlParams = "type=place&limit=1000&center=" + appConstants.geo.istanbulLat + ","
-  + appConstants.geo.istanbulLng + "&fields=id" +
-   "&access_token=" + values.fbApp.accessToken;
+  var istanbulCenter = appConstants.geo.istanbul.center;
 
-  makeFbRequest("/search?" + urlParams, true, successCallback, errorCallback);
+  var path = "/search";
+
+  var queryParams =  {
+    type: "place",
+    limit: 1000,
+    center: istanbulCenter.lat + ","+ istanbulCenter.lng,
+    fields: "id",
+    access_token: values.fbApp.accessToken
+  }
+
+  makeFbRequest(path + "?" + param(queryParams), true, successCallback, errorCallback);
 }
 
 function searchEventsWithPlaceData (places) {
