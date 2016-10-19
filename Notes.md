@@ -3,11 +3,13 @@
 ## General To-Do ##
 
 - Figure out what to use for version control & repo
-	- whatever I want :P
+	- whatever I want :P --- github repo under Happern organization
 - How is the web app being served? Is there a backend?
 	- Currently static files.
 - What technology is used for coding?
 	- Currently an html file with embedded JS that displays the google map.
+	- Web sockets will be used
+		- [Useful example](http://stackabuse.com/node-js-websocket-examples-with-socket-io/)
 - Language support
 
 ## Facebook Events ##
@@ -34,6 +36,14 @@
 
 ### What Do I Need ###
 - Access token
+
+### Other Notes ###
+- The events returned with this technique seems to insufficient
+- Data from the following API's will be combined
+	- Eventbrite
+	- Eventful
+	- Meetup
+	- Songkick
 
 ## People Density ##
 ### What Data Do We Want ###
@@ -66,6 +76,11 @@
 ### What Do I Need ###
 - Access token (done)
 
+### Other Notes ###
+- We might want to store the streamed data
+	-	For this create a writing to file system
+	- Estimated size per day 30 kb
+
 ## Weather Data ##
 ### Some Questions ###
 - How often are we going to get weather data?
@@ -88,6 +103,11 @@
 
 - more details:
 	- alerts returned in the forecast request, could be useful?
+
+- Fields to use:
+	- feels like
+	- wind speed
+	- precip type / probability
 
 ## Air Pollution Data ##
 - Example: [http://aqicn.org/map/turkey/#@g/41.0632/29.0178/12z](http://aqicn.org/map/turkey/#@g/41.0632/29.0178/12z)

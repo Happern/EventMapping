@@ -5,3 +5,5 @@ keymaps
 apis/facebook/values.js
 apis/twitter/constants.js
 apis/dark-sky/constants.js
+public/emotion
+public/assets/emotion
