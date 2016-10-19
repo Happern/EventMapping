@@ -1,18 +1,17 @@
 var appConstants = require("../../modules/core/appConstants");
 var makeDarkSkyRequest = require("./index").makeDarkSkyRequest;
 
-function getIstanbulForecast () {
+function getIstanbulCurrent () {
   var istanbulCenter = appConstants.geo.istanbul.center;
-  return getForecastForCoords(istanbulCenter.lat + "," + istanbulCenter.lng);
+  return getCurrentForCoords(istanbulCenter.lat + "," + istanbulCenter.lng);
 }
 
-function getForecastForCoords (coords) {
+function getCurrentForCoords (coords) {
   var path = "/forecast";
 
   var queryParams = {
     units: "si",
-    extend: "hourly",
-    exclude: "minutely,daily"
+    exclude: "minutely,daily,hourly"
   }
 
   return new Promise(function (resolve, reject) {
@@ -27,6 +26,6 @@ function getForecastForCoords (coords) {
 }
 
 module.exports = {
-  getForecastForCoords: getForecastForCoords,
-  getIstanbulForecast: getIstanbulForecast
+  getCurrentForCoords: getCurrentForCoords,
+  getIstanbulCurrent: getIstanbulCurrent
 }

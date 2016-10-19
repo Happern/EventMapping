@@ -2,6 +2,7 @@ var appConstants = require("../../modules/core/appConstants");
 var values = require("./values");
 var makeFbRequest = require("./index").makeFbRequest;
 var fbUtils = require("./utils");
+var moment = require("moment");
 
 var placesRecentlyUpdated = false;
 var places;
@@ -10,22 +11,34 @@ function getEventsInIstanbul(startDate, endDate) {
   /*TODO it is not neccessary to get the places again and again
   store places somehere and add new one's if there is any in the response
   or periodically get events*/
-  var eventsPromise;
-  if (placesRecentlyUpdated) {
-    eventsPromise = searchEventsWithPlaceData(places);
-    eventsPromise.then(function (values) {
-      console.log(fbUtils.processValues(values));
-    })
-  } else {
-    getPlacesInIstanbul(function (resp) {
-      placesRecentlyUpdated = true;
-      places = resp.data;
-      var eventsPromise = searchEventsWithPlaceData(resp.data);
-      eventsPromise.then(function (values) {
-        console.log(fbUtils.processValues(values));
-      })
-    });
+  var dates = {};
+
+  if (startDate) {
+    dates.since = moment(startDate, appConstants.date.defaultFormat).format("X");
   }
+
+  if(endDate) {
+    dates.until = moment(endDate, appConstants.date.defaultFormat).format("X");
+  }
+
+  return new Promise (function (resolve, reject) {
+    var eventsPromise;
+    if (placesRecentlyUpdated) {
+      eventsPromise = searchEventsWithPlaceData(places, dates);
+      eventsPromise.then(function (values) {
+        resolve(fbUtils.processValues(values));
+      })
+    } else {
+      getPlacesInIstanbul(function (resp) {
+        placesRecentlyUpdated = true;
+        places = resp.data;
+        var eventsPromise = searchEventsWithPlaceData(resp.data, dates);
+        eventsPromise.then(function (values) {
+          resolve(fbUtils.processValues(values));
+        })
+      });
+    }
+  });
 }
 
 function getPlacesInIstanbul (successCallback, errorCallback) {
@@ -44,7 +57,7 @@ function getPlacesInIstanbul (successCallback, errorCallback) {
   makeFbRequest(path, queryParams, true, successCallback, errorCallback);
 }
 
-function searchEventsWithPlaceData (places) {
+function searchEventsWithPlaceData (places, dates) {
   var placeIds = [];
   var idsArray = [];
   var idCount = 0;
@@ -63,34 +76,44 @@ function searchEventsWithPlaceData (places) {
     placeIds.push(places[placeIndex].id);
   }
 
-  return searchForEvents(idsArray, []);
+  return searchForEvents(idsArray, dates);
 }
 
-function searchForEvents (idsArray, events) {
-    var fields = values.getFieldsForEventSearch();
+function searchForEvents (idsArray, dates) {
+  var fields = values.getFieldsForEventSearch().join(",");
 
-    var promises = [];
-    var numBatches = idsArray.length;
-    for (var batchIndex = 0; batchIndex < numBatches; batchIndex++) {
-      var currBatch = idsArray[batchIndex];
+  if (dates.since) {
+    fields += ".since(" + dates.since + ")";
+  }
 
-      promises.push(new Promise( function (resolve, reject) {
-        var path = "/";
-        var queryParams = {
-          ids: currBatch.join(","),
-          access_token: values.fbApp.accessToken,
-          fields: fields.join(",")
-        }
+  if (dates.until) {
+    fields += ".until(" + dates.until + ")";
+  }
 
-        makeFbRequest(path, queryParams, true, function (resp) {
-          resolve(resp);
-        }, function (resp) {
-          console.log("error", resp);
-        });
-      }));
-    }
+  var promises = [];
+  var numBatches = idsArray.length;
+  for (var batchIndex = 0; batchIndex < numBatches; batchIndex++) {
+    var currBatch = idsArray[batchIndex];
 
-    return Promise.all(promises);
+    promises.push(new Promise( function (resolve, reject) {
+      var path = "/";
+
+      var queryParams = {
+        ids: currBatch.join(","),
+        access_token: values.fbApp.accessToken,
+        fields: fields
+      }
+
+
+      makeFbRequest(path, queryParams, true, function (resp) {
+        resolve(resp);
+      }, function (resp) {
+        console.log("error", resp);
+      });
+    }));
+  }
+
+  return Promise.all(promises);
 }
 
 module.exports = {

@@ -10,15 +10,17 @@ function getTweets(interval) {
   var numTweets = currTweets.length;
 
   for (var tweetIndex = numTweets - 1; tweetIndex > -1; tweetIndex--) {
-      var tweet = currTweets[tweetIndex];
+    var tweet = currTweets[tweetIndex];
 
-      if (currTime.diff(tweet.time, "minutes") <= interval) {
-        searchedFor.push(tweet.coord);
-      } else {
-        break;
-      }
+    if (currTime.diff(tweet.time, "minutes") <= interval) {
+      searchedFor.push(tweet.coord);
+    } else {
+      break;
+    }
   }
 
+  console.log(currTweets.length);
+  console.log(searchedFor.length)
   return searchedFor;
 }
 
