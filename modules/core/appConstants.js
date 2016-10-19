@@ -1,4 +1,11 @@
 module.exports = {
+  update: {
+    interval: 2 * 60 * 1000 //in ms
+  },
+  date: {
+    defaultFormat: "DD/MM/YYYY",
+    localTimeFormat: "YYYY-MM-DDTHH:mm:SS"
+  },
   geo: {
     istanbul: {
       center: {
