@@ -17,6 +17,7 @@
 - A list of events happening in Istanbul
 - Atendee data about events
 - Info about events
+
 ### Useful Sources ###
 - [https://github.com/tobilg/facebook-events-by-location-core/blob/master/lib/eventSearch.js](https://github.com/tobilg/facebook-events-by-location-core/blob/master/lib/eventSearch.js)
 ### Method Outline ###
@@ -35,15 +36,22 @@
 - Extract event description, venue, time
 
 ### What Do I Need ###
-- Access token
+- Access token (done)
 
 ### Other Notes ###
-- The events returned with this technique seems to insufficient
+- The events returned with this technique seems to be insufficient
 - Data from the following API's will be combined
-	- Eventbrite
-	- Eventful
-	- Meetup
-	- Songkick
+	- Eventbrite (301 redirection problem)
+	- Eventful (done)
+	- Meetup (done)
+	- Songkick (waiting for approval)
+
+### Things to be Done ###
+- Form a standardized response that is consistent with all the above API's. Documentation for their responses:
+	- [Eventbrite](https://www.eventbrite.com/developer/v3/formats/event/#ebapi-std:format-event)
+	- [Eventful](http://api.eventful.com/docs/events/search)
+	- [Meetup](https://www.meetup.com/meetup_api/docs/find/events/Meetup)
+	- [Songkick](https://www.songkick.com/developer/event-search)
 
 ## People Density ##
 ### What Data Do We Want ###
@@ -78,7 +86,7 @@
 
 ### Other Notes ###
 - We might want to store the streamed data
-	-	For this create a writing to file system
+	- For this create a writing to file system
 	- Estimated size per day 30 kb
 
 ## Weather Data ##
