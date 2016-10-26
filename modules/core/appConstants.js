@@ -1,10 +1,13 @@
 module.exports = {
-  update: {
-    interval: 2 * 60 * 1000 //in ms
+  timeValues: {
+    updateInterval: 30 * 1000, //in ms
+    timeout: 10 * 1000
   },
   date: {
     defaultFormat: "DD/MM/YYYY",
-    localTimeFormat: "YYYY-MM-DDTHH:mm:SS"
+    localTimeFormat: "YYYY-MM-DDTHH:mm:SS",
+    eventfulFormat: "YYYYMMDD00",
+    meetupFomat: "YYYY-MM-DDTHH:mm:ss.SSSZ"
   },
   geo: {
     istanbul: {

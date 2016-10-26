@@ -16,20 +16,25 @@ function makeRequest (config) {
     });
 
     resp.on('end', () => {
-      if (config.expectJSON) {
-        data = JSON.parse(data);
-      }
-
-      if (config.errorCodes && config.errorCodes.indexOf(status) >= 0) {
-        var errorMessage = constructErrorMessage(data, "problem with request",
-        config.errorMessageField);
-        onError(data, errorMessage, config.errorCallback);
-      } else if (config.successCallback) {
-        if (!config.isChunked) {
-          config.successCallback(data);
+      if (!config.isChunked) {
+        if (config.expectJSON) {
+          data = JSON.parse(data);
         }
-      }
 
+        if (config.errorCodes && config.errorCodes.indexOf(status) >= 0) {
+          var errorMessage = constructErrorMessage(data, "problem with request",
+          config.errorMessageField);
+          onError(data, errorMessage, config.errorCallback);
+        } else if (config.successCallback) {
+          if(config.requireHeaders) {
+            config.successCallback(data, resp.headers);
+          } else {
+            config.successCallback(data);
+          }
+        }
+      } else {
+        makeRequest(config);
+      }
     });
   });
 
