@@ -17,7 +17,10 @@ function getCurrentForCoords (coords) {
   return new Promise(function (resolve, reject) {
     makeDarkSkyRequest(path, coords, queryParams, function (resp) {
       //TODO implement a processing function to send only the required info
-      resolve(resp);
+      resolve({
+        api: "dark-sky",
+        data: resp
+      });
     }, function (resp) {
       reject(resp);
     })
