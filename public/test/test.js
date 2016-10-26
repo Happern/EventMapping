@@ -2,7 +2,7 @@
 var socket = io.connect('/');
 var map;
 
-var densityMarkers;
+var densityMarkers = [];
 var eventMarkers;
 
 var istanbulCoordinates = {
@@ -22,20 +22,34 @@ function initMap() {
   });
 }
 
-function getLatLngObj (lat, lng) {
-  return new google.maps.LatLng(lat, lng);
+function getEventLocation (event) {
+  if (event.lat && event.lng) {
+    return new google.maps.LatLng(event.lat, event.lng);
+  } else return null;
 }
 
-function initMarkers(events, locationFunction, pinImage, addInfo) {
+function getTwitterLocation (coords) {
+  return new google.maps.LatLng(coords[0], coords[1]);
+}
+
+function updateDensityInfo (newDensities) {
+  densityMarkers.forEach(function(marker) {
+    marker.setMap(null);
+  });
+
+  densityMarkers = initMarkers(newDensities, getTwitterLocation, twitterImage);
+}
+
+function initMarkers(pinArray, locationFunction, pinImage, addInfo) {
   //facebookEvents[index].place.location.latitude
   markers = [];
 
-  events.forEach(function (data) {
-    var eventLocation = locationFunction(data);
+  pinArray.forEach(function (data) {
+    var position = locationFunction(data);
 
-    if (eventLocation) {
+    if (position) {
       var markerOptions = {
-        position: getLatLngObj(eventLocation.latitude, eventLocation.longitude),
+        position: position,
         map: map
       }
 
@@ -46,9 +60,9 @@ function initMarkers(events, locationFunction, pinImage, addInfo) {
       var marker = new google.maps.Marker(markerOptions);
 
       if(addInfo) {
-        var infoMessage = "Name: " + data.name;
-        if (data.place.name) {
-          infoMessage += "\n Location: " + data.place.name;
+        var infoMessage = "Api: " + data.api + "\nName: " + data.name;
+        if (data.venue_name) {
+          infoMessage += "\n Location: " + data.venue_name;
         }
         var infowindow = new google.maps.InfoWindow({
           content: infoMessage
@@ -66,32 +80,11 @@ function initMarkers(events, locationFunction, pinImage, addInfo) {
   return markers;
 }
 
-function getFbLocation (event) {
-  if (event.place && event.place.location) {
-    return event.place.location;
-  } else return null;
-}
-
-function updateDensityInfo (newDensities) {
-  densityMarkers.forEach(function(marker) {
-    marker.setMap(null);
-  });
-
-  densityMarkers = initMarkers(newDensities, getTwitterLocation, twitterImage);
-}
-
-function getTwitterLocation (coords) {
-  return {
-    latitude: coords[0],
-    longitude: coords[1]
-  };
-}
-
 $(document).ready(function () {
   socket.on('initialConditions', function(data) {
     console.log("initial conditions received");
-    console.log("num events", data.fb.length);
-    eventsMarkers = initMarkers(data.fb, getFbLocation, null, true);
+    console.log("num events", data.events.length);
+    eventsMarkers = initMarkers(data.events, getEventLocation, null, true);
     console.log("num tweets", data.twitter.length);
     densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
   });
