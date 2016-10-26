@@ -3,21 +3,27 @@ var makeRequest = require("../../modules/core/http/index.js").makeRequest;
 var param = require("jquery-param");
 
 function makeMeetupRequest (path, queryParams, successCallback, errorCallback) {
-  queryParams = Object.assign({
-    sign: true,
-    key: meetupConstants.apiKey
-  }, queryParams);
+  if (typeof(queryParams) !== "string") {
+    queryParams = param(Object.assign({
+      sign: true,
+      key: meetupConstants.apiKey
+    }, queryParams));
+  } else {
+    queryParams += "&key=" + meetupConstants.apiKey;
+  }
+
 
   var options = {
     hostname:"api.meetup.com",
-    path: path + "?" + param(queryParams)
+    path: path + "?" + queryParams
   };
 
   makeRequest({
     options: options,
     successCallback: successCallback,
     errorCallback: errorCallback,
-    expectJSON: true
+    expectJSON: true,
+    requireHeaders: true
   })
 }
 
