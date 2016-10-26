@@ -29,8 +29,6 @@ function formParamString(params, extraFunction) {
   return param(sorted);
 }
 
-
-
 function processTweet(tweet) {
   var coordinates;
   var time = tweet.timestamp_ms || "";

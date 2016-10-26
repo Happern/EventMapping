@@ -19,8 +19,6 @@ function getTweets(interval) {
     }
   }
 
-  console.log(currTweets.length);
-  console.log(searchedFor.length)
   return searchedFor;
 }
 

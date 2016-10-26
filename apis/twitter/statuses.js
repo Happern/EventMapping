@@ -10,7 +10,8 @@ function getStatuses () {
   var neCorner = appConstants.geo.istanbul.boundinBoxNE;
   var queryParams = {
     locations: swCorner.lng + "," + swCorner.lat
-    + "," + neCorner.lng + "," + neCorner.lat
+    + "," + neCorner.lng + "," + neCorner.lat,
+    stall_warnings: true
   };
 
   extraOptions = {
@@ -24,16 +25,24 @@ function getStatuses () {
   makeTwitterRequest(path, queryParams, extraOptions, function (chunk) {
     data += chunk;
 
+    /*TODO handle this some other way - some data gets lost.
+    (if chunk itself is not a complete JSON)
+    Adding the chunks together might result in a combination of multiple tweets
+    which doesn't get counted as a valid JSON object
+    */
+
     try {
-      parsed = JSON.parse(data);
+      parsed = JSON.parse(chunk);
+      if (parsed.warning) {
+        console.log("warning", parsed);
+      }
       twitterStore.addToTweets(tweetUtils.processTweet(parsed));
-      data = "";
-    } catch (e){
-      //TODO do sth here?
+    } catch (e) {
+
     }
-  }, function (resp){
-    console.log("errr", resp);
-  });
+}, function (resp){
+  console.log("error", resp);
+});
 }
 
 function getLatestCoords () {
