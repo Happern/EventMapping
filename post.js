@@ -4,10 +4,67 @@ var darkSkyForecast = require("./apis/dark-sky/forecast.js");
 var darkSkyCurrent = require("./apis/dark-sky/current.js");
 var appConstants = require("./modules/core/appConstants");
 
+var meetupEvents = require("./apis/meetup/events");
+var eventfulEvents = require("./apis/eventful/events");
+var eventsCombined = require("./modules/events/index");
 /* post endpoints, potentially for older browser support */
+
+var moment = require("moment");
+var defaultDateFormat = appConstants.date.defaultFormat;
+
+function getMoment (date) {
+  var momm;
+  if(date) {
+    momm = moment(date, defaultDateFormat);
+  }
+  return momm;
+}
+
+function processDateParams (body) {
+  var since = getMoment(body.since) || moment();
+  var until = getMoment(body.until) || moment().add(1, "w");
+
+  return {
+    since: since,
+    until: until
+  }
+}
 function init(app) {
+
+  app.post("/eventful", function (request, response) {
+    var dateParams = processDateParams(request.body);
+
+    var eventsPromise = eventfulEvents.getEventsInIstanbul(dateParams.since, dateParams.until);
+
+    eventsPromise.then(function (value) {
+      response.send(value);
+    });
+  });
+
+  app.post("/meetup", function (request, response) {
+    var dateParams = processDateParams(request.body);
+
+    var eventsPromise = meetupEvents.getEventsInIstanbul(dateParams.since, dateParams.until);
+
+    eventsPromise.then(function (value) {
+      response.send(value);
+    });
+  });
+
   app.post("/density", function (request, response) {
     response.send(twitterStatusesStream.getLatestCoords());
+  });
+
+  app.post("/facebook", function (request, response) {
+    var dateParams = processDateParams(request.body);
+
+    var eventsPromise = fbEvents.getEventsInIstanbul(dateParams.since, dateParams.until);
+
+    eventsPromise.then(function (value) {
+      response.send(value);
+    }).catch(function (err) {
+      console.log("error ror ror", err);
+    });
   });
 
   app.post("/events", function (request, response) {
@@ -17,10 +74,13 @@ function init(app) {
       since = request.body.since;
       until = request.body.until;
     }
-    var eventsPromise = fbEvents.getEventsInIstanbul(since, until);
+    var eventsPromise = eventsCombined.getIstanbulEvents(since, until);
 
     eventsPromise.then(function (value) {
       response.send(value);
+    }).catch(function (error) {
+      //TODO send error response here
+      console.log(error);
     });
   });
 

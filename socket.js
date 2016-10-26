@@ -1,18 +1,21 @@
 //internal modules
-var fbEvents = require("./apis/facebook/events.js");
+var allEvents = require("./modules/events/index");
+
 var twitterStatusesStream = require("./apis/twitter/statuses.js");
 var darkSkyForecast = require("./apis/dark-sky/forecast.js");
 var darkSkyCurrent = require("./apis/dark-sky/current.js");
 var appConstants = require("./modules/core/appConstants");
+var allPromises = require("./modules/core/promise/allPromises");
 
 //external modules
 var socketIO = require('socket.io');
+var _ = require('lodash');
 
 function init(server){
   var io = socketIO(server);
 
   function sendCurrentConditions(sendFunction) {
-    var fbPromise =  fbEvents.getEventsInIstanbul();
+    var eventsPromise =  allEvents.getIstanbulEvents();
     var weatherPromise;
     var coords;
     if (coords) {
@@ -21,14 +24,18 @@ function init(server){
       weatherPromise = darkSkyCurrent.getIstanbulCurrent();
     }
 
-    var allPromises = Promise.all([fbPromise, weatherPromise]);
-    allPromises.then(function(values) {
+    allPromises.combinePromisesTimeout([eventsPromise, weatherPromise], function (values){
+      var eventIndex = _.findIndex(values, function(value) { return value.api === 'all-events'; });
+      var weatherIndex = _.findIndex(values, function (value) {
+        return value.api === "dark-sky";
+      });
+
       var currentValues = {
-        fb: values[0],
-        weather: values[1],
+        events: eventIndex >= 0 ? values[eventIndex].data : [],
+        weather: weatherIndex >= 0 ? values [weatherIndex].data : {},
         twitter: twitterStatusesStream.getLatestCoords()
       }
-      sendFunction (currentValues);
+      sendFunction(currentValues);
     });
   }
 
@@ -63,7 +70,7 @@ function init(server){
     sendCurrentConditions(function (data) {
       io.emit("updatedConditions", data);
     });
-  }, appConstants.update.interval);
+  }, appConstants.timeValues.updateInterval);
 }
 
 module.exports = {
