@@ -9,14 +9,14 @@ function makeEventfulRequest(path, queryParams, successCallback, errorCallback) 
 
   var options = {
     hostname:"api.eventful.com",
-    path: "/rest" + path + "?" + param(queryParams)
+    path: "/json" + path + "?" + param(queryParams)
   };
 
   makeRequest({
     options: options,
     successCallback: successCallback,
     errorCallback: errorCallback,
-    expectJSON: false
+    expectJSON: true
   })
 }
 
