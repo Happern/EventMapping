@@ -2,24 +2,19 @@ var appConstants = require("../../modules/core/appConstants");
 var values = require("./values");
 var makeFbRequest = require("./index").makeFbRequest;
 var fbUtils = require("./utils");
-var moment = require("moment");
 
 var placesRecentlyUpdated = false;
 var places;
 
-function getEventsInIstanbul(startDate, endDate) {
+//TODO check for pagination
+function getEventsInIstanbul(startMoment, endMoment) {
   /*TODO it is not neccessary to get the places again and again
   store places somehere and add new one's if there is any in the response
   or periodically get events*/
-  var dates = {};
-
-  if (startDate) {
-    dates.since = moment(startDate, appConstants.date.defaultFormat).format("X");
-  }
-
-  if(endDate) {
-    dates.until = moment(endDate, appConstants.date.defaultFormat).format("X");
-  }
+  var dates = {
+    since: startMoment.format("X"),
+    until:  endMoment.format("X")
+  };
 
   return new Promise (function (resolve, reject) {
     var eventsPromise;
@@ -27,14 +22,20 @@ function getEventsInIstanbul(startDate, endDate) {
       eventsPromise = searchEventsWithPlaceData(places, dates);
       eventsPromise.then(function (values) {
         resolve(fbUtils.processValues(values));
+      }).catch(function (err) {
+        reject(err);
       })
     } else {
       getPlacesInIstanbul(function (resp) {
         placesRecentlyUpdated = true;
         places = resp.data;
+
         var eventsPromise = searchEventsWithPlaceData(resp.data, dates);
+
         eventsPromise.then(function (values) {
           resolve(fbUtils.processValues(values));
+        }).catch(function (err) {
+          reject(err);
         })
       });
     }
@@ -81,14 +82,8 @@ function searchEventsWithPlaceData (places, dates) {
 
 function searchForEvents (idsArray, dates) {
   var fields = values.getFieldsForEventSearch().join(",");
-
-  if (dates.since) {
-    fields += ".since(" + dates.since + ")";
-  }
-
-  if (dates.until) {
-    fields += ".until(" + dates.until + ")";
-  }
+  fields += ".since(" + dates.since + ")";
+  fields += ".until(" + dates.until + ")";
 
   var promises = [];
   var numBatches = idsArray.length;
@@ -104,11 +99,11 @@ function searchForEvents (idsArray, dates) {
         fields: fields
       }
 
-
       makeFbRequest(path, queryParams, true, function (resp) {
+        console.log(resp.paging);
         resolve(resp);
-      }, function (resp) {
-        console.log("error", resp);
+      }, function (err) {
+        reject(err);
       });
     }));
   }

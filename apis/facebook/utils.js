@@ -1,3 +1,6 @@
+var formatEvents = require("../../modules/events/utils").formatEvents;
+var fbValues = require("./values");
+
 function extractEvents (placeEventData) {
   var events = [];
   var placeIds = Object.keys(placeEventData);
@@ -22,7 +25,8 @@ function processValues (values) {
       events = events.concat(extractEvents(values[valueIndex]));
   }
 
-  return events;
+  return formatEvents(events, fbValues.eventFormatMapping)
+  ;
 }
 
 module.exports = {
