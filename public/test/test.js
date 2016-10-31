@@ -15,11 +15,35 @@ var twitterImage = {
     scaledSize: new google.maps.Size(7, 7)
   };
 
+var weatherImage = {
+  url: "/assets/weather-icon-png-2.png",
+  scaledSize: new google.maps.Size(12, 12)
+};
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: istanbulCoordinates,
     zoom: 10
   });
+}
+
+function constructEventInfoMessage(data) {
+  var infoMessage = "Api: " + data.api + "\nName: " + data.name;
+  if (data.venue_name) {
+    infoMessage += "\n Location: " + data.venue_name;
+  }
+
+  return infoMessage;
+}
+
+function constructWeatherInfoMessage(data) {
+  return "Feels Like: " + data.apparentTemperature + "C\n" +
+  "Chance of Rain: " + data.precipProbability + "\n" +
+  "Wind Speed: " + data.windSpeed;
+}
+
+function getWeatherLocation (weather) {
+  return new google.maps.LatLng(weather.latitude, weather.longitude);
 }
 
 function getEventLocation (event) {
@@ -40,7 +64,7 @@ function updateDensityInfo (newDensities) {
   densityMarkers = initMarkers(newDensities, getTwitterLocation, twitterImage);
 }
 
-function initMarkers(pinArray, locationFunction, pinImage, addInfo) {
+function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageFunction) {
   //facebookEvents[index].place.location.latitude
   markers = [];
 
@@ -59,11 +83,9 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo) {
 
       var marker = new google.maps.Marker(markerOptions);
 
-      if(addInfo) {
-        var infoMessage = "Api: " + data.api + "\nName: " + data.name;
-        if (data.venue_name) {
-          infoMessage += "\n Location: " + data.venue_name;
-        }
+      if(addInfo && infoMessageFunction) {
+        var infoMessage = infoMessageFunction(data);
+
         var infowindow = new google.maps.InfoWindow({
           content: infoMessage
         });
@@ -84,9 +106,11 @@ $(document).ready(function () {
   socket.on('initialConditions', function(data) {
     console.log("initial conditions received");
     console.log("num events", data.events.length);
-    eventsMarkers = initMarkers(data.events, getEventLocation, null, true);
+    eventsMarkers = initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
     console.log("num tweets", data.twitter.length);
     densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
+    console.log("wather info", data.weather);
+    weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
   });
 
   socket.on("updatedConditions", function (data) {
