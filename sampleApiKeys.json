@@ -1,0 +1,22 @@
+{
+  "twitter": {
+    "accessToken": "",
+    "accessTokenSecret": "",
+    "consumerKey": "",
+    "consumerSecret": ""
+  },
+  "facebook": {
+    "appId": "",
+    "appSecret": "",
+    "accessToken": ""
+  },
+  "eventful": {
+    "applicationKey": ""
+  },
+  "meetup": {
+    "apiKey": ""
+  },
+  "darkSky": {
+    "secretKey": ""
+  }
+}

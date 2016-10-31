@@ -2,10 +2,6 @@
 npm-debug.log
 node_modules
 keymaps
-apis/facebook/values.js
-apis/twitter/constants.js
-apis/dark-sky/constants.js
-apis/eventful/constants.js
-apis/meetup/constants.js
+apiKeys.json
 public/emotion
 public/assets/emotion
