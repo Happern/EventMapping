@@ -89,7 +89,7 @@ function init(app) {
     if (request.body.coords) {
       weatherPromise = darkSkyCurrent.getCurrentForCoords(request.body.coords);
     } else {
-      weatherPromise = darkSkyCurrent.getIstanbulCurrent();
+      weatherPromise = darkSkyCurrent.getCurrentForAllIstanbulCoords();
     }
 
     weatherPromise.then(function (value) {
@@ -102,7 +102,7 @@ function init(app) {
     if (request.body.coords) {
       forecastPromise = darkSkyForecast.getForecastForCoords(request.body.coords);
     } else {
-      forecastPromise = darkSkyCurrent.getIstanbulForecast();
+      forecastPromise = darkSkyForecast.getIstanbulForecast();
     }
 
     forecastPromise.then(function (value) {

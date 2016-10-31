@@ -100,7 +100,6 @@ function searchForEvents (idsArray, dates) {
       }
 
       makeFbRequest(path, queryParams, true, function (resp) {
-        console.log(resp.paging);
         resolve(resp);
       }, function (err) {
         reject(err);

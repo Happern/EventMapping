@@ -21,7 +21,7 @@ function init(server){
     if (coords) {
       weatherPromise = darkSkyCurrent.getCurrentForCoords(coords);
     } else {
-      weatherPromise = darkSkyCurrent.getIstanbulCurrent();
+      weatherPromise = darkSkyCurrent.getCurrentForAllIstanbulCoords();
     }
 
     allPromises.combinePromisesTimeout([eventsPromise, weatherPromise], function (values){

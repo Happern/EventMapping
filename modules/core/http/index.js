@@ -18,7 +18,13 @@ function makeRequest (config) {
     resp.on('end', () => {
       if (!config.isChunked) {
         if (config.expectJSON) {
-          data = JSON.parse(data);
+          try {
+            data = JSON.parse(data);
+          } catch (e) {
+            console.log("error", e);
+            onError(e, errorMessage, config.errorCallback);
+            return;
+          }
         }
 
         if (config.errorCodes && config.errorCodes.indexOf(status) >= 0) {
