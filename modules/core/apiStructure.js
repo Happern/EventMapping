@@ -182,7 +182,7 @@ module.exports = {
           "type": "string"
         },
         "photo": {
-          "type": "any"
+          "type": ["object", "string"]
         },
         "start_time": {
           "type": "string"
