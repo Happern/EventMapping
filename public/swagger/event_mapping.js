@@ -1,4 +1,4 @@
-{
+module.exports = {
   "swagger": "2.0",
   "info": {
     "description": "Documentation for Event Mapping Server App.",
@@ -12,7 +12,7 @@
       "url": "https://github.com/swagger-api/swagger-ui/blob/master/LICENSE"
     }
   },
-  "host": "localhost:5000",
+  "host": process.env.EM_DOMAIN + ":" + process.env.EM_PORT,
   "basePath": "/",
   "produces": ["application/json"],
   "consumes": ["application/json"],
