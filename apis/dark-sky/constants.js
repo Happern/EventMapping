@@ -1,4 +1,4 @@
-var apiKeys = require("../../apiKeys.json");
+var apiKeys = require("../../apiKeys");
 
 module.exports = {
   secretKey: apiKeys.darkSky.secretKey,

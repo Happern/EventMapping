@@ -2,6 +2,5 @@
 npm-debug.log
 node_modules
 keymaps
-apiKeys.json
 public/emotion
 public/assets/emotion
