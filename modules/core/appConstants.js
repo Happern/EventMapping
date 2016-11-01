@@ -1,6 +1,6 @@
 module.exports = {
   timeValues: {
-    updateInterval: 30 * 1000, //in ms
+    updateInterval: 5 * 60 * 1000, //in ms
     timeout: 10 * 1000
   },
   date: {

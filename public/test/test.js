@@ -3,6 +3,7 @@ var socket = io.connect('/');
 var map;
 
 var densityMarkers = [];
+var weatherMarkers = [];
 var eventMarkers;
 
 var istanbulCoordinates = {
@@ -56,12 +57,12 @@ function getTwitterLocation (coords) {
   return new google.maps.LatLng(coords[0], coords[1]);
 }
 
-function updateDensityInfo (newDensities) {
-  densityMarkers.forEach(function(marker) {
+function updateInfo (newMarkers, oldMarkers, initFunction) {
+  oldMarkers.forEach(function(marker) {
     marker.setMap(null);
   });
 
-  densityMarkers = initMarkers(newDensities, getTwitterLocation, twitterImage);
+  oldMarkers = initFunction();
 }
 
 function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageFunction) {
@@ -109,14 +110,19 @@ $(document).ready(function () {
     eventsMarkers = initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
     console.log("num tweets", data.twitter.length);
     densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
-    console.log("wather info", data.weather);
+    console.log("weather info", data.weather);
     weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
   });
 
   socket.on("updatedConditions", function (data) {
     console.log("updated conditions received");
-    console.log(data.twitter.length);
-    updateDensityInfo(data.twitter);
+    console.log("density data point #", data.twitter.length);
+    updateInfo(data.twitter, densityMarkers, function () {
+      return initMarkers(data.twitter, getTwitterLocation, twitterImage);
+    });
+    updateInfo(data.weather, weatherMarkers, function () {
+      return initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
+    })
   });
 
   /*socket.emit("zoom", {coords: "41.147056,28.986053"});
