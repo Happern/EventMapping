@@ -18,11 +18,8 @@ function makeRequest (config) {
     resp.on('end', () => {
       if (!config.isChunked) {
         if (config.expectJSON) {
-          try {
-            data = JSON.parse(data);
-          } catch (e) {
-            console.log("error", e);
-            onError(e, errorMessage, config.errorCallback);
+          data = parseJSON(data);
+          if (data === null) {
             return;
           }
         }
@@ -46,7 +43,10 @@ function makeRequest (config) {
 
   req.on('error', (e) => {
     if (config.expectJSON) {
-      e = JSON.parse(e);
+      e = parseJSON(e);
+      if (e === null) {
+        return;
+      }
     }
 
     var errorMessage = constructErrorMessage(e, "problem with request",
@@ -85,6 +85,15 @@ function constructErrorMessage(resp, defaultMessage, errorMessageField) {
 function onError (resp, message, errorCallback) {
   if (errorCallback) {
     errorCallback(resp);
+  }
+}
+
+function parseJSON (data, config) {
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    onError(e, errorMessage, config.errorCallback);
+    return null;
   }
 }
 
