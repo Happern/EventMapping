@@ -1,3 +1,5 @@
+var port = process.env.PORT || process.env.EM_PORT || 5000;
+
 module.exports = {
   "swagger": "2.0",
   "info": {
@@ -12,7 +14,7 @@ module.exports = {
       "url": "https://github.com/swagger-api/swagger-ui/blob/master/LICENSE"
     }
   },
-  "host": process.env.EM_DOMAIN + ":" + process.env.EM_PORT,
+  "host": process.env.EM_DOMAIN + ":" + port,
   "basePath": "/",
   "produces": ["application/json"],
   "consumes": ["application/json"],
