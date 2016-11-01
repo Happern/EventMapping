@@ -1,4 +1,5 @@
 var eventFields = require("../events/constants").eventFields;
+eventFields.push("api");
 
 var host = process.env.EM_DOMAIN;
 
@@ -63,6 +64,14 @@ module.exports = {
         "lat",
         "lng"
       ]
+    },
+    "WeatherRequestModel": {
+      "type": "object",
+      "properties": {
+        "coords": {
+          "type": "string"
+        }
+      }
     },
     "WeatherResponseModel": {
       "type": "object",
@@ -136,9 +145,7 @@ module.exports = {
     "EventArrayModel": {
       "type": "array",
       "items": {
-        "schema": {
-          "$ref": "#/definitions/EventModel"
-        }
+        "$ref": "#/definitions/EventModel"
       }
     },
     "EventModel": {
@@ -217,7 +224,7 @@ module.exports = {
           }
         }
       }
-      },
+    },
     "/weather/current": {
       "post": {
         "tags": ["Get Current Weather"],
@@ -229,12 +236,7 @@ module.exports = {
             "description": "Coordinates for which the weather data is requested",
             "required": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                  "coords": {
-                    "type": "string"
-                  }
-              }
+              "$ref": "#/definitions/WeatherRequestModel"
             }
           }
         ],
@@ -261,16 +263,16 @@ module.exports = {
             "schema": {
               "$ref": "#/definitions/EventRequestModel"
             }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully got events",
-          "schema": {
-            "$ref": "#/definitions/EventResponseModel"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully got events",
+            "schema": {
+              "$ref": "#/definitions/EventResponseModel"
+            }
           }
         }
-      }
       }
     },
     "/eventful": {
@@ -286,16 +288,16 @@ module.exports = {
             "schema": {
               "$ref": "#/definitions/EventRequestModel"
             }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully got events",
-          "schema": {
-            "$ref": "#/definitions/EventResponseModel"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully got events",
+            "schema": {
+              "$ref": "#/definitions/EventResponseModel"
+            }
           }
         }
-      }
       }
     },
     "/facebook/" : {
@@ -311,7 +313,7 @@ module.exports = {
             "schema": {
               "$ref": "#/definitions/EventRequestModel"
             }
-        }
+          }
         ],
         "responses": {
           "200": {
@@ -334,7 +336,7 @@ module.exports = {
             "description": "Defines the time interval",
             "required": false,
             "schema": {
-                "$ref": "#/definitions/EventRequestModel"
+              "$ref": "#/definitions/EventRequestModel"
             }
           }
         ],
