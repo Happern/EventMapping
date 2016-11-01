@@ -28,7 +28,7 @@ app.get('/swagger', function (req, res) {
 });
 
 app.get('/swagger/event_mapping.json', function (req, res) {
-  var json = require("./public/swagger/event_mapping");
+  var json = require("./modules/core/apiStructure");
   res.send(json);
 })
 

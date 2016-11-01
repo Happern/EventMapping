@@ -1,3 +1,5 @@
+var eventFields = require("../events/constants").eventFields;
+
 var host = process.env.EM_DOMAIN;
 
 if (!process.env.PORT) {
@@ -148,7 +150,7 @@ module.exports = {
         },
         "id": {
           "type": "string"
-        }
+        },
         "name": {
           "description": "name of the event",
           "type": "string"
