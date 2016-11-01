@@ -46,7 +46,10 @@ function getStatuses () {
 }
 
 function getLatestCoords () {
-  return twitterStore.getTweets(15);
+  return {
+    "api": "twitter",
+    "data": twitterStore.getTweets(15)
+  };
 }
 
 module.exports = {

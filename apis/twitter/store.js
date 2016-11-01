@@ -13,7 +13,10 @@ function getTweets(interval) {
     var tweet = currTweets[tweetIndex];
 
     if (currTime.diff(tweet.time, "minutes") <= interval) {
-      searchedFor.push(tweet.coord);
+      searchedFor.push({
+        "lat": tweet.coord[0],
+        "lng": tweet.coord[1]
+      });
     } else {
       break;
     }
