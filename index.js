@@ -15,7 +15,7 @@ app.use(cors({origin: 'http://localhost:8080'}));*/
 
 app.use(bodyParser.json());
 
-app.set('port', (process.env.EM_PORT || 5000));
+app.set('port', (process.env.PORT || process.env.EM_PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
 
