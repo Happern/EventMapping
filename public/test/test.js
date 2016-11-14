@@ -1,4 +1,3 @@
-
 var socket = io.connect('/');
 var map;
 
@@ -24,8 +23,115 @@ var weatherImage = {
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: istanbulCoordinates,
-    zoom: 10
+    zoom: 10,
+    disableDefaultUI: true,
+    styles: [{
+            "featureType": "administrative"
+            , "elementType": "labels"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "administrative.country"
+            , "elementType": "geometry.stroke"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "administrative.province"
+            , "elementType": "geometry.stroke"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "landscape"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "visibility": "on"
+            }, {
+                "color": "#e3e3e3"
+            }]
+        }, {
+            "featureType": "landscape.natural"
+            , "elementType": "labels"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "poi"
+            , "elementType": "all"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road"
+            , "elementType": "all"
+            , "stylers": [{
+                "color": "#cccccc"
+            }]
+        }, {
+            "featureType": "road"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "road"
+            , "elementType": "labels"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road.local"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "transit"
+            , "elementType": "labels.icon"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "transit.line"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "transit.line"
+            , "elementType": "labels.text"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "transit.station.airport"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "transit.station.airport"
+            , "elementType": "labels"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "water"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "color": "#FFFFFF"
+            }]
+        }, {
+            "featureType": "water"
+            , "elementType": "labels"
+            , "stylers": [{
+                "visibility": "off"
+            }]
+        }]
   });
+    
 }
 
 function constructEventInfoMessage(data) {
