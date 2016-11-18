@@ -32,7 +32,7 @@ function successCallback(resp, headers, events, path, resolve, reject, startMome
 
 meetupUtils.correctTimeFormat(resp);
 
-    events = events.concat(formatEvents(resp, meetupConstants.eventFormatMapping));
+    events = events.concat(formatEvents(resp, meetupConstants.eventFormatMapping, "meetup"));
 
     if(headers.link) {
       queryParamsString = meetupUtils.extractQueryParamsFromLink(headers.link);
@@ -52,7 +52,7 @@ meetupUtils.correctTimeFormat(resp);
     } else {
       resolve(events);
     }
-  
+
 }
 
 module.exports = {

@@ -32,8 +32,8 @@ function init(server){
 
       var currentValues = {
         events: eventIndex >= 0 ? values[eventIndex].data : [],
-        weather: weatherIndex >= 0 ? values [weatherIndex].data : {},
-        twitter: twitterStatusesStream.getLatestCoords()
+        weather: weatherIndex >= 0 ? values [weatherIndex].data : [],
+        twitter: twitterStatusesStream.getLatestCoords().data || []
       }
       sendFunction(currentValues);
     });

@@ -25,7 +25,7 @@ function processValues (values) {
       events = events.concat(extractEvents(values[valueIndex]));
   }
 
-  return formatEvents(events, fbValues.eventFormatMapping)
+  return formatEvents(events, fbValues.eventFormatMapping, "fb");
   ;
 }
 

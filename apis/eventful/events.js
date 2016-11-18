@@ -21,7 +21,8 @@ function getEventsInIstanbul (startMoment, endMoment) {
   return new Promise(function (resolve, reject){
     makeEventfulRequest(path, queryParams, function (resp) {
       var pageCount = resp.page_count;
-      var events = formatEvents(resp.events.event, eventfulConstants.eventFormatMapping);
+      var eventsAPI = getEventsFromResponse(resp);
+      var events = formatEvents(eventsAPI, eventfulConstants.eventFormatMapping, "eventful");
 
       if (pageCount > 1) {
         getOtherPages(pageCount, path, queryParams, events, resolve, reject);
@@ -46,7 +47,8 @@ function getOtherPages (pageCount, path, queryParams, events, originalResolve, o
 
       promises.push(new Promise(function (resolve, reject) {
         makeEventfulRequest(path, queryParams, function (resp, headers) {
-          resolve(formatEvents(resp.events.event, eventfulConstants.eventFormatMapping));
+          var events = getEventsFromResponse(resp);
+          resolve(formatEvents(events, eventfulConstants.eventFormatMapping, "eventful"));
         }, function (err) {
           errorCallback(reject, err);
         })
@@ -58,6 +60,16 @@ function getOtherPages (pageCount, path, queryParams, events, originalResolve, o
     }, function(err) {
       errorCallback(originalReject, err);
     });
+}
+
+function getEventsFromResponse (response) {
+  var e = response.events.event;
+
+  if(typeof e === "object" && e.constructor.name !== "Array") {
+    e = [e];
+  }
+
+  return e;
 }
 
 module.exports = {

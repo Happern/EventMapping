@@ -1,11 +1,12 @@
 var eventConstants = require("./constants");
 
-function formatEvents (events, eventMapping) {
+function formatEvents (events, eventMapping, api) {
   var processedEvents = [];
 
-  events.forEach(function (event) {
+  for (var i = 0; i < events.length; i++) {
+    var event = events[i];
     processedEvents.push(formatEvent(event, eventMapping));
-  })
+  }
 
   return processedEvents;
 }
