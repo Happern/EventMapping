@@ -228,13 +228,14 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
 
                 //uses google map's default info window to create infoWindow
                 //object with the constructed message
-                var infowindow = new google.maps.InfoWindow({
+                var infowindow = new SnazzyInfoWindow({
                     content: infoMessage
+                    , marker: marker
                 });
-
+                
                 //adds event listener to the  marker object for 'click event' to open the info window
                 google.maps.event.addListener(marker, 'click', function () {
-                    infowindow.open(map, marker);
+                    infowindow.open();
                 });
             }
 
@@ -257,8 +258,8 @@ $(document).ready(function () {
         // since they are needed to be cleared when updated data arrives.
         // these variables are initialized at the top this file
         eventsMarkers = initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
-        densityMarkers = initMarkers(data.twitter, getTwitterLocation, null, true, twitterImage);
-        weatherMarkers = initMarkers(data.weather, getWeatherLocation, null, true, weatherImage, constructWeatherInfoMessage);
+        densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
+        weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
 
         // logs some info to console for debugging purposes, can be deleted
         console.log("initial conditions received");
