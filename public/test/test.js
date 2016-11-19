@@ -204,8 +204,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 , anchor: new google.maps.Point(12, 24)
             };
             var markerOptions = {
-                icon: markerIcon
-                , position: position
+                icon: markerIcon,
+                position: position
                 , map: map
             }
 
@@ -220,7 +220,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             //checks if infoMessageFunction parameter is passed and proceeds,
             // since in the absence of this function it is not possible to
             // create an information message - thus an info window here.
-            if (infoMessageFunction) {
+            if (addInfo && infoMessageFunction) {
                 //constructs the info message with the given function
                 // currently can either be constructEventInfoMessage or
                 // constructWeatherInfoMessage
@@ -256,9 +256,9 @@ $(document).ready(function () {
         // the marker arrays returned from initMarkers fucnction are stored
         // since they are needed to be cleared when updated data arrives.
         // these variables are initialized at the top this file
-        eventsMarkers = initMarkers(data.events, getEventLocation, null, constructEventInfoMessage);
-        densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
-        weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, constructWeatherInfoMessage);
+        eventsMarkers = initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
+        densityMarkers = initMarkers(data.twitter, getTwitterLocation, null, true, twitterImage);
+        weatherMarkers = initMarkers(data.weather, getWeatherLocation, null, true, weatherImage, constructWeatherInfoMessage);
 
         // logs some info to console for debugging purposes, can be deleted
         console.log("initial conditions received");
