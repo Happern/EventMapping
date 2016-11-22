@@ -253,14 +253,13 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                         right: 60,
                         bottom: 50
                     },
-                    border: false,
+                    border: true,
                     closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
                     content: template({
-                        title: 'Complex Styles',
-                        subtitle: 'For Snazzy Info Windows',
+                        title: data.name,
+                        subtitle: 'Location: '+ data.venue_name,
                         bgImg: 'https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?dpr=1&auto=format&fit=crop&w=800&h=350&q=80&cs=tinysrgb&crop=',
-                        body: infoMessage
-                    }),
+                   }),
                     callbacks: {
                         open: function() {
                             $(this.getWrapper()).addClass('open');

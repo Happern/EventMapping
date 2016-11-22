@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="/test/test.css" type="text/css">
-    <link rel="stylesheet" href="/snazzy-info-window/dist/snazzy-info-window.min.css">
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-          crossorigin="anonymous">
-  </script>
-</head>
-<body>
-  <div id="map">
-  </div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
-  </script>
-  <script src="/test/test.js"></script>
-  <script src="handlebars-v4.0.5.js"></script>
-  <script src="/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
+  <head>
+    <link rel="stylesheet" href="/test/test.css" type="text/css">
+      <link rel="stylesheet" href="/snazzy-info-window/dist/snazzy-info-window.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
+    </script>
+    <script src="/test/test.js"></script>
+    <script src="handlebars-v4.0.5.js"></script>
+    <script src="/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
     <script id="marker-content-template" type="text/x-handlebars-template">
-      <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
-      <section class="custom-content">
-          <h1 class="custom-header">
-              {{title}}
-              <small>{{subtitle}}</small>
-          </h1>
-          <div class="custom-body">{{{body}}}</div>
-      </section>
-  </script>
-</body>
+        <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
+        <section class="custom-content">
+            <h1 class="custom-header">
+                {{title}}
+                <small>{{subtitle}}</small>
+            </h1>
+            <div class="custom-body">{{{body}}}</div>
+        </section>
+    </script>
+  </head>
+  <body>
+    <div id="map">
+    </div>
+  </body>
 </html>
