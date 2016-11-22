@@ -217,6 +217,20 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             }
             var marker = new google.maps.Marker(markerOptions);
 
+              // Set up handle bars for Snazzy Info Window complex-styles
+            var template = Handlebars.compile($('#marker-content-template').html());
+
+            // Set up a close closeDelayed for CSS animations
+            var infowindow = null;
+            var closeDelayed = false;
+            var closeDelayHandler = function() {
+                $(infowindow.getWrapper()).removeClass('active');
+                setTimeout(function() {
+                    closeDelayed = true;
+                    infowindow.close();
+                }, 300);
+            };
+
             //checks if infoMessageFunction parameter is passed and proceeds,
             // since in the absence of this function it is not possible to
             // create an information message - thus an info window here.
@@ -229,8 +243,47 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 //uses google map's default info window to create infoWindow
                 //object with the constructed message
                 var infowindow = new SnazzyInfoWindow({
-                    content: infoMessage
-                    , marker: marker
+                    marker: marker,
+                    wrapperClass: 'custom-window',
+                    offset: {
+                        top: '-72px'
+                    },
+                    edgeOffset: {
+                        top: 50,
+                        right: 60,
+                        bottom: 50
+                    },
+                    border: false,
+                    closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
+                    content: template({
+                        title: 'Complex Styles',
+                        subtitle: 'For Snazzy Info Windows',
+                        bgImg: 'https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?dpr=1&auto=format&fit=crop&w=800&h=350&q=80&cs=tinysrgb&crop=',
+                        body: infoMessage
+                    }),
+                    callbacks: {
+                        open: function() {
+                            $(this.getWrapper()).addClass('open');
+                        },
+                        afterOpen: function() {
+                            var wrapper = $(this.getWrapper());
+                            wrapper.addClass('active');
+                            wrapper.find('.custom-close').on('click', closeDelayHandler);
+                        },
+                        beforeClose: function() {
+                            if (!closeDelayed) {
+                                closeDelayHandler();
+                                return false;
+                            }
+                            return true;
+                        },
+                        afterClose: function() {
+                            var wrapper = $(this.getWrapper());
+                            wrapper.find('.custom-close').off();
+                            wrapper.removeClass('open');
+                            closeDelayed = false;
+                        }
+                    }
                 });
                 
                 //adds event listener to the  marker object for 'click event' to open the info window
