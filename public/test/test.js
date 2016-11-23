@@ -135,6 +135,9 @@ function initMap() {
             }]
         }]
     });
+
+    var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
 }
 
 //constructs info message from event data, just for test purposes
@@ -215,6 +218,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             if (pinImage) {
                 markerOptions.icon = pinImage
             }
+
             var marker = new google.maps.Marker(markerOptions);
 
               // Set up handle bars for Snazzy Info Window complex-styles
