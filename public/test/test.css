@@ -8,6 +8,8 @@ html, body {
   width: 100%;
 }
 
+/*Styling for Snazzy info windows*/
+
 .si-float-wrapper {
   position: absolute;
   width: 100%; }
@@ -341,4 +343,124 @@ body {
   .custom-body {
     padding: 40px; } }
 
-/*# sourceMappingURL=styles.css.map */
+/*End of styling for Snazzy info windows*/
+
+/*Styling for Event Details check boxes*/
+
+  .box{ 
+    background-color: #F1F1F3;
+    position: absolute;
+    height: 110%;
+    width: 15%;
+    left: 87%;
+    top: 12%;
+    opacity: 0.6;
+    z-index: 1;
+  }
+
+  .Checkbox_Events{
+    position: absolute;
+    top: 20%;
+    left: 88%;
+    color: #E17A3D;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+
+  .Checkbox_Traffic{
+    position: absolute;
+    top: 23%;
+    left: 88%;
+    color: #EDC74E;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+
+  #EventAttenders{
+    position: absolute;
+    top: 33%;
+    left: 88%;
+    color: black;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+
+  .range1{
+    position: absolute;
+    z-index: 2;
+    top: 37%;
+    left: 88%;  
+  }
+
+  #PeopleDensity{
+    position: absolute;
+    top: 40%;
+    left: 88%;
+    color: black;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+
+  .range2{
+    position: absolute;
+    z-index: 2;
+    top: 44%;
+    left: 88%;
+  }
+
+  #Noise{
+    position: absolute;
+    top: 47%;
+    left: 88%;
+    color: black;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+
+  .range3{
+    position: absolute;
+    z-index: 2;
+    top: 51%;
+    left: 88%;
+  }
+
+  #Physicalchaos{
+    position: absolute;
+    top: 54%;
+    left: 88%;
+    color: black;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+
+  .range4{
+    position: absolute;
+    z-index: 2;
+    top: 57%;
+    left: 88%;
+  }
+
+  #Price{
+    position: absolute;
+    top: 61%;
+    left: 88%;
+    color: black;
+    z-index: 2;
+    font-family: 'Roboto';
+    font-size: 12px;
+  }
+  .range5{
+    position: absolute;
+    z-index: 2;
+    top: 65%;
+    left: 88%;
+  }
+
+  /*End of styling for Event Details check boxes*/
+
