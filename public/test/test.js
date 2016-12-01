@@ -259,9 +259,14 @@ $(document).ready(function () {
         console.log("density data point #", data.twitter.length);
     });
 
-    socket.emit("timelineSelected", {startDate: "03/12/2016", endDate: "06/12/2016"});
+    socket.emit("timelineSelected", {
+        startDate: "03/12/2016", endDate: "06/12/2016"
+        //startDate and endDate should be received from the sliders
+    });
     socket.on("timelineSelectedValue", function (data) {
       console.log("data");
+        //give the data to the map with a dedicated function, or simple use updateInfo()
+        //create google charts timeline here (once the correct marker information is shown on the map)
     });
 
     // the lines below were there to test some socket functionality.
@@ -284,11 +289,28 @@ $(document).ready(function () {
 
     initMap();
 
-});
+    $('.ui.sidebar')
+        .sidebar('setting', 'transition', 'overlay')
+        .sidebar('toggle')
+    ;
 
-$('.visible.example .ui.sidebar')
-  .sidebar({
-    context: '.visible.example .bottom.segment'
-  })
-  .sidebar('hide')
-;
+    // Initiate the range slider and set min-max in the bottom sidebar 
+    $('#my-range-1').range({
+        min: 0,
+        max: 10,
+        start: 5
+        // onChange: function(val){
+        //     //specify what happens when a value is selected --> update timeli
+        // }
+    });
+
+    $('#my-range-2').range({
+        min: 0,
+        max: 10,
+        start: 5
+        // onChange: function(val){
+        //     //specify what happens when a value is selected --> update timeli
+        // }
+    });
+
+});
