@@ -7,6 +7,7 @@ var darkSkyCurrent = require("./apis/dark-sky/current.js");
 var appConstants = require("./modules/core/appConstants");
 var allPromises = require("./modules/core/promise/allPromises");
 
+var eventsCombined = require("./modules/events/index");
 //external modules
 var socketIO = require('socket.io');
 var _ = require('lodash');
@@ -60,7 +61,16 @@ function init(server){
     socket.on("timelineSelected", function (data){
       /* TODO return events for the selected timeline
       and weather forecast if available */
-      var fbPromise = fbEvents.getEventsInIstanbul(data.startDate, data.endDate);
+
+      //DD/MM/YYYY
+      var eventsPromise = eventsCombined.getIstanbulEvents(data.startDate, data.endDate);
+
+      eventsPromise.then(function (value) {
+        socket.emit("timelineSelectedValue", value);
+      }).catch(function (error) {
+        //TODO send error response here
+        console.log(error);
+      });
     });
   }
 
