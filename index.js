@@ -19,12 +19,8 @@ app.set('port', (process.env.PORT || process.env.EM_PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/test', function(req, res) {
-  res.sendFile(__dirname + 'public/test/index.html');
-});
-
-app.get('/swagger', function (req, res) {
-  res.sendFile(__dirname + 'public/swagger/index.html');
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/public/test/index.html');
 });
 
 app.get('/swagger/event_mapping.json', function (req, res) {
