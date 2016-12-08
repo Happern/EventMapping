@@ -15,22 +15,20 @@ function getEventsInIstanbul (startMoment, endMoment) {
   var events = [];
   return new Promise(function (resolve, reject) {
     makeMeetupRequest(path, queryParams,
-    function (resp, headers) {
-      successCallback(resp, headers, events, path, resolve, reject, startMoment, endMoment);
-    }, function (error) {
+      function (resp, headers) {
+        successCallback(resp, headers, events, path, resolve, reject, startMoment, endMoment);
+      }, function (error) {
         errorCallback(error, reject);
+      });
     });
-  });
-}
+  }
 
-function errorCallback (err, reject) {
+  function errorCallback (err, reject) {
     reject(err);
-}
+  }
 
-function successCallback(resp, headers, events, path, resolve, reject, startMoment, endMoment) {
-  resp = meetupUtils.filterResultsByDate(resp, startMoment, endMoment);
-
-meetupUtils.correctTimeFormat(resp);
+  function successCallback(resp, headers, events, path, resolve, reject, startMoment, endMoment) {
+    resp = meetupUtils.filterResultsByDate(resp, startMoment, endMoment);
 
     events = events.concat(formatEvents(resp, meetupConstants.eventFormatMapping, "meetup"));
 
@@ -39,22 +37,22 @@ meetupUtils.correctTimeFormat(resp);
 
       if (meetupUtils.checkDate(queryParamsString, endMoment)) {
         makeMeetupRequest(path, queryParamsString,
-        function (resp, headers) {
-          successCallback(resp, headers, events, path, resolve, reject, startMoment, endMoment);
-        },
-        function(err) {
-          errorCallback(err, reject);
-        });
+          function (resp, headers) {
+            successCallback(resp, headers, events, path, resolve, reject, startMoment, endMoment);
+          },
+          function(err) {
+            errorCallback(err, reject);
+          });
+        } else {
+          resolve(events);
+        }
+
       } else {
         resolve(events);
       }
 
-    } else {
-      resolve(events);
     }
 
-}
-
-module.exports = {
-  getEventsInIstanbul: getEventsInIstanbul
-};
+    module.exports = {
+      getEventsInIstanbul: getEventsInIstanbul
+    };
