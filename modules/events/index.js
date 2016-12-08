@@ -1,6 +1,8 @@
 var fbEvents = require("../../apis/facebook/events");
 var meetupEvents = require("../../apis/meetup/events");
 var eventfulEvents = require("../../apis/eventful/events");
+var allEvents = require("../../apis/allevents/events");
+
 var moment = require("moment");
 var appConstants = require("../core/appConstants");
 var allPromises = require("../core/promise/allPromises");
@@ -12,9 +14,10 @@ function getIstanbulEvents (startDate, endDate) {
     fbPromise = fbEvents.getEventsInIstanbul(startMoment, endMoment);
     meetupPromise = meetupEvents.getEventsInIstanbul(startMoment, endMoment);
     eventfulPromise = eventfulEvents.getEventsInIstanbul(startMoment, endMoment);
+    alleventsPromise = allEvents.getEventsInIstanbul(startMoment, endMoment);
 
     return new Promise(function (resolve, reject) {
-      allPromises.combinePromisesTimeout([fbPromise, meetupPromise, eventfulPromise],
+      allPromises.combinePromisesTimeout([fbPromise, meetupPromise, eventfulPromise, alleventsPromise],
       function (values) {
         var resolvedValues = [];
 

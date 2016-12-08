@@ -1,17 +1,21 @@
+var moment = require("moment");
 var eventConstants = require("./constants");
+var appConstants = require("../core/appConstants");
+var defaultFormat = appConstants.dateTime.default;
 
 function formatEvents (events, eventMapping, api) {
   var processedEvents = [];
+  var apiTimeFormat = appConstants.dateTime.api;
 
   for (var i = 0; i < events.length; i++) {
     var event = events[i];
-    processedEvents.push(formatEvent(event, eventMapping));
+    processedEvents.push(formatEvent(event, eventMapping, apiTimeFormat));
   }
 
   return processedEvents;
 }
 
-function formatEvent (event, eventMapping) {
+function formatEvent (event, eventMapping, originalFormat) {
   var fields = eventConstants.eventFields;
 
   var eventObj = {
@@ -21,7 +25,15 @@ function formatEvent (event, eventMapping) {
   fields.forEach(function (field) {
     var mappedField = eventMapping[field];
     if (mappedField) {
-      eventObj[field] = resolveProperty(event, mappedField);
+      var value = resolveProperty(event, mappedField);
+      if (field === "start_time" || field === "end_time") {
+        if (value) {
+          value = moment(value, originalFormat).format(defaultFormat);
+        } else {
+          value = "";
+        }
+      }
+      eventObj[field] = value;
     } else {
       eventObj[field] = "";
     }

@@ -7,7 +7,15 @@ module.exports = {
     defaultFormat: "DD/MM/YYYY",
     localTimeFormat: "YYYY-MM-DDTHH:mm:SS",
     eventfulFormat: "YYYYMMDD00",
-    meetupFomat: "YYYY-MM-DDTHH:mm:ss.SSSZ"
+    meetupFomat: "YYYY-MM-DDTHH:mm:ss.SSSZ",
+    allEventsFormat: "DD-MM-YYYY"
+  },
+  dateTime: {
+    eventful: "YYYY-MM-DD HH:mm:SS",
+    meetup: "x",
+    allevents: "X",
+    facebook: "YYYY-MM-DDTHH:mm:SSZZ",
+    default: "DD/MM/YYYY HH:mm:SS"
   },
   geo: {
     istanbul: {
