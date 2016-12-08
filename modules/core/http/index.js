@@ -25,9 +25,9 @@ function makeRequest (config) {
         }
 
         if (config.errorCodes && config.errorCodes.indexOf(status) >= 0) {
-          var errorMessage = constructErrorMessage(data, "problem with request",
-          config.errorMessageField);
-          onError(data, errorMessage, config.errorCallback);
+          //var errorMessage = constructErrorMessage(data, "problem with request",
+          //config.errorMessageField);
+          onError(data, config.errorCallback);
         } else if (config.successCallback) {
           if(config.requireHeaders) {
             config.successCallback(data, resp.headers);
@@ -49,10 +49,9 @@ function makeRequest (config) {
       }
     }
 
-    var errorMessage = constructErrorMessage(e, "problem with request",
-    config.errorMessageField)
+    //var errorMessage = constructErrorMessage(e, "problem with request", config.errorMessageField)
 
-    onError(e, errorMessage, config.errorCallback);
+    onError(e, config.errorCallback);
   });
 
   // write data to request body
@@ -82,7 +81,8 @@ function constructErrorMessage(resp, defaultMessage, errorMessageField) {
   return errorMessage;
 }
 
-function onError (resp, message, errorCallback) {
+function onError (resp, errorCallback) {
+  console.log(resp);
   if (errorCallback) {
     errorCallback(resp);
   }
@@ -92,7 +92,7 @@ function parseJSON (data, config) {
   try {
     return JSON.parse(data);
   } catch (e) {
-    onError(e, errorMessage, config.errorCallback);
+    onError(e, config.errorCallback);
     return null;
   }
 }
