@@ -4,6 +4,7 @@ var darkSkyForecast = require("./apis/dark-sky/forecast.js");
 var darkSkyCurrent = require("./apis/dark-sky/current.js");
 var appConstants = require("./modules/core/appConstants");
 
+var allEvents = require("./apis/allevents/events")
 var meetupEvents = require("./apis/meetup/events");
 var eventfulEvents = require("./apis/eventful/events");
 var eventsCombined = require("./modules/events/index");
@@ -59,6 +60,18 @@ function init(app) {
     var dateParams = processDateParams(request.body);
 
     var eventsPromise = fbEvents.getEventsInIstanbul(dateParams.since, dateParams.until);
+
+    eventsPromise.then(function (value) {
+      response.send(value);
+    }).catch(function (err) {
+      console.log("error ror ror", err);
+    });
+  });
+
+  app.post("/allevents", function (request, response) {
+    var dateParams = processDateParams(request.body);
+
+    var eventsPromise = allEvents.getEventsInIstanbul(dateParams.since, dateParams.until);
 
     eventsPromise.then(function (value) {
       response.send(value);
