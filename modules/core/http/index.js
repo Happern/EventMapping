@@ -18,7 +18,7 @@ function makeRequest (config) {
     resp.on('end', () => {
       if (!config.isChunked) {
         if (config.expectJSON) {
-          data = parseJSON(data);
+          data = parseJSON(data, config);
           if (data === null) {
             return;
           }
@@ -43,7 +43,7 @@ function makeRequest (config) {
 
   req.on('error', (e) => {
     if (config.expectJSON) {
-      e = parseJSON(e);
+      e = parseJSON(e, config);
       if (e === null) {
         return;
       }
