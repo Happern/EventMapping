@@ -478,12 +478,12 @@ body {
   }
 
   .flat-slider.ui-slider-horizontal {
-    height: 6px;
+    height: 10px;
   }
 
   .flat-slider.ui-slider-vertical {
     height: 15em;
-    width: 6px;
+    width: 10px;
   }
 
   .flat-slider .ui-slider-handle {
@@ -522,7 +522,7 @@ body {
 
   .flat-slider.ui-slider-vertical .ui-slider-range {
     left: 0;
-    width: 6px;
+    width: 10px;
   }
 
   /*End of styling for Flat Slider by Lugo Labs*/

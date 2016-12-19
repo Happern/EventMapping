@@ -296,7 +296,7 @@ $(document).ready(function () {
         .sidebar('toggle')
     ;
 
-    // Initiate the range slider and set min-max in the bottom sidebar 
+    // Currently none of both are in use - Initiate the range slider and set min-max in the bottom sidebar 
     $('#my-range-1').range({
         min: 0,
         max: 10,
@@ -308,18 +308,21 @@ $(document).ready(function () {
 
     $('#my-range-2').range({
         min: 0,
-        max: 10,
-        start: 5
+        max: 40,
+        start: 0
         // onChange: function(val){
         //     //specify what happens when a value is selected --> update timeli
         // }
     });
 
-        //Initiate 'flat slider' used in time interval selection
+    //Initiate 'flat slider' used in time interval selection
     $('#flat-slider').slider({
         orientation: 'horizontal',
-        range:       true,
-        values:      [17,67]
+        range: true,
+        min: 0,
+        max: 40,
+        start: 0,
+        step: 10
     });
 
 });
