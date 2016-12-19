@@ -318,11 +318,45 @@ $(document).ready(function () {
     //Initiate 'flat slider' used in time interval selection
     $('#flat-slider').slider({
         orientation: 'horizontal',
+        values: [0,1],
         range: true,
         min: 0,
-        max: 40,
-        start: 0,
-        step: 10
+        max: 4,
+        step: 1
+    })
+    .each(function() {
+
+      var opt = $(this).data().uiSlider.options;
+      
+
+        // Get the number of possible values
+        var vals = opt.max - opt.min;
+         
+      // Space out values
+      for (var i = 0; i <= vals; i++) {
+        
+        var numericSteps = $('<label>'+(i+1)+'</label>').css('left',(i/vals*100)+'%');
+        var numericToDate = new Date();
+
+        switch (numericSteps){
+            case 1:
+                numericToDate;
+                break;
+            case 2:
+                numericToDate;
+                break;
+            case 3:
+                numericToDate;
+                break;
+            case 4:
+                numericToDate;
+                break;
+        }
+
+        $( "#flat-slider" ).append(numericToDate);
+        
+      }
+      
     });
 
 });

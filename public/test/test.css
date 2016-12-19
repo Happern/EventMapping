@@ -8,6 +8,18 @@ html, body {
   width: 100%;
 }
 
+#flat-slider {
+  width: 35%;
+  margin: 0 auto;
+}
+
+#flat-slider label {
+    position: absolute;
+    width: 20px;
+    margin-left: -10px;
+    text-align: center;
+    margin-top: 20px;
+}
 /*Styling for Snazzy info windows*/
 
 .si-float-wrapper {
