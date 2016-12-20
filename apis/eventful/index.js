@@ -1,5 +1,6 @@
 var eventfulConstants = require("./constants");
-var makeRequest = require("../../modules/core/http/index.js").makeRequest;
+var makeRequest = require("../../modules/http/index").makeRequest;
+var eventfulUtils = require("./utils")
 var param = require("jquery-param");
 
 function makeEventfulRequest(path, queryParams, successCallback, errorCallback) {
@@ -16,7 +17,9 @@ function makeEventfulRequest(path, queryParams, successCallback, errorCallback) 
     options: options,
     successCallback: successCallback,
     errorCallback: errorCallback,
-    expectJSON: true
+    expectJSON: true,
+    checkErrors: eventfulUtils.checkErrors,
+    api: eventfulConstants.apiName
   })
 }
 
