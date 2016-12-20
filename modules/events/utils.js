@@ -3,8 +3,9 @@ var eventConstants = require("./constants");
 var appConstants = require("../core/appConstants");
 var defaultFormat = appConstants.dateTime.default;
 
-function formatEvents (events, eventMapping, api) {
+function formatEvents (events, eventMapping) {
   var processedEvents = [];
+  var api = eventMapping.api;
   var apiTimeFormat = appConstants.dateTime.api;
 
   for (var i = 0; i < events.length; i++) {

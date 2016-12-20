@@ -5,7 +5,7 @@ var allEvents = require("../../apis/allevents/events");
 
 var moment = require("moment");
 var appConstants = require("../core/appConstants");
-var allPromises = require("../core/promise/allPromises");
+var allPromises = require("../promise/allPromises");
 
 function getIstanbulEvents (startDate, endDate) {
     var startMoment = startDate ? moment(startDate, appConstants.date.defaultFormat) : moment();
