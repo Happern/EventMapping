@@ -1,5 +1,6 @@
 var values = require("./values.js");
-var makeRequest = require("../../modules/core/http/index.js").makeRequest;
+var makeRequest = require("../../modules/http/index").makeRequest;
+var fbUtils = require("./utils");
 var param = require("jquery-param");
 
 function getFbAccessToken (callbackFnc) {
@@ -32,14 +33,15 @@ function makeFbRequest(path, queryParams, expectJSON, successCallback, errorCall
     options: options,
     expectJSON: expectJSON,
     successCallback: successCallback,
-    errorCodes: [400],
-    errorCallback: errorCallback
+    errorCallback: errorCallback,
+    checkErrors: fbUtils.checkErrors,
+    api: values.apiName
   }
 
   if (expectJSON) {
-    config.errorMessageField = "error.message"
     config.errorCallback = function (resp) {
-      if (resp.error.type == "OAuthException") {
+      //might remove this oauthexpception part
+      if (resp.error && resp.error.type == "OAuthException" && resp.error.sub_code === 467) {
         var oldAccessTokenValue = values.fbApp.accessToken;
 
         getFbAccessToken(function () {

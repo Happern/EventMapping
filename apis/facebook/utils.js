@@ -29,7 +29,17 @@ function processValues (values) {
   ;
 }
 
+
+function checkErrors (resp) {
+    if (resp.error) {
+      return resp.error.message;
+    }
+
+    return null;
+}
+
 module.exports = {
   processValues: processValues,
-  extractEvent: extractEvents
+  extractEvent: extractEvents,
+  checkErrors: checkErrors
 }

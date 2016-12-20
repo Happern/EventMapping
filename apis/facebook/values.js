@@ -1,6 +1,7 @@
 var apiKeys = require("../../apiKeys");
 
 var fbApp = apiKeys.facebook;
+var apiName = "facebook";
 
 function setAccessToken (token) {
   console.log("old value is", values.accessToken);
@@ -38,7 +39,7 @@ function getFieldsForEventSearch () {
 }
 
 var eventFormatMapping = {
-  api: "facebook",
+  api: apiName,
   id: "id",
   name: "name",
   description: "description",
@@ -56,6 +57,7 @@ var eventFormatMapping = {
 
 module.exports = {
   fbApp: fbApp,
+  apiName: apiName,
   getFieldsForEventSearch: getFieldsForEventSearch,
   setAccessToken: setAccessToken,
   eventFormatMapping: eventFormatMapping
