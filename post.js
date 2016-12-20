@@ -39,6 +39,10 @@ function init(app) {
 
     eventsPromise.then(function (value) {
       response.send(value);
+    }).catch(function(error) {
+      response.send({
+        error: error
+      });
     });
   });
 
@@ -49,6 +53,10 @@ function init(app) {
 
     eventsPromise.then(function (value) {
       response.send(value);
+    }).catch(function(error) {
+      response.send({
+        error: error
+      });
     });
   });
 
@@ -63,8 +71,10 @@ function init(app) {
 
     eventsPromise.then(function (value) {
       response.send(value);
-    }).catch(function (err) {
-      console.log("error ror ror", err);
+    }).catch(function(error) {
+      response.send({
+        error: error
+      });
     });
   });
 
@@ -75,8 +85,10 @@ function init(app) {
 
     eventsPromise.then(function (value) {
       response.send(value);
-    }).catch(function (err) {
-      console.log("error ror ror", err);
+    }).catch(function(error) {
+      response.send({
+        error: error
+      });
     });
   });
 
@@ -91,9 +103,10 @@ function init(app) {
 
     eventsPromise.then(function (value) {
       response.send(value);
-    }).catch(function (error) {
-      //TODO send error response here
-      console.log(error);
+    }).catch(function(error) {
+      response.send({
+        error: error
+      });
     });
   });
 
