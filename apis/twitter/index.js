@@ -1,4 +1,4 @@
-var makeRequest = require("../../modules/core/http/index.js").makeRequest;
+var makeRequest = require("../../modules/http/index.js").makeRequest;
 var twitterAuth = require("./auth.js");
 var param = require('jquery-param');
 
