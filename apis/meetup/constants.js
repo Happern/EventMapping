@@ -1,9 +1,11 @@
 var apiKeys = require("../../apiKeys");
+var apiName = "meetup";
 
 module.exports = {
   apiKey: apiKeys.meetup.apiKey,
+  apiName: apiName,
   eventFormatMapping: {
-    api: "meetup",
+    api: apiName,
     id: "id",
     name: "name",
     description: "description",
