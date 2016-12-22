@@ -31,6 +31,12 @@ var weatherImage = {
     scaledSize: new google.maps.Size(12, 12)
 };
 
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
 //initializes map in the div with id 'map'
 function initMap() {
     var d = new Date();    // defaults to the current time in the current timezone
@@ -318,45 +324,31 @@ $(document).ready(function () {
     //Initiate 'flat slider' used in time interval selection
     $('#flat-slider').slider({
         orientation: 'horizontal',
-        values: [0,1],
+        values: [0,7],
         range: true,
         min: 0,
-        max: 4,
-        step: 1
+        max: 28,
+        step: 7
     })
     .each(function() {
 
-      var opt = $(this).data().uiSlider.options;
-      
+        //Gets the options (values, range etc.) for this slider
+        var opt = $(this).data().uiSlider.options;
 
         // Get the number of possible values
         var vals = opt.max - opt.min;
-         
-      // Space out values
-      for (var i = 0; i <= vals; i++) {
-        
-        var numericSteps = $('<label>'+(i+1)+'</label>').css('left',(i/vals*100)+'%');
-        var numericToDate = new Date();
 
-        switch (numericSteps){
-            case 1:
-                numericToDate;
-                break;
-            case 2:
-                numericToDate;
-                break;
-            case 3:
-                numericToDate;
-                break;
-            case 4:
-                numericToDate;
-                break;
+        // Space out values and format dates into M d, yy
+        for (var i = 0; i<= vals; i += 7){
+            var iDate = new Date();
+            iDate.setDate(iDate.getDate() + i);
+
+            var sDate = iDate.toDateString();
+            var label = $('<label>' + (sDate) + '</label>').css('left', (i/vals*100) + '%');
+        
+            $("#flat-slider").append(label);      
         }
 
-        $( "#flat-slider" ).append(numericToDate);
-        
-      }
-      
     });
 
 });
