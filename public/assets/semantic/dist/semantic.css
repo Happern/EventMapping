@@ -33538,6 +33538,7 @@ a.ui.nag {
   margin: 0em !important;
   overflow-y: auto !important;
   z-index: 102;
+  color: #000000;
 }
 
 /* GPU Layers for Child Elements */

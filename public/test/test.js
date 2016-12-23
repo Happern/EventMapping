@@ -31,12 +31,6 @@ var weatherImage = {
     scaledSize: new google.maps.Size(12, 12)
 };
 
-function addDays(date, days) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-}
-
 //initializes map in the div with id 'map'
 function initMap() {
     var d = new Date();    // defaults to the current time in the current timezone
@@ -56,9 +50,6 @@ function initMap() {
             , styles:
             [{"featureType":"all","elementType":"all","stylers":[{"lightness":"29"},{"invert_lightness":true},{"saturation":"-73"},{"hue":"#008fff"}]},{"featureType":"all","elementType":"labels","stylers":[{"saturation":"-72"},{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ff77d1"}]},{"featureType":"administrative","elementType":"all","stylers":[{"lightness":"32"},{"weight":"0.42"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":"-53"},{"saturation":"-66"}]},{"featureType":"landscape","elementType":"all","stylers":[{"lightness":"-86"},{"gamma":"1.13"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"lightness":"4"},{"gamma":"1.44"},{"saturation":"-67"},{"color":"#222223"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"lightness":"5"}]},{"featureType":"landscape","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"weight":"0.84"},{"gamma":"0.5"},{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"weight":"0.79"},{"gamma":"0.5"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#282828"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"visibility":"simplified"},{"lightness":"-78"},{"saturation":"-91"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"lightness":"-69"},{"color":"#ff77d1"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"lightness":"10"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"gamma":"1"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"saturation":"-100"}]},{"featureType":"transit","elementType":"all","stylers":[{"lightness":"-35"},{"visibility":"off"},{"gamma":"0.88"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#ff0000"},{"saturation":"0"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":"-97"},{"lightness":"-14"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]}]        });
     };
-
-    var trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(map);
 }
 
 //constructs info message from event data, just for test purposes
@@ -183,7 +174,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     content: template({
                         title: data.name,
                         subtitle: 'Location: '+ data.venue_name,
-                        bgImg: 'https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?dpr=1&auto=format&fit=crop&w=800&h=350&q=80&cs=tinysrgb&crop=',
+                        bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
                    }),
                     callbacks: {
                         open: function() {
@@ -286,40 +277,8 @@ $(document).ready(function () {
       console.log("weather data for coords received", data);
     });*/
 
-    // $.getJSON("http://json-time.appspot.com/time.json?tz="+timezone+"&callback=?",
-    // function(data){
-    //     if (data.hour < 12) {
-    //         initDayMap();
-    //     } else {
-    //         initNightMap();
-    //   }
-    // });
-
     initMap();
 
-    $('.ui.sidebar')
-        .sidebar('setting', 'transition', 'overlay')
-        .sidebar('toggle')
-    ;
-
-    // Currently none of both are in use - Initiate the range slider and set min-max in the bottom sidebar 
-    $('#my-range-1').range({
-        min: 0,
-        max: 10,
-        start: 5
-        // onChange: function(val){
-        //     //specify what happens when a value is selected --> update timeli
-        // }
-    });
-
-    $('#my-range-2').range({
-        min: 0,
-        max: 40,
-        start: 0
-        // onChange: function(val){
-        //     //specify what happens when a value is selected --> update timeli
-        // }
-    });
 
     //Initiate 'flat slider' used in time interval selection
     $('#flat-slider').slider({
@@ -344,11 +303,26 @@ $(document).ready(function () {
             iDate.setDate(iDate.getDate() + i);
 
             var sDate = iDate.toDateString();
-            var label = $('<label>' + (sDate) + '</label>').css('left', (i/vals*100) + '%');
+            var label = $('<label><small>' + (sDate) + '</small></label>').css('left', (i/vals*100) + '%');
         
             $("#flat-slider").append(label);      
         }
 
     });
 
+    $('.checkbox').checkbox()
+
+    //Add/remove traffic data layer
+    .first().checkbox({ 
+        onChecked: function() { 
+            console.log('onChecked called');
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+        },
+        onUnchecked: function() { 
+            console.log('onUnchecked called');
+            //Do sth to remove the traffic layer
+        }
+    })
+    ;
 });
