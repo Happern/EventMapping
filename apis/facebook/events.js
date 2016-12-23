@@ -3,6 +3,8 @@ var values = require("./values");
 var makeFbRequest = require("./index").makeFbRequest;
 var fbUtils = require("./utils");
 
+var allPromises = require("../../modules/promise/allPromises");
+
 var placesRecentlyUpdated = false;
 var places;
 
@@ -19,26 +21,30 @@ function getEventsInIstanbul(startMoment, endMoment) {
   return new Promise (function (resolve, reject) {
     var eventsPromise;
     if (placesRecentlyUpdated) {
-      eventsPromise = searchEventsWithPlaceData(places, dates);
-      eventsPromise.then(function (values) {
-        resolve(fbUtils.processValues(values));
-      }).catch(function (err) {
-        reject(err);
-      })
+      handlePlacesData(places, dates, resolve, reject);
     } else {
       getPlacesInIstanbul(function (resp) {
         placesRecentlyUpdated = true;
         places = resp.data;
 
-        var eventsPromise = searchEventsWithPlaceData(resp.data, dates);
-
-        eventsPromise.then(function (values) {
-          resolve(fbUtils.processValues(values));
-        }).catch(function (err) {
-          reject(err);
-        })
+        handlePlacesData(places, dates, resolve, reject);
+      }, function (errorObj) {
+        reject(errorObj);
       });
     }
+  });
+}
+
+function handlePlacesData(places, dates, resolve, reject) {
+  var eventsPromises = searchEventsWithPlaceData(places, dates);
+
+  allPromises.combinePromisesTimeout(eventsPromises, function (values) {
+    resolve(fbUtils.processValues(values));
+  }, function (err) {
+    reject({
+      type: "Internal",
+      message: err
+    });
   });
 }
 
@@ -77,10 +83,10 @@ function searchEventsWithPlaceData (places, dates) {
     placeIds.push(places[placeIndex].id);
   }
 
-  return searchForEvents(idsArray, dates);
+  return getSearchForEventsPromises(idsArray, dates);
 }
 
-function searchForEvents (idsArray, dates) {
+function getSearchForEventsPromises (idsArray, dates) {
   var fields = values.getFieldsForEventSearch().join(",");
   fields += ".since(" + dates.since + ")";
   fields += ".until(" + dates.until + ")";
@@ -107,7 +113,7 @@ function searchForEvents (idsArray, dates) {
     }));
   }
 
-  return Promise.all(promises);
+  return promises;
 }
 
 module.exports = {

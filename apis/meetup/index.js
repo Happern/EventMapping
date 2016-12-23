@@ -1,5 +1,6 @@
 var meetupConstants = require("./constants");
-var makeRequest = require("../../modules/core/http/index.js").makeRequest;
+var makeRequest = require("../../modules/http/index").makeRequest;
+var meetupUtils = require("./utils");
 var param = require("jquery-param");
 
 function makeMeetupRequest (path, queryParams, successCallback, errorCallback) {
@@ -22,8 +23,10 @@ function makeMeetupRequest (path, queryParams, successCallback, errorCallback) {
     options: options,
     successCallback: successCallback,
     errorCallback: errorCallback,
+    checkErrors: meetupUtils.checkErrors,
     expectJSON: true,
-    requireHeaders: true
+    requireHeaders: true,
+    api: meetupConstants.apiName
   })
 }
 

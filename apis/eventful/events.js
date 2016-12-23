@@ -4,7 +4,7 @@ var formatEvents = require("../../modules/events/utils").formatEvents;
 var eventfulConstants = require("./constants");
 
 var eventfulDateFormat = appConstants.date.eventfulFormat;
-var allPromises = require("../../modules/core/promise/allPromises");
+var allPromises = require("../../modules/promise/allPromises");
 
 function getEventsInIstanbul (startMoment, endMoment) {
   var istanbulCenter = appConstants.geo.istanbul.center;
@@ -22,7 +22,7 @@ function getEventsInIstanbul (startMoment, endMoment) {
     makeEventfulRequest(path, queryParams, function (resp) {
       var pageCount = resp.page_count;
       var eventsAPI = getEventsFromResponse(resp);
-      var events = formatEvents(eventsAPI, eventfulConstants.eventFormatMapping, "eventful");
+      var events = formatEvents(eventsAPI, eventfulConstants.eventFormatMapping);
 
       if (pageCount > 1) {
         getOtherPages(pageCount, path, queryParams, events, resolve, reject);
@@ -58,7 +58,10 @@ function getOtherPages (pageCount, path, queryParams, events, originalResolve, o
     allPromises.combinePromisesTimeout(promises, function (values) {
       originalResolve(events.concat.apply([], values));
     }, function(err) {
-      errorCallback(originalReject, err);
+      originalReject({
+        tpye: "Internal",
+        message: err}
+      );
     });
 }
 

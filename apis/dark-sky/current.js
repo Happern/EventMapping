@@ -2,7 +2,7 @@ var appConstants = require("../../modules/core/appConstants");
 var makeDarkSkyRequest = require("./index").makeDarkSkyRequest;
 var darkSkyConstants = require("./constants");
 var darkSkyUtils = require("./utils");
-var allPromises = require("../../modules/core/promise/allPromises");
+var allPromises = require("../../modules/promise/allPromises");
 
 function getIstanbulCurrent () {
   var istanbulCenter = appConstants.geo.istanbul.center;

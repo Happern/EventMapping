@@ -5,7 +5,7 @@ var twitterStatusesStream = require("./apis/twitter/statuses.js");
 var darkSkyForecast = require("./apis/dark-sky/forecast.js");
 var darkSkyCurrent = require("./apis/dark-sky/current.js");
 var appConstants = require("./modules/core/appConstants");
-var allPromises = require("./modules/core/promise/allPromises");
+var allPromises = require("./modules/promise/allPromises");
 
 var eventsCombined = require("./modules/events/index");
 //external modules
@@ -37,6 +37,10 @@ function init(server){
         twitter: twitterStatusesStream.getLatestCoords().data || []
       }
       sendFunction(currentValues);
+    }, function (errObj) {
+      sendFunction({
+        error: errObj
+      })
     });
   }
 

@@ -1,4 +1,4 @@
-var appConstants = require("../appConstants");
+var appConstants = require("../core/appConstants");
 
 function combinePromisesTimeout (promiseObjs, successCallback, errorCallback) {
     var allPromises = Promise.all(promiseObjs);

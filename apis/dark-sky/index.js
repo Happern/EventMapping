@@ -1,5 +1,5 @@
 var darkSkyConstants = require("./constants");
-var makeRequest = require("../../modules/core/http/index.js").makeRequest;
+var makeRequest = require("../../modules/http/index").makeRequest;
 var param = require("jquery-param");
 
 function makeDarkSkyRequest (path, coords, queryParams, successCallback, errorCallback) {

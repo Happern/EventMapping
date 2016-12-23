@@ -50,7 +50,7 @@ function getEventsInIstanbul (startMoment, endMoment) {
       } else {
         resolve(events);
       }
-
+      
     }
 
     module.exports = {

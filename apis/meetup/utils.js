@@ -24,8 +24,24 @@ function checkDate(string, endMoment) {
   return (moment(date, dateConstants.meetupFormat).diff(endMoment) <= 0);
 }
 
+function checkErrors(resp) {
+  if (resp.errors) {
+    var errLen = resp.errors.length;
+    var msg = "";
+
+    for (var errIndex = 0; errIndex < errLen; errIndex++) {
+      msg += resp.errors[errIndex].message;
+    }
+
+    return msg;
+  }
+
+  return null;
+}
+
 module.exports = {
   filterResultsByDate: filterResultsByDate,
   extractQueryParamsFromLink: extractQueryParamsFromLink,
-  checkDate: checkDate
+  checkDate: checkDate,
+  checkErrors: checkErrors
 }

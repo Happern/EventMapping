@@ -1,9 +1,11 @@
 var apiKeys = require("../../apiKeys");
+var apiName = "eventful";
 
 module.exports = {
   applicationKey: apiKeys.eventful.applicationKey,
+  apiName: apiName,
   eventFormatMapping: {
-    api: "eventful",
+    api: apiName,
     id: "id",
     name: "title",
     description: "description",

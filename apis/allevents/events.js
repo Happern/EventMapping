@@ -4,7 +4,7 @@ var formatEvents = require("../../modules/events/utils").formatEvents;
 var allEventsConstants = require("./constants");
 
 var allEventsDateFormat = appConstants.date.allEventsFormat;
-var allPromises = require("../../modules/core/promise/allPromises");
+var allPromises = require("../../modules/promise/allPromises");
 
 function getEventsInIstanbul (startMoment, endMoment) {
   var queryParams = {
@@ -19,7 +19,7 @@ function getEventsInIstanbul (startMoment, endMoment) {
 
   return new Promise(function (resolve, reject){
     makeAllEventsRequest(path, queryParams, function (resp) {
-      resolve(formatEvents(resp.data, allEventsConstants.eventFormatMapping, "allevents"));
+      resolve(formatEvents(resp.data, allEventsConstants.eventFormatMapping));
     }, function (err) {
       errorCallback(reject, err);
     });
@@ -33,8 +33,8 @@ function getEventsByPage (queryParams, page) {
   return new Promise(function (resolve, reject){
     makeAllEventsRequest(path, queryParams, function (resp) {
       console.log(resp.data);
-    }, function (err) {
-      errorCallback(reject, err);
+    }, function (errObj) {
+      errorCallback(reject, errObj);
     });
   });
 }
