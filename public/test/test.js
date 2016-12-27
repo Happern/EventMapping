@@ -283,11 +283,11 @@ $(document).ready(function () {
     //Initiate 'flat slider' used in time interval selection
     $('#flat-slider').slider({
         orientation: 'horizontal',
-        values: [0,7],
+        values: [0,1],
         range: true,
         min: 0,
-        max: 28,
-        step: 7
+        max: 4,
+        step: 1
     })
     .each(function() {
 
@@ -298,12 +298,22 @@ $(document).ready(function () {
         var vals = opt.max - opt.min;
 
         // Space out values and format dates into M d, yy
-        for (var i = 0; i<= vals; i += 7){
-            var iDate = new Date();
-            iDate.setDate(iDate.getDate() + i);
+        for (var i = 0; i<= vals; i += 1){
 
-            var sDate = iDate.toDateString();
-            var label = $('<label><small>' + (sDate) + '</small></label>').css('left', (i/vals*100) + '%');
+            // This section puts the actual date (and next 4 weeks' dates) onto the slider. Currently not necessary.
+            // var iDate = new Date();
+            // iDate.setDate(iDate.getDate() + i);
+
+            // var sDate = iDate.toDateString();
+            // var label = $('<label><small>' + (sDate) + '</small></label>').css('left', (i/vals*100) + '%');
+
+            if (i == 0) {
+                var label = $('<label><small> Today </small></label>').css('left', (i/vals*100) + '%');
+            } else if (i == 1) {
+                var label = $('<label><small> Next week </small></label>').css('left', (i/vals*100) + '%');
+            } else {
+                var label = $('<label><small>' + (i) + ' weeks later </small></label>').css('left', (i/vals*100) + '%');
+            }
         
             $("#flat-slider").append(label);      
         }
