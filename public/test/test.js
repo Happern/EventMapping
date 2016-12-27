@@ -308,11 +308,11 @@ $(document).ready(function () {
             // var label = $('<label><small>' + (sDate) + '</small></label>').css('left', (i/vals*100) + '%');
 
             if (i == 0) {
-                var label = $('<label><small> Today </small></label>').css('left', (i/vals*100) + '%');
+                var label = $('<label-today> Today </label-today>').css('left', (i/vals*100) + '%');
             } else if (i == 1) {
-                var label = $('<label><small> Next week </small></label>').css('left', (i/vals*100) + '%');
+                var label = $('<label> Next week </label>').css('left', (i/vals*100) + '%');
             } else {
-                var label = $('<label><small>' + (i) + ' weeks later </small></label>').css('left', (i/vals*100) + '%');
+                var label = $('<label>' + (i) + ' weeks from now </label>').css('left', (i/vals*100) + '%');
             }
         
             $("#flat-slider").append(label);      
