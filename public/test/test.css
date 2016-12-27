@@ -20,9 +20,9 @@ p {
 #flat-slider label {
     position: absolute;
     width: 90px;
-    margin-left: 8px;
+    margin-left: 16px;
     text-align: left;
-    margin-top: -3px;
+    margin-top: -2px;
     font-size: 10px;
     vertical-align: top;
 }
@@ -32,7 +32,7 @@ p {
     width: 90px;
     margin-left: -40px;
     text-align: left;
-    margin-top: -3px;
+    margin-top: -2px;
     font-size: 10px;
     vertical-align: top;
 }
