@@ -262,11 +262,11 @@ $(document).ready(function () {
     });
 
     socket.emit("timelineSelected", {
-        startDate: "03/12/2016", endDate: "06/12/2016"
+        startDate: "03/01/2017", endDate: "06/01/2017"
         //startDate and endDate should be received from the sliders
     });
     socket.on("timelineSelectedValue", function (data) {
-      console.log("data");
+      console.log(data);
         //give the data to the map with a dedicated function, or simple use updateInfo()
         //create google charts timeline here (once the correct marker information is shown on the map)
     });
@@ -296,7 +296,7 @@ $(document).ready(function () {
         .sidebar('toggle')
     ;
 
-    // Currently none of both are in use - Initiate the range slider and set min-max in the bottom sidebar 
+    // Currently none of both are in use - Initiate the range slider and set min-max in the bottom sidebar
     $('#my-range-1').range({
         min: 0,
         max: 10,
@@ -327,14 +327,14 @@ $(document).ready(function () {
     .each(function() {
 
       var opt = $(this).data().uiSlider.options;
-      
+
 
         // Get the number of possible values
         var vals = opt.max - opt.min;
-         
+
       // Space out values
       for (var i = 0; i <= vals; i++) {
-        
+
         var numericSteps = $('<label>'+(i+1)+'</label>').css('left',(i/vals*100)+'%');
         var numericToDate = new Date();
 
@@ -354,9 +354,9 @@ $(document).ready(function () {
         }
 
         $( "#flat-slider" ).append(numericToDate);
-        
+
       }
-      
+
     });
 
 });

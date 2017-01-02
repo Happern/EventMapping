@@ -65,15 +65,17 @@ function init(server){
     socket.on("timelineSelected", function (data){
       /* TODO return events for the selected timeline
       and weather forecast if available */
-
+      console.log("timelineSelected event received", data);
       //DD/MM/YYYY
       var eventsPromise = eventsCombined.getIstanbulEvents(data.startDate, data.endDate);
 
       eventsPromise.then(function (value) {
+        console.log("success", value);
         socket.emit("timelineSelectedValue", value);
       }).catch(function (error) {
         //TODO send error response here
-        console.log(error);
+        console.log("error", error);
+        socket.emit("timelineSelectedValue", error);
       });
     });
   }
