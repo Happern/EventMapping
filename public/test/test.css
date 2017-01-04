@@ -3,6 +3,10 @@ html, body {
   width: 100%;
 }
 
+p {
+  font-size: 13px;
+}
+
 #map {
   height: 100%;
   width: 100%;
@@ -15,10 +19,22 @@ html, body {
 
 #flat-slider label {
     position: absolute;
-    width: 20px;
-    margin-left: -10px;
-    text-align: center;
-    margin-top: 20px;
+    width: 90px;
+    margin-left: 16px;
+    text-align: left;
+    margin-top: -1px;
+    font-size: 11px;
+    vertical-align: top;
+}
+
+#flat-slider label-today {
+    position: absolute;
+    width: 90px;
+    margin-left: -40px;
+    text-align: left;
+    margin-top: -1px;
+    font-size: 11px;
+    vertical-align: top;
 }
 /*Styling for Snazzy info windows*/
 
@@ -485,23 +501,23 @@ body {
 
   .flat-slider.ui-slider {
     border: 0;
-    background: #f7d2cc;
+    background: #e3dedd;
     border-radius: 7px;
   }
 
   .flat-slider.ui-slider-horizontal {
-    height: 10px;
+    height: 20px;
   }
 
   .flat-slider.ui-slider-vertical {
     height: 15em;
-    width: 10px;
+    width: 20px;
   }
 
   .flat-slider .ui-slider-handle {
     width: 20px;
     height: 20px;
-    background: #38b11f;
+    background: #5f665e;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -524,17 +540,17 @@ body {
   .flat-slider .ui-slider-range {
     border: 0;
     border-radius: 7;
-    background: #f99;
+    background: #c8c3c3;
   }
 
   .flat-slider.ui-slider-horizontal .ui-slider-range {
     top: 0;
-    height: 6px;
+    height: 20px;
   }
 
   .flat-slider.ui-slider-vertical .ui-slider-range {
     left: 0;
-    width: 10px;
+    width: 20px;
   }
 
   /*End of styling for Flat Slider by Lugo Labs*/

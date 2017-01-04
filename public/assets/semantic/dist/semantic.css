@@ -33538,6 +33538,7 @@ a.ui.nag {
   margin: 0em !important;
   overflow-y: auto !important;
   z-index: 102;
+  background: inherit;
 }
 
 /* GPU Layers for Child Elements */
@@ -33569,6 +33570,7 @@ a.ui.nag {
 .ui.bottom.sidebar {
   width: 100% !important;
   height: auto !important;
+  overflow: hidden;
 }
 
 .ui.top.sidebar {
