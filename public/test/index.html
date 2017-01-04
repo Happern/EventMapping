@@ -2,10 +2,10 @@
 <html>
   <head>
     <link rel="stylesheet" href="/test/test.css" type="text/css">
-    <link rel="stylesheet" href="/snazzy-info-window/dist/snazzy-info-window.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/semantic/dist/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/range.css">
-    <link rel="stylesheet" href="/assets/jquery_ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/lib/snazzy-info-window/dist/snazzy-info-window.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/range.css">
+    <link rel="stylesheet" href="/lib/jquery_ui/jquery-ui.min.css">
 
     <script src="/socket.io/socket.io.js"></script>
 
@@ -13,15 +13,15 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous">
-    </script> 
-   
+    </script>
+
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
     </script>
     <script src="/test/test.js"></script>
     <!-- Snazzy info window style definition -->
-    <script src="/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
-    <script src="handlebars-v4.0.5.js"></script>
+    <script src="/lib/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
+    <script src="/lib/handlebars-v4.0.5.js"></script>
     <script id="marker-content-template" type="text/x-handlebars-template">
         <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
         <section class="custom-content">
@@ -32,19 +32,19 @@
             <div class="custom-body">{{{body}}}</div>
         </section>
     </script>
-    <script src="/assets/semantic/dist/semantic.min.js"></script>
+    <script src="/lib/semantic/dist/semantic.min.js"></script>
     <!-- Semantic UI doesn't have a slider, so here is one: -->
-    <script src="/assets/range.js"></script>
+    <script src="/lib/range.js"></script>
 
 <!--     <script src="/assets/jquery_ui/jquery.js"></script>
- -->    <script src="/assets/jquery_ui/jquery-ui.min.js"></script>
+-->    <script src="/lib/jquery_ui/jquery-ui.min.js"></script>
     </head>
   <body>
-<!-- 
+<!--
     <div class="ui top fixed menu">
         <a class="item">
             <i class="sidebar icon"></i>
-            Add data layers 
+            Add data layers
         </a>
     </div> -->
 
@@ -124,8 +124,8 @@
       </div>
   </div>
 
-  <div class="ui visible bottom sidebar"> 
-        <p align="center">Show events taking place... </p>  
+  <div class="ui visible bottom sidebar">
+        <p align="center">Show events taking place... </p>
         <div class="flat-slider" id="flat-slider"></div>
   </div>
 
