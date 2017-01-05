@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="/test/test.css" type="text/css">
-    <link rel="stylesheet" href="/lib/snazzy-info-window/dist/snazzy-info-window.min.css">
-    <link rel="stylesheet" type="text/css" href="/lib/semantic/dist/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="/lib/range.css">
-    <link rel="stylesheet" href="/lib/jquery_ui/jquery-ui.min.css">
+<head>
+  <link rel="stylesheet" href="/test/test.css" type="text/css">
+  <link rel="stylesheet" href="/lib/snazzy-info-window/dist/snazzy-info-window.min.css">
+  <link rel="stylesheet" type="text/css" href="/lib/semantic/dist/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="/lib/range.css">
+  <link rel="stylesheet" href="/lib/jquery_ui/jquery-ui.min.css">
 
-    <script src="/socket.io/socket.io.js"></script>
-
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-            crossorigin="anonymous">
-    </script>
+  <script src="/socket.io/socket.io.js"></script>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
-    </script>
-    <script src="/test/test.js"></script>
-    <!-- Snazzy info window style definition -->
-    <script src="/lib/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
-    <script src="/lib/handlebars-v4.0.5.js"></script>
-    <script id="marker-content-template" type="text/x-handlebars-template">
-        <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
-        <section class="custom-content">
-            <h1 class="custom-header">
-                {{title}}
-                <small>{{subtitle}}</small>
-            </h1>
-            <div class="custom-body">{{{body}}}</div>
-        </section>
-    </script>
-    <script src="/lib/semantic/dist/semantic.min.js"></script>
-    <!-- Semantic UI doesn't have a slider, so here is one: -->
-    <script src="/lib/range.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous">
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
+</script>
+<script src="/test/test.js"></script>
+<!-- Snazzy info window style definition -->
+<script src="/lib/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
+<script src="/lib/handlebars-v4.0.5.js"></script>
+<script id="marker-content-template" type="text/x-handlebars-template">
+  <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
+  <section class="custom-content">
+    <h1 class="custom-header">
+      {{title}}
+      <small>{{subtitle}}</small>
+    </h1>
+    <div class="custom-body">{{{body}}}</div>
+  </section>
+</script>
+<script src="/lib/semantic/dist/semantic.min.js"></script>
+<!-- Semantic UI doesn't have a slider, so here is one: -->
+<script src="/lib/range.js"></script>
 
 <!--     <script src="/assets/jquery_ui/jquery.js"></script>
 -->    <script src="/lib/jquery_ui/jquery-ui.min.js"></script>
-    </head>
-  <body>
+</head>
+<body>
 <!--
     <div class="ui top fixed menu">
         <a class="item">
             <i class="sidebar icon"></i>
             Add data layers
         </a>
-    </div> -->
+      </div> -->
 
-  <div class="ui visible sidebar vertical  menu">
-    <div class="ui centered grid">
-        <a class="item">
-        <!-- Upload website logo here -->
+      <div class="ui visible sidebar vertical  menu">
+        <div class="ui centered grid">
+          <a class="item">
+            <!-- Upload website logo here -->
             <div class="image">
-                <img src="https://s13.postimg.org/hm8x73xk3/civar_co_beyaz.png">
+              <img src="https://s13.postimg.org/hm8x73xk3/civar_co_beyaz.png">
             </div>
-        </a>
-    </div>
+          </a>
+        </div>
 
 
 
@@ -85,50 +85,50 @@
           </div>
         </div> -->
         <div class="ui styled fluid accordion">
-        <div class="active title">
-          <i class="dropdown icon"></i>
-          Traffic
-        </div>
-        <div class="content">
-                  <a class="item">
-            <div class="ui slider checkbox">
+          <div class="active title">
+            <i class="dropdown icon"></i>
+            Traffic
+          </div>
+          <div class="content">
+            <a class="item">
+              <div class="ui slider checkbox">
                 <input id="traffic-checkbox" type="checkbox" >
                 <label>Add traffic information</label>
-            </div>
-        </a>
-        </div>
-        <div class="title">
-          <i class="dropdown icon"></i>
-          Weather
-        </div>
-        <div class="content">
-        <a class="item">
-            <div class="ui checkbox">
-                <input type="checkbox">
-                <label>Semantic UI Test Label</label>
-            </div>
-        </a>
-        </div>
-        <div class="title">
-          <i class="dropdown icon"></i>
-          Density
-        </div>
-        <div class="content">
-        <a class="item">
-            <div class="ui toggle checkbox">
-                <input type="checkbox">
-                <label>Semantic UI Test Label</label>
-            </div>
-        </a>
+              </div>
+            </a>
+          </div>  
+          <div class="active title">
+            <i class="dropdown icon"></i>
+            Weather
+          </div>
+          <div class="content">
+            <a class="item">
+              <div class="ui slider checkbox">
+                <input id="weather-checkbox" type="checkbox" >
+                <label>Add weather information</label>
+              </div>
+            </a>
+          </div>          
+          <div class="active title">
+            <i class="dropdown icon"></i>
+            Human Density
+          </div>
+          <div class="content">
+            <a class="item">
+              <div class="ui slider checkbox">
+                <input id="density-checkbox" type="checkbox" >
+                <label>Add human density information</label>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
-  </div>
 
-  <div class="ui visible bottom sidebar">
+      <div class="ui visible bottom sidebar">
         <p align="center">Show events taking place... </p>
         <div class="flat-slider" id="flat-slider"></div>
-  </div>
+      </div>
 
-   <div class = "pusher" id="map"></div>
-</body>
-</html>
+      <div class = "pusher" id="map"></div>
+    </body>
+    </html>
