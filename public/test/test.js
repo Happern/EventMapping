@@ -119,8 +119,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 , anchor: new google.maps.Point(12, 24)
             };
             var markerOptions = {
-                icon: markerIcon,
-                position: position
+                icon: markerIcon
+                , position: position
                 , map: map
             }
 
@@ -312,7 +312,7 @@ $(document).ready(function () {
     });
 
     $('#flat-slider').on("slidechange", function (event, ui) {
-        var values = $('#flat-slider').slider("option", "values"); //returns the range selected by the user
+        var values = $('#flat-slider').slider("option", "values"); //returns range selected by user
         var startDate = new Date(); 
         var endDate = new Date();
 
@@ -355,16 +355,12 @@ $(document).ready(function () {
         console.log(endDate);
     });
 
-    // Doesn't work
-    // var selection = $( "#flat-slider" ).slider( "value" );             
-    // console.log(selection);
-
     socket.emit("timelineSelected", {
-        startDate: "03/02/2017", endDate: "06/02/2017"
+        startDate, endDate
         //startDate and endDate should be received from the sliders
     });
     socket.on("timelineSelectedValue", function (data) {
-      console.log(data);
+      console.log("timelineSelectedValue" + data);
         //give the data to the map with a dedicated function, or simple use updateInfo()
         //create google charts timeline here (once the correct marker information is shown on the map)
     });
