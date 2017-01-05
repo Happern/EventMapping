@@ -356,8 +356,7 @@ $(document).ready(function () {
     });
 
     socket.emit("timelineSelected", {
-        startDate, endDate
-        //startDate and endDate should be received from the sliders
+        startDate: "03/02/2017", endDate: "06/02/2017"        //startDate and endDate should be received from the sliders
     });
     socket.on("timelineSelectedValue", function (data) {
       console.log("timelineSelectedValue" + data);
