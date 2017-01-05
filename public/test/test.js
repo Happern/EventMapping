@@ -258,16 +258,6 @@ $(document).ready(function () {
         console.log("density data point #", data.twitter.length);
     });
 
-    socket.emit("timelineSelected", {
-        startDate: "03/02/2017", endDate: "06/02/2017"
-        //startDate and endDate should be received from the sliders
-    });
-    socket.on("timelineSelectedValue", function (data) {
-      console.log(data);
-        //give the data to the map with a dedicated function, or simple use updateInfo()
-        //create google charts timeline here (once the correct marker information is shown on the map)
-    });
-
     // the lines below were there to test some socket functionality.
     // zoom is an example of an event that can be emitted from the browser and
     // handled by the server, more such events can be created
@@ -287,7 +277,8 @@ $(document).ready(function () {
         range: true,
         min: 0,
         max: 4,
-        step: 1
+        step: 1,
+        change: function (event, ui) {}
     })
     .each(function() {
 
@@ -318,6 +309,64 @@ $(document).ready(function () {
             $("#flat-slider").append(label);
         }
 
+    });
+
+    $('#flat-slider').on("slidechange", function (event, ui) {
+        var values = $('#flat-slider').slider("option", "values"); //returns the range selected by the user
+        var startDate = new Date(); 
+        var endDate = new Date();
+
+        switch(values[0]){
+            case 0:
+                break;
+            case 1:
+                startDate.setDate(startDate.getDate() + 7);
+                break;
+            case 2:
+                startDate.setDate(startDate.getDate() + 14);
+                break;
+            case 3:
+                startDate.setDate(startDate.getDate() + 21);
+                break;
+            case 4:
+                startDate.setDate(startDate.getDate() + 28);
+                break;            
+        }
+
+        switch(values[1]){
+            case 0:
+                break;
+            case 1:
+                endDate.setDate(endDate.getDate() + 7);
+                break;
+            case 2:
+                endDate.setDate(endDate.getDate() + 14);
+                break;
+            case 3:
+                endDate.setDate(endDate.getDate() + 21);
+                break;
+            case 4:
+                endDate.setDate(endDate.getDate() + 28);
+                break;            
+        }
+
+        console.log(values);
+        console.log(startDate);
+        console.log(endDate);
+    });
+
+    // Doesn't work
+    // var selection = $( "#flat-slider" ).slider( "value" );             
+    // console.log(selection);
+
+    socket.emit("timelineSelected", {
+        startDate: "03/02/2017", endDate: "06/02/2017"
+        //startDate and endDate should be received from the sliders
+    });
+    socket.on("timelineSelectedValue", function (data) {
+      console.log(data);
+        //give the data to the map with a dedicated function, or simple use updateInfo()
+        //create google charts timeline here (once the correct marker information is shown on the map)
     });
 
     $('.checkbox').checkbox()
