@@ -4,6 +4,8 @@ var map;
 var densityMarkers = [];
 var weatherMarkers = [];
 var eventMarkers;
+var trafficLayer = new google.maps.TrafficLayer();
+
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -358,6 +360,7 @@ $(document).ready(function () {
     socket.emit("timelineSelected", {
         startDate: "03/02/2017", endDate: "06/02/2017"        //startDate and endDate should be received from the sliders
     });
+
     socket.on("timelineSelectedValue", function (data) {
       console.log("timelineSelectedValue" + data);
         //give the data to the map with a dedicated function, or simple use updateInfo()
@@ -370,12 +373,12 @@ $(document).ready(function () {
     .first().checkbox({
         onChecked: function() {
             console.log('onChecked called');
-            var trafficLayer = new google.maps.TrafficLayer();
             trafficLayer.setMap(map);
         },
         onUnchecked: function() {
             console.log('onUnchecked called');
             //Do sth to remove the traffic layer
+            trafficLayer.setMap(null);
         }
     })
     ;
