@@ -4,7 +4,8 @@ var map;
 var densityMarkers = [];
 var weatherMarkers = [];
 var eventMarkers;
-var trafficLayer = new google.maps.TrafficLayer();
+var trafficLayer;
+var densityLayer;
 
 
 //approximately central coordinates for istanbul, should be verified & updated
@@ -33,9 +34,20 @@ var weatherImage = {
     scaledSize: new google.maps.Size(12, 12)
 };
 
+//converts Date() to DD/MM/YYYY
+function convertDate(inputFormat) {
+  function pad(s) { 
+    return (s < 10) ? '0' + s : s; 
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+};
+
 //initializes map in the div with id 'map'
 function initMap() {
     var d = new Date();    // defaults to the current time in the current timezone
+    trafficLayer = new google.maps.TrafficLayer();
+
     if (d.getHours() < 20) {    //styles map 'lightly' when the local time is earlier than 20.00
         map = new google.maps.Map(document.getElementById('map'), {
             center: istanbulCoordinatesPushRight
@@ -44,14 +56,14 @@ function initMap() {
             , styles:
             [{"featureType":"all","elementType":"all","stylers":[{"lightness":"29"},{"invert_lightness":true},{"saturation":"-73"},{"hue":"#008fff"}]},{"featureType":"all","elementType":"labels","stylers":[{"saturation":"-72"},{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"hue":"#ff0000"},{"visibility":"off"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ff77d1"}]},{"featureType":"administrative","elementType":"all","stylers":[{"lightness":"32"},{"weight":"0.42"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#ff0000"},{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":"-53"},{"saturation":"-66"}]},{"featureType":"landscape","elementType":"all","stylers":[{"lightness":"-86"},{"gamma":"1.13"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"lightness":"4"},{"gamma":"1.44"},{"saturation":"-67"},{"color":"#dcdcdc"}]},{"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"lightness":"5"}]},{"featureType":"landscape","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"saturation":"-4"},{"visibility":"simplified"},{"color":"#dcdcdc"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry","stylers":[{"visibility":"off"},{"color":"#dddddd"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"},{"hue":"#ff0000"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"weight":"0.84"},{"gamma":"0.5"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"weight":"0.79"},{"gamma":"0.5"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"lightness":"64"},{"gamma":"1"},{"saturation":"5"},{"visibility":"on"},{"color":"#cecccc"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"visibility":"simplified"},{"color":"#a9a9a9"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"lightness":"-69"},{"color":"#ff77d1"},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"lightness":"5"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"gamma":"1"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"lightness":"22"},{"saturation":"-100"}]},{"featureType":"transit","elementType":"all","stylers":[{"lightness":"-35"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#ff0000"},{"saturation":"0"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":"-97"},{"lightness":"-14"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#f4f4f4"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]}]
         });
-    } else {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: istanbulCoordinatesPushRight
-            , zoom: 12
-            , disableDefaultUI: true
-            , styles:
-            [{"featureType":"all","elementType":"all","stylers":[{"lightness":"29"},{"invert_lightness":true},{"saturation":"-73"},{"hue":"#008fff"}]},{"featureType":"all","elementType":"labels","stylers":[{"saturation":"-72"},{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ff77d1"}]},{"featureType":"administrative","elementType":"all","stylers":[{"lightness":"32"},{"weight":"0.42"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":"-53"},{"saturation":"-66"}]},{"featureType":"landscape","elementType":"all","stylers":[{"lightness":"-86"},{"gamma":"1.13"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"lightness":"4"},{"gamma":"1.44"},{"saturation":"-67"},{"color":"#222223"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"lightness":"5"}]},{"featureType":"landscape","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"weight":"0.84"},{"gamma":"0.5"},{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"weight":"0.79"},{"gamma":"0.5"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#282828"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"visibility":"simplified"},{"lightness":"-78"},{"saturation":"-91"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"lightness":"-69"},{"color":"#ff77d1"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"lightness":"10"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"gamma":"1"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"saturation":"-100"}]},{"featureType":"transit","elementType":"all","stylers":[{"lightness":"-35"},{"visibility":"off"},{"gamma":"0.88"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#ff0000"},{"saturation":"0"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":"-97"},{"lightness":"-14"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]}]        });
-    };
+} else {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: istanbulCoordinatesPushRight
+        , zoom: 12
+        , disableDefaultUI: true
+        , styles:
+        [{"featureType":"all","elementType":"all","stylers":[{"lightness":"29"},{"invert_lightness":true},{"saturation":"-73"},{"hue":"#008fff"}]},{"featureType":"all","elementType":"labels","stylers":[{"saturation":"-72"},{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ff77d1"}]},{"featureType":"administrative","elementType":"all","stylers":[{"lightness":"32"},{"weight":"0.42"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":"-53"},{"saturation":"-66"}]},{"featureType":"landscape","elementType":"all","stylers":[{"lightness":"-86"},{"gamma":"1.13"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"lightness":"4"},{"gamma":"1.44"},{"saturation":"-67"},{"color":"#222223"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"lightness":"5"}]},{"featureType":"landscape","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"weight":"0.84"},{"gamma":"0.5"},{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"weight":"0.79"},{"gamma":"0.5"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#282828"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"visibility":"simplified"},{"lightness":"-78"},{"saturation":"-91"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"lightness":"-69"},{"color":"#ff77d1"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"lightness":"10"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"gamma":"1"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"saturation":"-100"}]},{"featureType":"transit","elementType":"all","stylers":[{"lightness":"-35"},{"visibility":"off"},{"gamma":"0.88"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#ff0000"},{"saturation":"0"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":"-97"},{"lightness":"-14"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]}]        });
+};
 }
 
 //constructs info message from event data, just for test purposes
@@ -136,7 +148,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             var marker = new google.maps.Marker(markerOptions);
 
               // Set up handle bars for Snazzy Info Window complex-styles
-            var template = Handlebars.compile($('#marker-content-template').html());
+              var template = Handlebars.compile($('#marker-content-template').html());
 
             // Set up a close closeDelayed for CSS animations
             var infowindow = null;
@@ -177,7 +189,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                         title: data.name,
                         subtitle: 'Location: '+ data.venue_name,
                         bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
-                   }),
+                    }),
                     callbacks: {
                         open: function() {
                             $(this.getWrapper()).addClass('open');
@@ -212,7 +224,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             markers.push(marker);
         }
     })
-    return markers;
+return markers;
 }
 
 // called when the webpage is 'ready', all the html elements are initialized(?)
@@ -267,9 +279,9 @@ $(document).ready(function () {
 
     socket.on("currentWeatherForCoords", function(data) {
       console.log("weather data for coords received", data);
-    });*/
+  });*/
 
-    initMap();
+  initMap();
 
 
     //Initiate 'flat slider' used in time interval selection
@@ -320,51 +332,56 @@ $(document).ready(function () {
 
         switch(values[0]){
             case 0:
-                break;
+            break;
             case 1:
-                startDate.setDate(startDate.getDate() + 7);
-                break;
+            startDate.setDate(startDate.getDate() + 7);
+            break;
             case 2:
-                startDate.setDate(startDate.getDate() + 14);
-                break;
+            startDate.setDate(startDate.getDate() + 14);
+            break;
             case 3:
-                startDate.setDate(startDate.getDate() + 21);
-                break;
+            startDate.setDate(startDate.getDate() + 21);
+            break;
             case 4:
-                startDate.setDate(startDate.getDate() + 28);
-                break;            
+            startDate.setDate(startDate.getDate() + 28);
+            break;            
         }
 
         switch(values[1]){
             case 0:
-                break;
+            break;
             case 1:
-                endDate.setDate(endDate.getDate() + 7);
-                break;
+            endDate.setDate(endDate.getDate() + 7);
+            break;
             case 2:
-                endDate.setDate(endDate.getDate() + 14);
-                break;
+            endDate.setDate(endDate.getDate() + 14);
+            break;
             case 3:
-                endDate.setDate(endDate.getDate() + 21);
-                break;
+            endDate.setDate(endDate.getDate() + 21);
+            break;
             case 4:
-                endDate.setDate(endDate.getDate() + 28);
-                break;            
+            endDate.setDate(endDate.getDate() + 28);
+            break;            
         }
+
+        startDate = convertDate(startDate);
+        endDate = convertDate(endDate);
+
 
         console.log(values);
         console.log(startDate);
         console.log(endDate);
-    });
 
-    socket.emit("timelineSelected", {
-        startDate: "03/02/2017", endDate: "06/02/2017"        //startDate and endDate should be received from the sliders
+        socket.emit("timelineSelected", {
+            startDate, endDate        //startDate and endDate should be received from the sliders
+        });
     });
 
     socket.on("timelineSelectedValue", function (data) {
-      console.log("timelineSelectedValue" + data);
-        //give the data to the map with a dedicated function, or simple use updateInfo()
-        //create google charts timeline here (once the correct marker information is shown on the map)
+        console.log("timelineSelectedValue" + data);
+        updateInfo(data.events, eventsMarkers, function () {
+            return initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
+        });
     });
 
     $('.checkbox').checkbox()
@@ -385,6 +402,6 @@ $(document).ready(function () {
 
     $('.ui.accordion').accordion({
 
-      })
+    })
     ;
 });
