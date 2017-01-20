@@ -36,8 +36,8 @@ var weatherImage = {
 
 //converts Date() to DD/MM/YYYY
 function convertDate(inputFormat) {
-  function pad(s) { 
-    return (s < 10) ? '0' + s : s; 
+  function pad(s) {
+    return (s < 10) ? '0' + s : s;
     }
     var d = new Date(inputFormat);
     return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
@@ -95,7 +95,7 @@ function getEventLocation(event) {
 
 //similar to above, for twitter data
 function getTwitterLocation(coords) {
-    return new google.maps.LatLng(coords[0], coords[1]);
+    return new google.maps.LatLng(coords.lat, coords.lng);
 }
 
 //updates markers on the map by un-assigning the map to old markers and
@@ -108,7 +108,7 @@ function updateInfo(newMarkers, oldMarkers, initFunction) {
     oldMarkers.forEach(function (marker) {
         marker.setMap(null);
     });
-    oldMarkers = initFunction();
+    initFunction();
 }
 
 //initialized markers on the 'map'
@@ -259,13 +259,13 @@ $(document).ready(function () {
 
         // updates density info (old markers are cleared and new ones are created)
         updateInfo(data.twitter, densityMarkers, function () {
-            return initMarkers(data.twitter, getTwitterLocation, twitterImage);
+            densityMarkers =  initMarkers(data.twitter, getTwitterLocation, twitterImage);
         });
 
         // updates weather info (old markers are cleared and new ones are created)
         updateInfo(data.weather, weatherMarkers, function () {
-            return initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
-        })
+            weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
+        });
 
         //logs for debugging purposes
         console.log("updated conditions received");
@@ -327,7 +327,7 @@ $(document).ready(function () {
 
     $('#flat-slider').on("slidechange", function (event, ui) {
         var values = $('#flat-slider').slider("option", "values"); //returns range selected by user
-        var startDate = new Date(); 
+        var startDate = new Date();
         var endDate = new Date();
 
         switch(values[0]){
@@ -344,7 +344,7 @@ $(document).ready(function () {
             break;
             case 4:
             startDate.setDate(startDate.getDate() + 28);
-            break;            
+            break;
         }
 
         switch(values[1]){
@@ -361,7 +361,7 @@ $(document).ready(function () {
             break;
             case 4:
             endDate.setDate(endDate.getDate() + 28);
-            break;            
+            break;
         }
 
         startDate = convertDate(startDate);
@@ -373,14 +373,15 @@ $(document).ready(function () {
         console.log(endDate);
 
         socket.emit("timelineSelected", {
-            startDate, endDate        //startDate and endDate should be received from the sliders
+            startDate: startDate,
+            endDate: endDate        //startDate and endDate should be received from the sliders
         });
     });
 
-    socket.on("timelineSelectedValue", function (data) {
-        console.log("timelineSelectedValue" + data);
-        updateInfo(data.events, eventsMarkers, function () {
-            return initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
+    socket.on("timelineSelectedValue", function (response) {
+        console.log("timelineSelectedValue" + response.data);
+        updateInfo(response.data, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(response.data, getEventLocation, null, true, constructEventInfoMessage);
         });
     });
 

@@ -70,11 +70,11 @@ function init(server){
       var eventsPromise = eventsCombined.getIstanbulEvents(data.startDate, data.endDate);
 
       eventsPromise.then(function (value) {
-        console.log("success", value);
+//        console.log("success", value);
         socket.emit("timelineSelectedValue", value);
       }).catch(function (error) {
         //TODO send error response here
-        console.log("error", error);
+//        console.log("error", error);
         socket.emit("timelineSelectedValue", error);
       });
     });
