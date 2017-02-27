@@ -28,6 +28,11 @@ var twitterImage = {
     scaledSize: new google.maps.Size(7, 7)
 };
 
+var eventImage = {
+    url: "/assets/blackcircle_100x100-01.png",
+    scaledSize: new google.maps.Size(20,20)
+};
+
 //a weather icon for weather data coordinates, arbitrary
 var weatherImage = {
     url: "/assets/weather-icon-png-2.png",
@@ -241,7 +246,7 @@ $(document).ready(function () {
         // the marker arrays returned from initMarkers fucnction are stored
         // since they are needed to be cleared when updated data arrives.
         // these variables are initialized at the top this file
-        eventsMarkers = initMarkers(data.events, getEventLocation, null, true, constructEventInfoMessage);
+        eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
         densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
         weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
 
