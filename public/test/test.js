@@ -22,12 +22,13 @@ var istanbulCoordinatesPushRight = {
     //41°01'47.4"N 28°56'06
 };
 
-//an orange dot to represent tweet coordinates, arbitrary
+//an orange dot to represent tweet coordinates
 var twitterImage = {
     url: "/assets/orange-circle-png-3.png",
     scaledSize: new google.maps.Size(7, 7)
 };
 
+//a black dot to represent event coordinates
 var eventImage = {
     url: "/assets/blackcircle_100x100-01.png",
     scaledSize: new google.maps.Size(20,20)
@@ -43,9 +44,9 @@ var weatherImage = {
 function convertDate(inputFormat) {
   function pad(s) {
     return (s < 10) ? '0' + s : s;
-    }
-    var d = new Date(inputFormat);
-    return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+}
+var d = new Date(inputFormat);
+return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
 };
 
 //initializes map in the div with id 'map'
@@ -406,8 +407,11 @@ $(document).ready(function () {
     })
     ;
 
-    $('.ui.accordion').accordion({
-
+    $('.button').button() 
+    .popup({
+        on: 'click',
+        position: 'right center'
     })
     ;
+
 });
