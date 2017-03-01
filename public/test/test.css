@@ -9,6 +9,11 @@ p {
   font-size: 13px;
 }
 
+.ui-button.ui-widget.ui-corner-all {
+  background-color: transparent;
+  border-style: none;
+}
+
 #map {
   height: 100%;
   width: 100%;

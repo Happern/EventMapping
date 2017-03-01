@@ -397,9 +397,12 @@ $(document).ready(function () {
             trafficLayer.setMap(map);
         }
         if(!$(this).is(':checked')){
-            trafficLayer.setMap(null);        
+            trafficLayer.setMap(null); 
+                $('.segment').dimmer('show');
+       
         }
-        });
+    })
+    ;
 
 
     $('.button').button() 
@@ -411,17 +414,23 @@ $(document).ready(function () {
 
     $('.ui.accordion')
     .accordion({
-        heightStyle: "fill"
+        heightStyle: "content"
     })
     ;   
 
     $('.accordion')
     .accordion({
+        heightStyle: "content",
         collapsible: false,
         active: false,
         autoHeight:true,
         animate: 400
     })
-    ;  
+    ; 
+
+    $('.ui-button.ui-widget.ui-corner-all').click(function(){
+        console.log('button is clicked');
+    })
+    ;
 
 });
