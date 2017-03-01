@@ -391,21 +391,16 @@ $(document).ready(function () {
         });
     });
 
-    $('.checkbox').checkbox()
 
-    //Add/remove traffic data layer
-    .first().checkbox({
-        onChecked: function() {
-            console.log('onChecked called');
+    $('#trafficCB').bind('change', function(){
+        if($(this).is(':checked')){
             trafficLayer.setMap(map);
-        },
-        onUnchecked: function() {
-            console.log('onUnchecked called');
-            //Do sth to remove the traffic layer
-            trafficLayer.setMap(null);
         }
-    })
-    ;
+        if(!$(this).is(':checked')){
+            trafficLayer.setMap(null);        
+        }
+        });
+
 
     $('.button').button() 
     .popup({
@@ -413,5 +408,20 @@ $(document).ready(function () {
         position: 'right center'
     })
     ;
+
+    $('.ui.accordion')
+    .accordion({
+        heightStyle: "fill"
+    })
+    ;   
+
+    $('.accordion')
+    .accordion({
+        collapsible: false,
+        active: false,
+        autoHeight:true,
+        animate: 400
+    })
+    ;  
 
 });

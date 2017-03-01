@@ -10,73 +10,38 @@
   <script src="/socket.io/socket.io.js"></script>
 
 
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous">
-</script>
+  crossorigin="anonymous"></script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
-</script>
-<script src="/test/test.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdixTSUaLEKGsYmGEtrdpSRY1TVupIL4">
+  </script>
+  <script src="/test/test.js"></script>
 
-<!-- Snazzy info window style definition -->
-<script src="/lib/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
-<script src="/lib/handlebars-v4.0.5.js"></script>
-<script id="marker-content-template" type="text/x-handlebars-template">
-  <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
-  <section class="custom-content">
-    <h1 class="custom-header">
-      {{title}}
-      <small>{{subtitle}}</small>
-    </h1>
-    <div class="custom-body">{{{body}}}</div>
-  </section>
-</script>
-<script src="/lib/semantic/dist/semantic.min.js"></script>
+  <!-- Snazzy info window style definition -->
+  <script src="/lib/snazzy-info-window/dist/snazzy-info-window.min.js"></script>
+  <script src="/lib/handlebars-v4.0.5.js"></script>
+  <script id="marker-content-template" type="text/x-handlebars-template">
+    <div class="custom-img" style="background-image: url({{{bgImg}}})"></div>
+    <section class="custom-content">
+      <h1 class="custom-header">
+        {{title}}
+        <small>{{subtitle}}</small>
+      </h1>
+      <div class="custom-body">{{{body}}}</div>
+    </section>
+  </script>
+  <script src="/lib/semantic/dist/semantic.min.js"></script>
 
-<!-- Semantic UI doesn't have a slider, so here is one: -->
-<script src="/lib/range.js"></script>
+  <!-- Semantic UI doesn't have a slider, so here is one: -->
+  <script src="/lib/range.js"></script>
 
-<script src="/lib/jquery_ui/jquery-ui.min.js"></script>
+  <script src="/lib/jquery_ui/jquery-ui.min.js"></script>
 </head>
 
 <body>
-
-  <div class="ui visible sidebar vertical  menu">
-
-    <div class="ui centered grid">
-      <div class="item">
-        <!-- Upload website logo here -->
-        <div class="image">
-          <img src="https://s13.postimg.org/hm8x73xk3/civar_co_beyaz.png">
-        </div>
-        <div class="fluid mini ui basic button" align="center" data-content="About us text: " data-variation="wide">About</div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="ui toggle checkbox">
-        <input id="traffic-checkbox" type="checkbox" >
-        <label> Traffic </label>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="ui toggle checkbox">
-        <input id="weather-checkbox" type="checkbox" >
-        <label> Weather </label>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="ui toggle checkbox">
-        <input id="density-checkbox" type="checkbox" >
-        <label> Human density </label>
-      </div>
-    </div>
-
-  </div>
 
   <div class="ui visible bottom sidebar">
 
@@ -84,6 +49,88 @@
     <div class="flat-slider" id="flat-slider"></div>
   </div>
 
-  <div class = "pusher" id="map"></div>
+  <div class="ui visible sidebar vertical menu">
+
+    <div class="ui centered grid">
+      <div class="item">
+        <!-- Upload website logo here -->
+        <div class="image">
+          <img src="https://s13.postimg.org/hm8x73xk3/civar_co_beyaz.png">
+        </div>
+      </div>
+    </div>
+
+    <div class="ui styled accordion">
+      <div class="title">
+        Events
+      </div>
+      <div class="content">
+        <p align="right"> Show all events <input class="toggle" type="checkbox" name="events_all" id="events_all"> </p> 
+        <div class="accordion">
+          <div class="title">
+            Entertainment
+          </div>
+          <div class="content">
+            <p align="right">  Show all <br> entertainment events <input class="toggle" type="checkbox" name="entertainment_all" id="entertainment_all"></p>  
+            <p align="right">  Meetup <input class="toggle" type="checkbox" name="Meetup" id="Meetup"></p>       
+            <p align="right">  Celebration <input class="toggle" type="checkbox" name="Celebration" id="Celebration"></p>       
+            <p align="right">  Festival <input class="toggle" type="checkbox" name="Festival" id="Festival"></p>       
+            <p align="right">  Party <input class="toggle" type="checkbox" name="Party" id="Party"></p>       
+            <p align="right">  Concert <input class="toggle" type="checkbox" name="Concert" id="Concert"></p>       
+            <p align="right">  Sports event <input class="toggle" type="checkbox" name="Sports_event" id="Sports_event"></p>      
+          </div>
+          <div class="title">
+            Cultural
+          </div>
+          <div class="content">
+            <p align="right">  Show all <br> cultural events <input class="toggle" type="checkbox" name="cultural_all" id="cultural_all"></p>  
+            <p align="right">  Cinema <input class="toggle" type="checkbox" name="Cinema" id="Cinema"></p>       
+            <p align="right">  Theater <input class="toggle" type="checkbox" name="Theater" id="Theater"></p>       
+            <p align="right">  Show <input class="toggle" type="checkbox" name="Show" id="Show"></p>       
+            <p align="right">  Exhibition <input class="toggle" type="checkbox" name="Exhibition" id="Exhibition"></p>          
+          </div>
+          <div class="title">
+            Educative
+          </div>
+          <div class="content">
+            <p align="right">  Show all educative events <input class="toggle" type="checkbox" name="educative_all" id="educative_all"></p>  
+            <p align="right">  Conference <input class="toggle" type="checkbox" name="Conference" id="Conference"></p>       
+            <p align="right">  Meeting <input class="toggle" type="checkbox" name="Meeting" id="Meeting"></p>       
+            <p align="right">  Talk <input class="toggle" type="checkbox" name="Talk" id="Talk"></p>       
+            <p align="right">  Workshop <input class="toggle" type="checkbox" name="Workshop" id="Workshop"></p>          
+          </div>
+          <div class="title">
+            Other
+          </div>
+          <div class="content">
+            <p align="right">  Show all other events <input class="toggle" type="checkbox" name="educative_all" id="educative_all"></p>  
+            <p align="right">  Protest <input class="toggle" type="checkbox" name="Protest" id="Protest"></p>       
+            <p align="right">  Ceremony <input class="toggle" type="checkbox" name="Ceremony" id="Ceremony"></p>       
+            <p align="right">  Other <input class="toggle" type="checkbox" name="Other" id="Other"></p>          
+          </div>
+        </div>
+      </div>
+      <div class="title">
+        Crowd
+      </div>
+      <div class="content">
+        <p align="right"> Show <input class="toggle" type="checkbox" name="crowd" id="crowd"> </p> 
+      </div>
+      <div class="title">
+        Traffic
+      </div>
+      <div class="content">
+        <p align="right"> Show <input class="toggle" type="checkbox" name="trafficCB" id="trafficCB"> </p> 
+      </div>      <div class="title">
+      Weather & Air
+    </div>
+    <div class="content">
+        <p align="right"> Show <input class="toggle" type="checkbox" name="weather_air" id="weather_air"> </p> 
+    </div>
+  </div>
+
+</div>
+
+<div class = "pusher" id="map"></div>
 </body>
 </html>
