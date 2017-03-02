@@ -6,7 +6,7 @@ var weatherMarkers = [];
 var eventMarkers;
 var trafficLayer;
 var densityLayer;
-
+var initialConditionsReceived = false;
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -38,6 +38,21 @@ var eventImage = {
 var weatherImage = {
     url: "/assets/weather-icon-png-2.png",
     scaledSize: new google.maps.Size(12, 12)
+};
+
+var weatherImage_rain = {
+    url: "/assets/weather_rain.png",
+    scaledSize: new google.maps.Size(20,20)
+};
+
+var weatherImage_snow = {
+    url: "/assets/weather_snow.png",
+    scaledSize: new google.maps.Size(20,20)
+};
+
+var weatherImage_bad_quality = {
+    url: "/assets/weather_bad_quality.png",
+    scaledSize: new google.maps.Size(20,20)
 };
 
 //converts Date() to DD/MM/YYYY
@@ -193,7 +208,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
                     content: template({
                         title: data.name,
-                        subtitle: 'Location: '+ data.venue_name,
+                        subtitle: 'Location: '+ data.venue_name + 'Time: ' + data.start_time,
                         bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
                     }),
                     callbacks: {
@@ -232,6 +247,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
 return markers;
 }
 
+
 // called when the webpage is 'ready', all the html elements are initialized(?)
 $(document).ready(function () {
 
@@ -252,29 +268,43 @@ $(document).ready(function () {
                 console.log('events_allCB is checked')
                 eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
             }
-
         })
         ;
 
-        densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
+        $('#crowdCB').bind('change', function(){
+            if($(this).is(':checked')){
+                densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
+            }
+        })
+        ;
+
         weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
 
         // logs some info to console for debugging purposes, can be deleted
+        initialConditionsReceived = true;
         console.log("initial conditions received");
         console.log("num events", data.events.length);
         console.log("num tweets", data.twitter.length);
         console.log("weather info", data.weather);
 
+       $('.pusher').dimmer('hide');
+       $('.overlay').dimmer('hide');
+
     });
 
     // the server emits 'updatedConditions' event in specific intervals while
     // sending updated info about weather and density conditions
+    // TO DO - initMarkers only if the corresponding checkboxes are in checked state
     socket.on("updatedConditions", function (data) {
 
-        // updates density info (old markers are cleared and new ones are created)
-        updateInfo(data.twitter, densityMarkers, function () {
+        if ($('#crowdCB').is(':checked')){
             densityMarkers =  initMarkers(data.twitter, getTwitterLocation, twitterImage);
-        });
+        }
+
+        // updates density info (old markers are cleared and new ones are created)
+        // updateInfo(data.twitter, densityMarkers, function () {
+        //     densityMarkers =  initMarkers(data.twitter, getTwitterLocation, twitterImage);
+        // });
 
         // updates weather info (old markers are cleared and new ones are created)
         updateInfo(data.weather, weatherMarkers, function () {
@@ -416,7 +446,16 @@ $(document).ready(function () {
               eventsMarkers[i].setMap(null);
           }
       }
-  })
+    })
+    ;
+
+    $('#crowdCB').bind('change', function(){
+        if(!$(this).is(':checked')){
+            for (var i = 0; i < densityMarkers.length; i++) {
+                densityMarkers[i].setMap(null);
+          }
+      }
+    })
     ;
 
     $('.button').button() 
