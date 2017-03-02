@@ -398,8 +398,8 @@ $(document).ready(function () {
         }
         if(!$(this).is(':checked')){
             trafficLayer.setMap(null); 
-                $('.segment').dimmer('show');
-       
+            $('.segment').dimmer('show');
+
         }
     })
     ;
@@ -429,7 +429,8 @@ $(document).ready(function () {
     ; 
 
     $('.ui-button.ui-widget.ui-corner-all').click(function(){
-        console.log('button is clicked');
+        var redirectWindow = window.open('http://happern.ku.edu.tr/projects-2/eventmap/', '_blank');
+        redirectWindow.location;
     })
     ;
 
