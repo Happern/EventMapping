@@ -153,8 +153,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
 
             var marker = new google.maps.Marker(markerOptions);
 
-              // Set up handle bars for Snazzy Info Window complex-styles
-              var template = Handlebars.compile($('#marker-content-template').html());
+            // Set up handle bars for Snazzy Info Window complex-styles
+            var template = Handlebars.compile($('#marker-content-template').html());
 
             // Set up a close closeDelayed for CSS animations
             var infowindow = null;
@@ -226,7 +226,6 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     infowindow.open();
                 });
             }
-
             markers.push(marker);
         }
     })
@@ -247,7 +246,16 @@ $(document).ready(function () {
         // the marker arrays returned from initMarkers fucnction are stored
         // since they are needed to be cleared when updated data arrives.
         // these variables are initialized at the top this file
-        eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
+
+        $('#events_allCB').bind('change', function(){
+            if($(this).is(':checked')){
+                console.log('events_allCB is checked')
+                eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
+            }
+
+        })
+        ;
+
         densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
         weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
 
@@ -398,12 +406,18 @@ $(document).ready(function () {
         }
         if(!$(this).is(':checked')){
             trafficLayer.setMap(null); 
-            $('.segment').dimmer('show');
-
         }
     })
     ;
 
+    $('#events_allCB').bind('change', function(){
+        if(!$(this).is(':checked')){
+            for (var i = 0; i < eventsMarkers.length; i++) {
+              eventsMarkers[i].setMap(null);
+          }
+      }
+  })
+    ;
 
     $('.button').button() 
     .popup({
