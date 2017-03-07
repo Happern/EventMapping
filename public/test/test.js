@@ -3,7 +3,7 @@ var socket = io.connect('/');
 var map;
 var densityMarkers = [];
 var weatherMarkers = [];
-var eventMarkers;
+var eventsMarkers;
 var trafficLayer;
 var densityLayer;
 var initialConditionsReceived = false;
@@ -37,12 +37,12 @@ var eventImage = {
 //a weather icon for weather data coordinates, arbitrary
 var weatherImage = {
     url: "/assets/weather-icon-png-2.png",
-    scaledSize: new google.maps.Size(12, 12)
+    scaledSize: new google.maps.Size(50, 50)
 };
 
 var weatherImage_rain = {
     url: "/assets/weather_rain.png",
-    scaledSize: new google.maps.Size(20,20)
+    scaledSize: new google.maps.Size(80,80)
 };
 
 var weatherImage_snow = {
@@ -52,7 +52,7 @@ var weatherImage_snow = {
 
 var weatherImage_bad_quality = {
     url: "/assets/weather_bad_quality.png",
-    scaledSize: new google.maps.Size(20,20)
+    scaledSize: new google.maps.Size(110,110)
 };
 
 //converts Date() to DD/MM/YYYY
@@ -98,7 +98,7 @@ function constructEventInfoMessage(data) {
 
 //similar to above
 function constructWeatherInfoMessage(data) {
-    return "Feels Like: " + data.apparentTemperature + "C\n" + "Chance of Rain: " + data.precipProbability + "\n" + "Wind Speed: " + data.windSpeed;
+    console.log("Feels Like: " + data.apparentTemperature + "C\n" + "Chance of Rain: " + data.precipProbability + "\n" + "Wind Speed: " + data.windSpeed) 
 }
 
 //extracts weather locations from weather data and creates google location obj
@@ -162,7 +162,17 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             // if the pinImage parameter is passed, adds that image for the markers
             // constructed with the given data / instead of the default pins.
             // Currently can either be twitterImage or weatherImage
-            if (pinImage) {
+
+            if (data.precipProbability > 4) {
+                markerOptions.icon = weatherImage_rain
+            } 
+            if (data.precipProbability > 4 && data.apparentTemperature < 1) {
+                markerOptions.icon = weatherImage_snow
+            }
+            if (data.windSpeed < 2.85) {
+                markerOptions.icon = weatherImage_bad_quality
+            }
+            else { 
                 markerOptions.icon = pinImage
             }
 
@@ -185,11 +195,11 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             //checks if infoMessageFunction parameter is passed and proceeds,
             // since in the absence of this function it is not possible to
             // create an information message - thus an info window here.
-            if (addInfo && infoMessageFunction) {
+            if (addInfo) {
                 //constructs the info message with the given function
                 // currently can either be constructEventInfoMessage or
                 // constructWeatherInfoMessage
-                var infoMessage = infoMessageFunction(data);
+                //var infoMessage = infoMessageFunction(data);
 
                 //uses google map's default info window to create infoWindow
                 //object with the constructed message
@@ -298,7 +308,12 @@ $(document).ready(function () {
         })
         ;
 
-        weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
+        $('#weather_airCB').bind('change', function(){
+            if($(this).is(':checked')){
+                weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, false, constructWeatherInfoMessage);
+            }
+        })
+        ;
 
         // logs some info to console for debugging purposes, can be deleted
         console.log("initial conditions received");
@@ -324,9 +339,12 @@ $(document).ready(function () {
         // });
 
         // updates weather info (old markers are cleared and new ones are created)
-        updateInfo(data.weather, weatherMarkers, function () {
-            weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
-        });
+
+        if ($('#weather_airCB').is(':checked')){
+            updateInfo(data.weather, weatherMarkers, function () {
+                weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, false, constructWeatherInfoMessage);
+            });
+        }
 
         //logs for debugging purposes
         console.log("updated conditions received");
@@ -463,15 +481,24 @@ $(document).ready(function () {
               eventsMarkers[i].setMap(null);
           }
       }
-    })
+  })
     ;
 
     $('#crowdCB').bind('change', function(){
         if(!$(this).is(':checked')){
             for (var i = 0; i < densityMarkers.length; i++) {
                 densityMarkers[i].setMap(null);
-          }
-      }
+            }
+        }
+    })
+    ;
+
+    $('#weather_airCB').bind('change', function(){
+        if(!$(this).is(':checked')){
+            for (var i = 0; i < weatherMarkers.length; i++) {
+                weatherMarkers[i].setMap(null);
+            }
+        }
     })
     ;
 
