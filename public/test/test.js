@@ -247,6 +247,26 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
 return markers;
 }
 
+function onReady(callback) {
+    var intervalID = window.setInterval(checkReady, 2800);
+
+    function checkReady() {
+        if (initialConditionsReceived == false) {
+            window.clearInterval(intervalID);
+            callback.call(this);
+        }
+    }
+}
+
+function show(id, value) {
+    document.getElementById(id).style.display = value ? 'block' : 'none';
+}
+
+onReady(function () {
+    show('map', true);
+    show('overlay', true);
+    show('loading', false);
+});
 
 // called when the webpage is 'ready', all the html elements are initialized(?)
 $(document).ready(function () {
@@ -281,14 +301,11 @@ $(document).ready(function () {
         weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, true, constructWeatherInfoMessage);
 
         // logs some info to console for debugging purposes, can be deleted
-        initialConditionsReceived = true;
         console.log("initial conditions received");
         console.log("num events", data.events.length);
         console.log("num tweets", data.twitter.length);
         console.log("weather info", data.weather);
-
-       $('.pusher').dimmer('hide');
-       $('.overlay').dimmer('hide');
+        initialConditionsReceived = true;
 
     });
 
