@@ -258,12 +258,13 @@ return markers;
 }
 
 function onReady(callback) {
-    var intervalID = window.setInterval(checkReady, 2800);
+    var intervalID = window.setInterval(checkReady, 1000);
 
     function checkReady() {
-        if (initialConditionsReceived == false) {
-            window.clearInterval(intervalID);
+        if (initialConditionsReceived == true) {
             callback.call(this);
+        } else {
+            console.log('initialConditionsReceived == false')
         }
     }
 }
