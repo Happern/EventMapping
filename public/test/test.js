@@ -531,4 +531,66 @@ $(document).ready(function () {
     })
     ;
 
+    $( function() {
+        $( "#slider-range" ).slider({
+          range: true,
+          min: 0,
+          max: 500,
+          values: [ 75, 300 ],
+          slide: function( event, ui ) {
+            $( "#attenders" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        }
+    });
+    } );
+
+    $( function() {
+        $( "#slider-range-2" ).slider({
+          range: true,
+          min: 0,
+          max: 500,
+          values: [ 75, 300 ],
+          slide: function( event, ui ) {
+            $( "#people_density" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        }
+    });
+    } );
+
+    $( function() {
+        $( "#slider-range-3" ).slider({
+          min: 0,
+          max: 500,
+          values: [ 75],
+          slide: function( event, ui ) {
+        }
+    });
+    } );
+
+    $( function() {
+        $( "#slider-range-4" ).slider({
+          min: 0,
+          max: 500,
+          values: [100],
+          slide: function( event, ui ) {
+        }
+    });
+    } );
+
+    $( function() {
+        $( "#slider-range-5" ).slider({
+          min: 0,
+          max: 500,
+          value: 100,
+          step: 100,
+          slide: function( event, ui ) {
+            $( "#amount" ).val( "$" + ui.value );
+        }
+    });
+    } );
+
+    $( function() {
+        $( "input" ).checkboxradio({
+          icon: false
+      });
+    } );
+
 });
