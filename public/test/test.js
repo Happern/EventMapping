@@ -518,7 +518,7 @@ $(document).ready(function () {
     $('.accordion')
     .accordion({
         heightStyle: "content",
-        collapsible: false,
+        collapsible: true,
         active: false,
         autoHeight:true,
         animate: 400
