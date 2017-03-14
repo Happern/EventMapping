@@ -34,6 +34,12 @@ var eventImage = {
     scaledSize: new google.maps.Size(20,20)
 };
 
+//change -- to do 
+var eventImage_medium = {
+    url: "/assets/black circle_more transparent.png",
+    size: new google.maps.Size(42, 68)
+}
+
 //a weather icon for weather data coordinates, arbitrary
 var weatherImage = {
     url: "/assets/weather-icon-png-2.png",
@@ -55,6 +61,7 @@ var weatherImage_bad_quality = {
     scaledSize: new google.maps.Size(110,110)
 };
 
+
 //converts Date() to DD/MM/YYYY
 function convertDate(inputFormat) {
   function pad(s) {
@@ -69,7 +76,7 @@ function initMap() {
     var d = new Date();    // defaults to the current time in the current timezone
     trafficLayer = new google.maps.TrafficLayer();
 
-    if (d.getHours() < 20) {    //styles map 'lightly' when the local time is earlier than 20.00
+    if (d.getHours() < 23) {    //styles map 'lightly' when the local time is earlier than 20.00
         map = new google.maps.Map(document.getElementById('map'), {
             center: istanbulCoordinatesPushRight
             , zoom: 12
@@ -201,6 +208,13 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 // constructWeatherInfoMessage
                 //var infoMessage = infoMessageFunction(data);
 
+                if (Math.random() >= 0.5){
+                    markerOptions.icon = eventImage_medium
+                    console.log('here')
+                } else {
+                    markerOptions.icon = eventImage
+                }
+
                 //uses google map's default info window to create infoWindow
                 //object with the constructed message
                 var infowindow = new SnazzyInfoWindow({
@@ -296,7 +310,6 @@ $(document).ready(function () {
 
         $('#events_allCB').bind('change', function(){
             if($(this).is(':checked')){
-                console.log('events_allCB is checked')
                 eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
             }
         })
@@ -592,5 +605,17 @@ $(document).ready(function () {
           icon: false
       });
     } );
+
+     $("#overlay #title_events").tooltip({
+      items: "div",
+      show: { effect: "blind", duration: 800 },
+      position: { my: "left+15 center", at: "right center" },
+      content: function() {
+           var element = $(this);
+           if (element.attr('id') === 'title_events') {
+               return "<img width = '150' height = '100' src='/assets/event_lejand.png'>";
+           }
+        }
+    });
 
 });
