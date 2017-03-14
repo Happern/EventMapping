@@ -356,6 +356,7 @@ $(document).ready(function () {
             if($(this).is(':checked')){
                 weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, false, constructWeatherInfoMessage);
 
+                badAirMarkers = [];
                 for (var i = 0; i < badAirQualityCoordinates.length; i++){
 
                     var marker = new google.maps.Marker({
@@ -364,6 +365,7 @@ $(document).ready(function () {
                     }); 
 
                     marker.setMap(map);
+                    badAirMarkers.push(marker);
                 }
             }
         })
@@ -550,6 +552,11 @@ $(document).ready(function () {
             for (var i = 0; i < weatherMarkers.length; i++) {
                 weatherMarkers[i].setMap(null);
             }
+
+            for (var i = 0; i < badAirMarkers.length; i++) {
+                badAirMarkers[i].setMap(null);
+            }
+
         }
     })
     ;
