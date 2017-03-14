@@ -618,4 +618,28 @@ $(document).ready(function () {
         }
     });
 
+    $("#overlay #title_crowd").tooltip({
+      items: "div",
+      show: { effect: "blind", duration: 800 },
+      position: { my: "left+15 center", at: "right center" },
+      content: function() {
+           var element = $(this);
+           if (element.attr('id') === 'title_crowd') {
+               return "<img width = '150' height = '100' src='/assets/crowd_lejand.png'>";
+           }
+        }
+    });
+
+    $("#overlay #title_weather_air").tooltip({
+      items: "div",
+      show: { effect: "blind", duration: 800 },
+      position: { my: "left+15 center", at: "right center" },
+      content: function() {
+           var element = $(this);
+           if (element.attr('id') === 'title_weather_air') {
+               return "<img width = '170' height = '170' src='/assets/weather_air_lejand.png'>";
+           }
+        }
+    });    
+
 });
