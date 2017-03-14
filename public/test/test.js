@@ -68,14 +68,22 @@ var weatherImage_snow = {
     url: "/assets/weather_snow.png",
     scaledSize: new google.maps.Size(100, 100),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(50,50)};
+    anchor: new google.maps.Point(50,50)
+};
 
 var weatherImage_bad_quality = {
     url: "/assets/weather_bad_quality.png",
     scaledSize: new google.maps.Size(100, 100),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(50,50)};
+    anchor: new google.maps.Point(50,50)
+};
 
+var weatherImage_very_hot = {
+    url: "/assets/weather_very_hot.png",
+    scaledSize: new google.maps.Size(100, 100),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(50,50)   
+};
 
 //converts Date() to DD/MM/YYYY
 function convertDate(inputFormat) {
@@ -193,6 +201,10 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             if (data.precipProbability > 0.4 && data.apparentTemperature < -3) {
                 markerIcon = weatherImage_snow
                 console.log('weather marker initiated with snow')                                
+            }
+            if (data.apparentTemperature >= 40) {
+                markerIcon = weatherImage_very_hot
+                console.log('weather marker initiated with very hot')
             }
 
             var markerOptions = {
