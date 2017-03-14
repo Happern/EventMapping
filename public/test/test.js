@@ -7,6 +7,7 @@ var eventsMarkers;
 var trafficLayer;
 var densityLayer;
 var initialConditionsReceived = false;
+var badAirMarkers;
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -22,10 +23,20 @@ var istanbulCoordinatesPushRight = {
     //41°01'47.4"N 28°56'06
 };
 
+var badAirQualityCoordinates = [
+    {lat: 40.997040, lng: 29.171562}, //Ümraniye - nova ticaret 
+    {lat: 41.062849, lng: 28.992759}, // Cevahir AVM 
+    {lat: 41.002408, lng: 28.974237}, // Çatladıkapı 
+    {lat: 41.003982, lng: 29.023916}, // Siyami Ersek Hastanesi 
+    {lat: 41.090526, lng: 28.985135}, // Kağıthane Merkez 
+    {lat: 40.991960, lng: 29.036442}, // Söğütlüçeşme  
+    {lat: 41.009925, lng: 29.154930}// Yukarıdudullu 
+];
+
 //an orange dot to represent tweet coordinates
 var twitterImage = {
-    url: "/assets/orange-circle-png-3.png",
-    scaledSize: new google.maps.Size(7, 7)
+    url: "/assets/black-circle-png-3.png",
+    scaledSize: new google.maps.Size(3, 3)
 };
 
 //a black dot to represent event coordinates
@@ -48,18 +59,22 @@ var weatherImage = {
 
 var weatherImage_rain = {
     url: "/assets/weather_rain.png",
-    scaledSize: new google.maps.Size(80,80)
+    scaledSize: new google.maps.Size(100, 100),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(50,50)
 };
 
 var weatherImage_snow = {
     url: "/assets/weather_snow.png",
-    scaledSize: new google.maps.Size(20,20)
-};
+    scaledSize: new google.maps.Size(100, 100),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(50,50)};
 
 var weatherImage_bad_quality = {
     url: "/assets/weather_bad_quality.png",
-    scaledSize: new google.maps.Size(110,110)
-};
+    scaledSize: new google.maps.Size(100, 100),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(50,50)};
 
 
 //converts Date() to DD/MM/YYYY
@@ -76,7 +91,7 @@ function initMap() {
     var d = new Date();    // defaults to the current time in the current timezone
     trafficLayer = new google.maps.TrafficLayer();
 
-    if (d.getHours() < 11) {    //styles map 'lightly' when the local time is earlier than 20.00
+    if (d.getHours() < 19) {    //styles map 'lightly' when the local time is earlier than 20.00
         map = new google.maps.Map(document.getElementById('map'), {
             center: istanbulCoordinatesPushRight
             , zoom: 12
@@ -151,6 +166,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
     pinArray.forEach(function (data) {
         var position = locationFunction(data);
         if (position) {
+
+            //Default icon
             var markerIcon = {
                 path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'
                 , fillColor: '#000000'
@@ -160,31 +177,27 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 , strokeWeight: 3
                 , anchor: new google.maps.Point(12, 24)
             };
-            var markerOptions = {
-                icon: markerIcon
-                , position: position
-                , map: map
-            }
 
             // if the pinImage parameter is passed, adds that image for the markers
             // constructed with the given data / instead of the default pins.
             // Currently can either be twitterImage or weatherImage
 
+            markerIcon = pinImage
+
+            //Change markerIcon for weather
             if (data.precipProbability > 0.4) {
-                markerOptions.icon = weatherImage_rain
+                markerIcon = weatherImage_rain
                 console.log('weather marker initiated with rain')                                
             } 
-            if (data.precipProbability > 4 && data.apparentTemperature < 1) {
-                markerOptions.icon = weatherImage_snow
+            if (data.precipProbability > 0.4 && data.apparentTemperature < -3) {
+                markerIcon = weatherImage_snow
                 console.log('weather marker initiated with snow')                                
             }
-            if (data.windSpeed < 2.85) {
-                markerOptions.icon = weatherImage_bad_quality
-                console.log('weather marker initiated with bad quality')                                
-            }
-            else { 
-                markerOptions.icon = pinImage
-                console.log('weather marker initiated with pinImage')                
+
+            var markerOptions = {
+                icon: markerIcon
+                , position: position
+                , map: map
             }
 
             var marker = new google.maps.Marker(markerOptions);
@@ -329,6 +342,16 @@ $(document).ready(function () {
         $('#weather_airCB').bind('change', function(){
             if($(this).is(':checked')){
                 weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, false, constructWeatherInfoMessage);
+
+                for (var i = 0; i < badAirQualityCoordinates.length; i++){
+
+                    var marker = new google.maps.Marker({
+                        icon: weatherImage_bad_quality,
+                        position: badAirQualityCoordinates[i]                        
+                    }); 
+
+                    marker.setMap(map);
+                }
             }
         })
         ;
@@ -340,7 +363,6 @@ $(document).ready(function () {
         console.log("num tweets", data.twitter.length);
         console.log("weather info", data.weather);
         initialConditionsReceived = true;
-
     });
 
     // the server emits 'updatedConditions' event in specific intervals while
@@ -379,7 +401,6 @@ $(document).ready(function () {
   });*/
 
   initMap();
-
 
     //Initiate 'flat slider' used in time interval selection
     $('#flat-slider').slider({
@@ -613,7 +634,6 @@ $(document).ready(function () {
 
      $("#overlay #title_events").tooltip({
       items: "div",
-      show: { effect: "blind", duration: 800 },
       position: { my: "left+15 center", at: "right center" },
       content: function() {
            var element = $(this);
@@ -625,7 +645,6 @@ $(document).ready(function () {
 
     $("#overlay #title_crowd").tooltip({
       items: "div",
-      show: { effect: "blind", duration: 800 },
       position: { my: "left+15 center", at: "right center" },
       content: function() {
            var element = $(this);
@@ -637,7 +656,6 @@ $(document).ready(function () {
 
     $("#overlay #title_weather_air").tooltip({
       items: "div",
-      show: { effect: "blind", duration: 800 },
       position: { my: "left+15 center", at: "right center" },
       content: function() {
            var element = $(this);
