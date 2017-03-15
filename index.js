@@ -28,6 +28,10 @@ app.get('/swagger/event_mapping.json', function (req, res) {
   res.send(json);
 })
 
+app.get('/changebasemap', function (req, res) {
+  res.sendFile(__dirname + '/public/test/index.html');
+})
+
 var server = app.listen(app.get('port'), function () {
   console.log('Node app is running on port', app.get('port'));
 });
