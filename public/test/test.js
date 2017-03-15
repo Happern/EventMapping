@@ -262,7 +262,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
                     content: template({
                         title: data.name,
-                        subtitle: 'Location: '+ data.venue_name + 'Time: ' + data.start_time,
+                        subtitle: 'Location: '+ data.venue_name + ' //// Time: ' + data.start_time,
                         bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
                     }),
                     callbacks: {
