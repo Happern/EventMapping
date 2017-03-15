@@ -31,7 +31,7 @@ var badAirQualityCoordinates = [
     {lat: 41.090526, lng: 28.985135}, // Kağıthane Merkez 
     {lat: 40.991960, lng: 29.036442}, // Söğütlüçeşme  
     {lat: 41.009925, lng: 29.154930}// Yukarıdudullu 
-];
+    ];
 
 //an orange dot to represent tweet coordinates
 var twitterImage = {
@@ -100,22 +100,33 @@ function initMap() {
     trafficLayer = new google.maps.TrafficLayer();
 
     if (d.getHours() < 19) {    //styles map 'lightly' when the local time is earlier than 20.00
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: istanbulCoordinatesPushRight
-            , zoom: 12
-            , disableDefaultUI: true
-            , styles:
-            [{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f7f7f7"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"lightness":21},{"visibility":"off"},{"color":"#e3e3e3"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#cecccc"},{"lightness":21},{"visibility":"off"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"weight":"0.70"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#b2b2b2"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2},{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#b2b2b2"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#cbcbcb"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#9a2323"},{"lightness":19},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e3e3e3"},{"lightness":17}]}]
-        });
-} else {
+        initiateDayMap();
+    } else {
+        initiateNightMap();
+    };
+}
+
+
+// To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
+// should be applied
+function initiateDayMap () {
     map = new google.maps.Map(document.getElementById('map'), {
+        center: istanbulCoordinatesPushRight
+        , zoom: 12
+        , disableDefaultUI: true
+        , styles:
+        [{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f7f7f7"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"lightness":21},{"visibility":"off"},{"color":"#e3e3e3"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#cecccc"},{"lightness":21},{"visibility":"off"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"weight":"0.70"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#b2b2b2"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2},{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#b2b2b2"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#cbcbcb"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#9a2323"},{"lightness":19},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e3e3e3"},{"lightness":17}]}]
+    });
+}
+
+function initiateNightMap () {
+        map = new google.maps.Map(document.getElementById('map'), {
         center: istanbulCoordinatesPushRight
         , zoom: 12
         , disableDefaultUI: true
         , styles:
         [{"featureType":"all","elementType":"all","stylers":[{"lightness":"29"},{"invert_lightness":!0},{"saturation":"-73"},{"hue":"#008fff"}]},{"featureType":"all","elementType":"labels","stylers":[{"saturation":"-72"},{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ff77d1"}]},{"featureType":"administrative","elementType":"all","stylers":[{"lightness":"32"},{"weight":"0.42"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":"-53"},{"saturation":"-66"}]},{"featureType":"landscape","elementType":"all","stylers":[{"lightness":"-86"},{"gamma":"1.13"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"lightness":"4"},{"gamma":"1.44"},{"saturation":"-67"},{"color":"#333333"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"lightness":"5"}]},{"featureType":"landscape","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"weight":"0.84"},{"gamma":"0.5"},{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"weight":"0.79"},{"gamma":"0.5"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"visibility":"off"},{"color":"#282828"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"visibility":"simplified"},{"lightness":"30"},{"saturation":"-100"},{"hue":"#1000ff"},{"gamma":"0.71"},{"weight":"0.7"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"lightness":"-69"},{"color":"#ff77d1"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"lightness":"10"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"gamma":"1"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"lightness":"10"},{"saturation":"-100"},{"weight":"0.70"}]},{"featureType":"transit","elementType":"all","stylers":[{"lightness":"-35"},{"visibility":"off"},{"gamma":"0.88"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#ff0000"},{"saturation":"0"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":"-97"},{"lightness":"-14"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"hue":"#ff0000"}]}]
     });
-};
 }
 
 //constructs info message from event data, just for test purposes
@@ -322,6 +333,12 @@ onReady(function () {
     show('overlay', true);
     show('loading', false);
 });
+
+function submitSnazzyCode() {
+    var newStyle = document.getElementById('snazzyStyleCode').value;
+    var isDayMap = document.getElementById('isDayMap').checked;
+    console.log('New base map style submitted; day map is ' + isDayMap);
+};
 
 // called when the webpage is 'ready', all the html elements are initialized(?)
 $(document).ready(function () {
@@ -620,8 +637,8 @@ $(document).ready(function () {
           max: 500,
           values: [ 75],
           slide: function( event, ui ) {
-        }
-    });
+          }
+      });
     } );
 
     $( function() {
@@ -630,8 +647,8 @@ $(document).ready(function () {
           max: 500,
           values: [100],
           slide: function( event, ui ) {
-        }
-    });
+          }
+      });
     } );
 
     $( function() {
@@ -652,37 +669,37 @@ $(document).ready(function () {
       });
     } );
 
-     $("#overlay #title_events").tooltip({
+    $("#overlay #title_events").tooltip({
       items: "div",
       position: { my: "left+15 center", at: "right center" },
       content: function() {
-           var element = $(this);
-           if (element.attr('id') === 'title_events') {
-               return "<img width = '150' height = '100' src='/assets/event_lejand.png'>";
-           }
-        }
-    });
+         var element = $(this);
+         if (element.attr('id') === 'title_events') {
+             return "<img width = '150' height = '100' src='/assets/event_lejand.png'>";
+         }
+     }
+ });
 
     $("#overlay #title_crowd").tooltip({
       items: "div",
       position: { my: "left+15 center", at: "right center" },
       content: function() {
-           var element = $(this);
-           if (element.attr('id') === 'title_crowd') {
-               return "<img width = '150' height = '100' src='/assets/crowd_lejand.png'>";
-           }
-        }
-    });
+         var element = $(this);
+         if (element.attr('id') === 'title_crowd') {
+             return "<img width = '150' height = '100' src='/assets/crowd_lejand.png'>";
+         }
+     }
+ });
 
     $("#overlay #title_weather_air").tooltip({
       items: "div",
       position: { my: "left+15 center", at: "right center" },
       content: function() {
-           var element = $(this);
-           if (element.attr('id') === 'title_weather_air') {
-               return "<img width = '170' height = '170' src='/assets/weather_air_lejand.png'>";
-           }
-        }
-    });    
+         var element = $(this);
+         if (element.attr('id') === 'title_weather_air') {
+             return "<img width = '170' height = '170' src='/assets/weather_air_lejand.png'>";
+         }
+     }
+ });    
 
 });

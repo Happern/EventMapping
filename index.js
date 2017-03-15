@@ -29,7 +29,7 @@ app.get('/swagger/event_mapping.json', function (req, res) {
 })
 
 app.get('/changebasemap', function (req, res) {
-  res.sendFile(__dirname + '/public/test/index.html');
+  res.sendFile(__dirname + '/public/test/changebasemap.html');
 })
 
 var server = app.listen(app.get('port'), function () {
