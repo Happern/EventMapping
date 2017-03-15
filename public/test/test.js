@@ -591,19 +591,19 @@ $(document).ready(function () {
     ;
 
     $( function() {
-        $( "#slider-range" ).slider({
+        $( "#slider-attenders" ).slider({
           range: true,
-          min: 0,
-          max: 500,
+          min: 50,
+          max: 1000,
           values: [ 75, 300 ],
           slide: function( event, ui ) {
             $( "#attenders" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
         }
-    });
+    })
     } );
 
     $( function() {
-        $( "#slider-range-2" ).slider({
+        $( "#slider-density" ).slider({
           range: true,
           min: 0,
           max: 500,
@@ -615,7 +615,7 @@ $(document).ready(function () {
     } );
 
     $( function() {
-        $( "#slider-range-3" ).slider({
+        $( "#slider-sound" ).slider({
           min: 0,
           max: 500,
           values: [ 75],
@@ -625,7 +625,7 @@ $(document).ready(function () {
     } );
 
     $( function() {
-        $( "#slider-range-4" ).slider({
+        $( "#slider-activity" ).slider({
           min: 0,
           max: 500,
           values: [100],
@@ -635,9 +635,9 @@ $(document).ready(function () {
     } );
 
     $( function() {
-        $( "#slider-range-5" ).slider({
+        $( "#slider-price" ).slider({
           min: 0,
-          max: 500,
+          max: 300,
           value: 100,
           step: 100,
           slide: function( event, ui ) {
