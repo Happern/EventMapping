@@ -402,8 +402,35 @@ $(document).ready(function () {
     socket.on("updatedConditions", function (data) {
 
         if ($('#crowdCB').is(':checked')){
+            for (var i = 0; i < densityMarkers.length; i++) {
+                densityMarkers[i].setMap(null);
+            }            
             densityMarkers =  initMarkers(data.twitter, getTwitterLocation, twitterImage);
         }
+
+        if (!$('#crowdCB').is(':checked')){
+            densityMarkers =  initMarkers(data.twitter, getTwitterLocation, twitterImage);
+            for (var i = 0; i < densityMarkers.length; i++) {
+                densityMarkers[i].setMap(null);
+            }
+            console.log('after update, density markers not shown although there are new ' + data.twitter.length + ' data points')
+        }
+
+        $('#crowdCB').bind('change', function(){
+            if($(this).is(':checked')){
+                densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
+            }
+        })
+        ;        
+
+        $('#crowdCB').bind('change', function(){
+            if(!$(this).is(':checked')){
+                for (var i = 0; i < densityMarkers.length; i++) {
+                    densityMarkers[i].setMap(null);
+                }
+            }
+        })
+        ;        
 
         // updates density info (old markers are cleared and new ones are created)
         // updateInfo(data.twitter, densityMarkers, function () {
@@ -417,6 +444,14 @@ $(document).ready(function () {
                 weatherMarkers = initMarkers(data.weather, getWeatherLocation, weatherImage, false, constructWeatherInfoMessage);
             });
         }
+
+        if (!$('#weather_airCB').is(':checked')){
+            weatherMarkers =  initMarkers(data.weather, getWeatherLocation, weatherImage, false, constructWeatherInfoMessage);
+            for (var i = 0; i < weatherMarkers.length; i++) {
+                weatherMarkers[i].setMap(null);
+            }
+            console.log('after update, density markers not shown although there are new ' + weatherMarkers.length + ' weather points')
+        }        
 
         //logs for debugging purposes
         console.log("updated conditions received");
