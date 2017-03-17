@@ -39,7 +39,7 @@ var twitterImage = {
     scaledSize: new google.maps.Size(3, 3)
 };
 
-//a black dot to represent event coordinates
+// a black dot to represent event coordinates
 var eventImage = {
     url: "/assets/blackcircle_100x100-01.png",
     scaledSize: new google.maps.Size(20,20)
@@ -97,15 +97,15 @@ return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
 //initializes map in the div with id 'map'
 function initMap() {
     var d = new Date();    // defaults to the current time in the current timezone
-    trafficLayer = new google.maps.TrafficLayer();
-
-    if (d.getHours() < 19) {    //styles map 'lightly' when the local time is earlier than 20.00
+    trafficLayer = new google.maps.TrafficLayer()
+    if (d.getHours() < 17) {    //styles map 'lightly' when the local time is earlier than 20.00
         initiateDayMap();
     } else {
         initiateNightMap();
+        eventImage.url = "/assets/eventmarker-white-medium.png",
+        eventImage.scaledSize = new google.maps.Size(20,20)
     };
 }
-
 
 // To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
 // should be applied
@@ -219,9 +219,9 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             }
 
             var markerOptions = {
-                icon: markerIcon
-                , position: position
-                , map: map
+                icon: markerIcon,
+                position: position,
+                map: map
             }
 
             var marker = new google.maps.Marker(markerOptions);
