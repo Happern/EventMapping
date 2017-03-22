@@ -1,6 +1,7 @@
 var moment = require("moment");
 var eventConstants = require("./constants");
 var appConstants = require("../core/appConstants");
+var randomize = require("./randomize");
 var defaultFormat = appConstants.dateTime.default;
 
 function formatEvents (events, eventMapping) {
@@ -36,7 +37,7 @@ function formatEvent (event, eventMapping, originalFormat) {
       }
       eventObj[field] = value;
     } else {
-      eventObj[field] = "";
+      eventObj[field] = randomize.getRandomValue(field);
     }
   });
 
