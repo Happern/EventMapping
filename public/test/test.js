@@ -252,7 +252,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
 
                 if (Math.random() >= 0.5){
                     markerOptions.icon = eventImage_medium
-                    console.log('here')
+                    console.log('eventImage_medium used for event marker initiation')
                 } else {
                     markerOptions.icon = eventImage
                 }
@@ -357,7 +357,7 @@ $(document).ready(function () {
         // these variables are initialized at the top this file
 
         preferredEvents = data.events;
-        eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
+        eventsMarkers = initMarkers(preferredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
         
         // for (var i = 0; i < data.events.length; i ++) {
         //     eventsCapacityMarkers[i] = data.events[i].capacity;
@@ -670,7 +670,11 @@ $(document).ready(function () {
             return value.capacity <= capacityEnd;
         }
 
-        console.log ("new filteredEventMarkers created with " + filteredEventMarkers.length + " elements");
+        console.log ("new filteredEventMarkers created with " + filteredEventMarkers.length + " elements"); 
+
+        updateInfo(filteredEventMarkers, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(filteredEventMarkers, getEventLocation, eventImage, true, constructEventInfoMessage);
+        }); 
     });
 
     $( function() {
