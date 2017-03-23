@@ -8,6 +8,7 @@ var trafficLayer;
 var densityLayer;
 var initialConditionsReceived = false;
 var badAirMarkers;
+var preferredEvents; 
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -100,11 +101,11 @@ function initMap() {
     trafficLayer = new google.maps.TrafficLayer()
     if (d.getHours() < 17) {    //styles map 'lightly' when the local time is earlier than 20.00
         initiateDayMap();
-    } else {
-        initiateNightMap();
-        eventImage.url = "/assets/eventmarker-white-medium.png",
-        eventImage.scaledSize = new google.maps.Size(20,20)
-    };
+} else {
+    initiateNightMap();
+    eventImage.url = "/assets/eventmarker-white-medium.png",
+    eventImage.scaledSize = new google.maps.Size(20,20)
+};
 }
 
 // To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
@@ -120,7 +121,7 @@ function initiateDayMap () {
 }
 
 function initiateNightMap () {
-        map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: istanbulCoordinatesPushRight
         , zoom: 12
         , disableDefaultUI: true
@@ -355,6 +356,15 @@ $(document).ready(function () {
         // since they are needed to be cleared when updated data arrives.
         // these variables are initialized at the top this file
 
+        preferredEvents = data.events;
+        eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
+        
+        // for (var i = 0; i < data.events.length; i ++) {
+        //     eventsCapacityMarkers[i] = data.events[i].capacity;
+        // }
+
+        $('#events_allCB').prop('checked', true);
+
         $('#events_allCB').bind('change', function(){
             if($(this).is(':checked')){
                 eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
@@ -489,14 +499,6 @@ $(document).ready(function () {
 
         // Space out values and format dates into M d, yy
         for (var i = 0; i<= vals; i += 1){
-
-            // This section puts the actual date (and next 4 weeks' dates) onto the slider. Currently not necessary.
-            // var iDate = new Date();
-            // iDate.setDate(iDate.getDate() + i);
-
-            // var sDate = iDate.toDateString();
-            // var label = $('<label><small>' + (sDate) + '</small></label>').css('left', (i/vals*100) + '%');
-
             if (i == 0) {
                 var label = $('<label-today> Today </label-today>').css('left', (i/vals*100) + '%');
             } else if (i == 1) {
@@ -504,7 +506,6 @@ $(document).ready(function () {
             } else {
                 var label = $('<label>' + (i) + ' weeks from now </label>').css('left', (i/vals*100) + '%');
             }
-
             $("#flat-slider").append(label);
         }
 
@@ -552,7 +553,6 @@ $(document).ready(function () {
         startDate = convertDate(startDate);
         endDate = convertDate(endDate);
 
-
         console.log(values);
         console.log(startDate);
         console.log(endDate);
@@ -564,12 +564,11 @@ $(document).ready(function () {
     });
 
     socket.on("timelineSelectedValue", function (response) {
-        console.log("timelineSelectedValue" + response.data);
+        console.log("timelineSelectedValue " + response.data.length);
         updateInfo(response.data, eventsMarkers, function () {
-            eventsMarkers =  initMarkers(response.data, getEventLocation, null, true, constructEventInfoMessage);
+            eventsMarkers =  initMarkers(response.data, getEventLocation, eventImage, true, constructEventInfoMessage);
         });
     });
-
 
     $('#trafficCB').bind('change', function(){
         if($(this).is(':checked')){
@@ -608,7 +607,6 @@ $(document).ready(function () {
             for (var i = 0; i < badAirMarkers.length; i++) {
                 badAirMarkers[i].setMap(null);
             }
-
         }
     })
     ;
@@ -642,17 +640,38 @@ $(document).ready(function () {
     })
     ;
 
-    $( function() {
-        $( "#slider-attenders" ).slider({
-          range: true,
-          min: 50,
-          max: 1000,
-          values: [ 75, 300 ],
-          slide: function( event, ui ) {
-            $( "#attenders" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+    $( "#slider-capacity" ).slider({
+      range: true,
+      min: 0,
+      max: 1,
+      step: 0.01,
+      values: [ 0.2, 0.4 ],
+      change: function (event, ui) {}
+    });
+
+    $('#slider-capacity').on("slidechange", function (event, ui){
+        var capacityStart;
+        var capacityEnd; 
+        var values = $('#slider-capacity').slider("option", "values");
+        var filteredEventMarkers = [];
+
+        capacityStart = values [0];
+        capacityEnd = values [1];
+
+        console.log ("new capacityStart " + capacityStart + " and capacityEnd " + capacityEnd);
+
+        filteredEventMarkers = preferredEvents.filter(isBigger).filter(isSmaller);
+
+        function isBigger(value) {
+            return capacityStart <= value.capacity;
         }
-    })
-    } );
+
+        function isSmaller(value) {
+            return value.capacity <= capacityEnd;
+        }
+
+        console.log ("new filteredEventMarkers created with " + filteredEventMarkers.length + " elements");
+    });
 
     $( function() {
         $( "#slider-density" ).slider({
@@ -708,33 +727,33 @@ $(document).ready(function () {
       items: "div",
       position: { my: "left+15 center", at: "right center" },
       content: function() {
-         var element = $(this);
-         if (element.attr('id') === 'title_events') {
-             return "<img width = '150' height = '100' src='/assets/event_lejand.png'>";
-         }
-     }
- });
+       var element = $(this);
+       if (element.attr('id') === 'title_events') {
+           return "<img width = '150' height = '100' src='/assets/event_lejand.png'>";
+       }
+   }
+});
 
     $("#overlay #title_crowd").tooltip({
       items: "div",
       position: { my: "left+15 center", at: "right center" },
       content: function() {
-         var element = $(this);
-         if (element.attr('id') === 'title_crowd') {
-             return "<img width = '150' height = '100' src='/assets/crowd_lejand.png'>";
-         }
-     }
- });
+       var element = $(this);
+       if (element.attr('id') === 'title_crowd') {
+           return "<img width = '150' height = '100' src='/assets/crowd_lejand.png'>";
+       }
+   }
+});
 
     $("#overlay #title_weather_air").tooltip({
       items: "div",
       position: { my: "left+15 center", at: "right center" },
       content: function() {
-         var element = $(this);
-         if (element.attr('id') === 'title_weather_air') {
-             return "<img width = '170' height = '170' src='/assets/weather_air_lejand.png'>";
-         }
-     }
- });    
+       var element = $(this);
+       if (element.attr('id') === 'title_weather_air') {
+           return "<img width = '170' height = '170' src='/assets/weather_air_lejand.png'>";
+       }
+   }
+});    
 
 });
