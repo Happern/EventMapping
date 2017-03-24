@@ -9,6 +9,8 @@ var densityLayer;
 var initialConditionsReceived = false;
 var badAirMarkers;
 var preferredEvents; 
+var allEvents;
+var preferredEventsLastOverwrittenBy = "none";
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -341,6 +343,12 @@ function submitSnazzyCode() {
     console.log('New base map style submitted; day map is ' + isDayMap);
 };
 
+function overwritePreferredEvents(newlyFilteredEvents, calledBy) {
+    preferredEvents = newlyFilteredEvents;
+    preferredEventsLastOverwrittenBy = calledBy;
+    console.log("preferredEvents overwritten by " + preferredEventsLastOverwrittenBy);
+};
+
 // called when the webpage is 'ready', all the html elements are initialized(?)
 $(document).ready(function () {
 
@@ -357,6 +365,7 @@ $(document).ready(function () {
         // these variables are initialized at the top this file
 
         preferredEvents = data.events;
+        allEvents = data.events;
         eventsMarkers = initMarkers(preferredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
         
         // for (var i = 0; i < data.events.length; i ++) {
@@ -397,7 +406,6 @@ $(document).ready(function () {
             }
         })
         ;
-
 
         // logs some info to console for debugging purposes, can be deleted
         console.log("initial conditions received");
@@ -653,14 +661,20 @@ $(document).ready(function () {
         var capacityStart;
         var capacityEnd; 
         var values = $('#slider-capacity').slider("option", "values");
-        var filteredEventMarkers = [];
+        var filteredEvents = [];
+
+        if (preferredEventsLastOverwrittenBy == "capacity") {
+            currentEvents = allEvents;
+        } else {
+            currentEvents = preferredEvents;
+        }
 
         capacityStart = values [0];
         capacityEnd = values [1];
 
         console.log ("new capacityStart " + capacityStart + " and capacityEnd " + capacityEnd);
 
-        filteredEventMarkers = preferredEvents.filter(isBigger).filter(isSmaller);
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
         function isBigger(value) {
             return capacityStart <= value.capacity;
@@ -670,24 +684,53 @@ $(document).ready(function () {
             return value.capacity <= capacityEnd;
         }
 
-        console.log ("new filteredEventMarkers created with " + filteredEventMarkers.length + " elements"); 
+        console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
 
-        updateInfo(filteredEventMarkers, eventsMarkers, function () {
-            eventsMarkers =  initMarkers(filteredEventMarkers, getEventLocation, eventImage, true, constructEventInfoMessage);
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
         }); 
+        overwritePreferredEvents(filteredEvents, "capacity");
     });
 
-    $( function() {
-        $( "#slider-density" ).slider({
-          range: true,
-          min: 0,
-          max: 500,
-          values: [ 75, 300 ],
-          slide: function( event, ui ) {
-            $( "#people_density" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+    $("#slider-density").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ 75, 300 ],
+      slide: function( event, ui ) {
+        $( "#people_density" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
         }
     });
-    } );
+
+    $("#slider-density").on("slidechange", function (event, ui) {
+        var densityStart;
+        var densityEnd;
+        var values = $("#slider-density").slider("option", "values");
+        var filteredEvents = [];
+        var currentEvents = preferredEvents;
+
+        densityStart = values[0];
+        densityEnd = values[1];
+
+        console.log("new densityStart " + densityStart + " and densityEnd " + densityEnd);
+
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+
+        function isBigger(value) {
+            return densityStart <= value.people_density;
+        }
+
+        function isSmaller(value){
+            return value.people_density <= densityEnd; 
+        }
+
+        console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
+
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers = initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        });
+        overwritePreferredEvents("density");
+    });
 
     $( function() {
         $( "#slider-sound" ).slider({
