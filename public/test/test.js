@@ -103,6 +103,66 @@ var weatherImage_very_hot = {
     anchor: new google.maps.Point(50,50)   
 };
 
+var eventImage_o_s = {
+    url: "/assets/event_o_s.png",
+    scaledSize: new google.maps.Size(25, 25)
+}
+
+var eventImage_o_m = {
+    url: "/assets/event_o_m.png",
+    scaledSize: new google.maps.Size(50, 50)
+}
+
+var eventImage_o_b = {
+    url: "/assets/event_o_b.png",
+    scaledSize: new google.maps.Size(100, 100)
+}
+
+var eventImage_y_s = {
+    url: "/assets/event_y_s.png",
+    scaledSize: new google.maps.Size(25, 25)
+}
+
+var eventImage_y_m = {
+    url: "/assets/event_y_m.png",
+    scaledSize: new google.maps.Size(50, 50)
+}
+
+var eventImage_y_b = {
+    url: "/assets/event_y_b.png",
+    scaledSize: new google.maps.Size(100, 100)
+}
+
+var eventImage_g_s = {
+    url: "/assets/event_g_s.png",
+    scaledSize: new google.maps.Size(25, 25)
+}
+
+var eventImage_g_m = {
+    url: "/assets/event_g_m.png",
+    scaledSize: new google.maps.Size(50, 50)
+}
+
+var eventImage_g_b = {
+    url: "/assets/event_g_b.png",
+    scaledSize: new google.maps.Size(100, 100)
+}
+
+var eventImage_b_s = {
+    url: "/assets/event_b_s.png",
+    scaledSize: new google.maps.Size(25, 25)
+}
+
+var eventImage_b_m = {
+    url: "/assets/event_b_m.png",
+    scaledSize: new google.maps.Size(50, 50)
+}
+
+var eventImage_b_b = {
+    url: "/assets/event_b_b.png",
+    scaledSize: new google.maps.Size(100, 100)
+}
+
 //converts Date() to DD/MM/YYYY
 function convertDate(inputFormat) {
   function pad(s) {
@@ -236,6 +296,40 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 console.log('weather marker initiated with very hot')
             }
 
+            if (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
+                data.event_type == "Party" || data.event_type == "Concert" || data.event_type == "Sports event") {
+                if (data.capacity <= 0.33) {
+                    markerIcon = eventImage_o_s
+                } else if (data.capacity <= 0.66) {
+                    markerIcon = eventImage_o_m
+                } else if (data.capacity <= 1) {
+                    markerIcon = eventImage_o_b
+                }
+            } else if (data.event_type == "Cinema" || data.event_type == "Theater" || data.event_type == "Show" ||
+                data.event_type == "Exhibition") {
+                if (data.capacity <= 0.33) {
+                    markerIcon = eventImage_y_s
+                } else if (data.capacity <= 0.66) {
+                    markerIcon = eventImage_y_m
+                } else if (data.capacity <= 1) {
+                    markerIcon = eventImage_y_b
+                }
+            } else if (data.event_type == "Conference" || data.event_type == "Meeting" || data.event_type == "Talk" ||
+                data.event_type == "Workshop") {
+                if (data.capacity <= 0.33) {
+                    markerIcon = eventImage_g_s
+                } else if (data.capacity <= 0.66) {
+                    markerIcon = eventImage_g_m
+                } else if (data.capacity <= 1) {
+                    markerIcon = eventImage_g_b
+                }
+            } else if (data.capacity <= 0.33) {
+                markerIcon = eventImage_b_s
+            } else if (data.capacity <= 0.66) {
+                markerIcon = eventImage_b_m
+            } else if (data.capacity <= 1) {
+                markerIcon = eventImage_b_b
+            }
             var markerOptions = {
                 icon: markerIcon,
                 position: position,
