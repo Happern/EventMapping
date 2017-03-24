@@ -12,6 +12,19 @@ var preferredEvents;
 var allEvents;
 var preferredEventsOverwritingSequence = [];
 
+var capacityStart = 0;
+var capacityEnd = 1;
+var densityStart = 0;
+var densityEnd = 1; 
+var soundStart = 0;
+var soundEnd = 1;
+var activityStart = 0;
+var activityEnd = 1;
+var priceStart = 0;
+var priceEnd = 1;
+var language_tr = true;
+var language_eng = true;
+
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
     lat: 41.015137,
@@ -375,6 +388,8 @@ $(document).ready(function () {
         // }
 
         $('#events_allCB').prop('checked', true);
+        $( "#language_tr" ).prop( "checked", true );
+        $( "#language_eng" ).prop( "checked", true );
 
         $('#events_allCB').bind('change', function(){
             if($(this).is(':checked')){
@@ -663,41 +678,41 @@ $(document).ready(function () {
         var capacityStart;
         var capacityEnd; 
         var values = $('#slider-capacity').slider("option", "values");
-        var filteredEvents = [];
-        var arrayCount = 0; 
+        // var filteredEvents = [];
+        // var arrayCount = 0; 
 
-        currentEvents = preferredEvents;
+        // currentEvents = preferredEvents;
 
-        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
-            if (preferredEventsOverwritingSequence[i] == "capacity") {
-                arrayCount ++;
-            }
-        } 
+        // for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+        //     if (preferredEventsOverwritingSequence[i] == "capacity") {
+        //         arrayCount ++;
+        //     }
+        // } 
 
-        if (arrayCount == preferredEventsOverwritingSequence.length) {
-            currentEvents = allEvents;
-            console.log("preferredEventsOverwritingSequence is all capacity");
-        }
+        // if (arrayCount == preferredEventsOverwritingSequence.length) {
+        //     currentEvents = allEvents;
+        //     console.log("preferredEventsOverwritingSequence is all capacity");
+        // }
 
-        capacityStart = values [0];
-        capacityEnd = values [1];
+        // capacityStart = values [0];
+        // capacityEnd = values [1];
 
-        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+        // filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
-        function isBigger(value) {
-            return capacityStart <= value.capacity;
-        }
+        // function isBigger(value) {
+        //     return capacityStart <= value.capacity;
+        // }
 
-        function isSmaller(value) {
-            return value.capacity <= capacityEnd;
-        }
+        // function isSmaller(value) {
+        //     return value.capacity <= capacityEnd;
+        // }
 
-        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
 
-        updateInfo(filteredEvents, eventsMarkers, function () {
-            eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        }); 
-        overwritePreferredEvents(filteredEvents, "capacity");
+        // updateInfo(filteredEvents, eventsMarkers, function () {
+        //     eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        // }); 
+        // overwritePreferredEvents(filteredEvents, "capacity");
     });
 
     $("#slider-density").slider({
@@ -713,81 +728,96 @@ $(document).ready(function () {
         var densityStart;
         var densityEnd;
         var values = $("#slider-density").slider("option", "values");
-        var filteredEvents = [];
-        var arrayCount = 0;
+        // var filteredEvents = [];
+        // var arrayCount = 0;
 
-        currentEvents = preferredEvents;
+        // currentEvents = preferredEvents;
 
-        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
-            if (preferredEventsOverwritingSequence[i] == "density") {
-                arrayCount ++;
-            }
-        } 
+        // for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+        //     if (preferredEventsOverwritingSequence[i] == "density") {
+        //         arrayCount ++;
+        //     }
+        // } 
 
-        if (arrayCount == preferredEventsOverwritingSequence.length) {
-            currentEvents = allEvents;
-            console.log("preferredEventsOverwritingSequence is all density");
-        } 
+        // if (arrayCount == preferredEventsOverwritingSequence.length) {
+        //     currentEvents = allEvents;
+        //     console.log("preferredEventsOverwritingSequence is all density");
+        // } 
 
-        densityStart = values[0];
-        densityEnd = values[1];
+        // densityStart = values[0];
+        // densityEnd = values[1];
 
 
-        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+        // filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
-        function isBigger(value) {
-            return densityStart <= value.people_density;
-        }
+        // function isBigger(value) {
+        //     return densityStart <= value.people_density;
+        // }
 
-        function isSmaller(value){
-            return value.people_density <= densityEnd; 
-        }
+        // function isSmaller(value){
+        //     return value.people_density <= densityEnd; 
+        // }
 
-        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
+        // // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
-        updateInfo(filteredEvents, eventsMarkers, function () {
-            eventsMarkers = initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        });
-        overwritePreferredEvents(filteredEvents, "density");
+        // updateInfo(filteredEvents, eventsMarkers, function () {
+        //     eventsMarkers = initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        // });
+        // overwritePreferredEvents(filteredEvents, "density");
     });
 
-    $( function() {
-        $( "#slider-sound" ).slider({
-          min: 0,
-          max: 500,
-          values: [ 75],
-          slide: function( event, ui ) {
-          }
-      });
-    } );
-
-    $( function() {
-        $( "#slider-activity" ).slider({
-          min: 0,
-          max: 500,
-          values: [100],
-          slide: function( event, ui ) {
-          }
-      });
-    } );
-
-    $( function() {
-        $( "#slider-price" ).slider({
-          min: 0,
-          max: 300,
-          value: 100,
-          step: 100,
-          slide: function( event, ui ) {
-            $( "#amount" ).val( "$" + ui.value );
-        }
+    $( "#slider-sound" ).slider({
+      range: true,
+      min: 0,
+      max: 1,
+      step: 0.01,
+      values: [ 0, 1 ],
+      change: function (event, ui) {}
     });
-    } );
 
-    $( function() {
-        $( "input" ).checkboxradio({
-          icon: false
-      });
-    } );
+    $("#slider-sound").on("slidechange", function (event, ui) {
+        var soundStart;
+        var soundEnd;
+        var values = $("#slider-sound").slider("option", "values");
+    });
+
+    $( "#slider-activity" ).slider({
+      range: true,
+      min: 0,
+      max: 1,
+      step: 0.01,
+      values: [ 0, 1 ],
+      change: function (event, ui) {}
+    });
+
+    $("#slider-activity").on("slidechange", function (event, ui) {
+        var activityStart;
+        var activityEnd;
+        var values = $("#slider-activity").slider("option", "values");
+    });    
+
+    $( "#slider-price" ).slider({
+        range: true,
+      min: 0,
+      max: 1,
+      step: 0.3,
+      values: [ 0, 1 ],
+      change: function (event, ui) {}
+    });
+
+    $("#slider-price").on("slidechange", function (event, ui) {
+        var priceStart;
+        var priceEnd;
+        var values = $("#slider-price").slider("option", "values");
+    });
+
+    $( "#language_tr").checkboxradio({
+        icon: false
+    });
+
+    $( "#language_eng").checkboxradio({
+        icon: false
+    });
 
     $("#overlay #title_events").tooltip({
       items: "div",
