@@ -10,7 +10,7 @@ var initialConditionsReceived = false;
 var badAirMarkers;
 var preferredEvents; 
 var allEvents;
-var preferredEventsLastOverwrittenBy = "none";
+var preferredEventsOverwritingSequence = [];
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -254,7 +254,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
 
                 if (Math.random() >= 0.5){
                     markerOptions.icon = eventImage_medium
-                    console.log('eventImage_medium used for event marker initiation')
+                    // console.log('eventImage_medium used for event marker initiation')
                 } else {
                     markerOptions.icon = eventImage
                 }
@@ -276,7 +276,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
                     content: template({
                         title: data.name,
-                        subtitle: 'Location: '+ data.venue_name + ' //// Time: ' + data.start_time,
+                        subtitle: 'Location: '+ data.venue_name + ' //// Time: ' + data.start_time + '///// Capacity: ' 
+                        + data.capacity + '///// Density ' + data.people_density,
                         bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
                     }),
                     callbacks: {
@@ -345,8 +346,9 @@ function submitSnazzyCode() {
 
 function overwritePreferredEvents(newlyFilteredEvents, calledBy) {
     preferredEvents = newlyFilteredEvents;
-    preferredEventsLastOverwrittenBy = calledBy;
-    console.log("preferredEvents overwritten by " + preferredEventsLastOverwrittenBy);
+    preferredEventsOverwritingSequence.push(calledBy);
+    console.log("preferred Events is now " + preferredEvents.length + " long");
+    return preferredEvents;
 };
 
 // called when the webpage is 'ready', all the html elements are initialized(?)
@@ -431,7 +433,7 @@ $(document).ready(function () {
             for (var i = 0; i < densityMarkers.length; i++) {
                 densityMarkers[i].setMap(null);
             }
-            console.log('after update, density markers not shown although there are new ' + data.twitter.length + ' data points')
+            // console.log('after update, density markers not shown although there are new ' + data.twitter.length + ' data points')
         }
 
         $('#crowdCB').bind('change', function(){
@@ -468,7 +470,7 @@ $(document).ready(function () {
             for (var i = 0; i < weatherMarkers.length; i++) {
                 weatherMarkers[i].setMap(null);
             }
-            console.log('after update, density markers not shown although there are new ' + weatherMarkers.length + ' weather points')
+            // console.log('after update, density markers not shown although there are new ' + weatherMarkers.length + ' weather points')
         }        
 
         //logs for debugging purposes
@@ -653,7 +655,7 @@ $(document).ready(function () {
       min: 0,
       max: 1,
       step: 0.01,
-      values: [ 0.2, 0.4 ],
+      values: [ 0, 1 ],
       change: function (event, ui) {}
     });
 
@@ -662,17 +664,23 @@ $(document).ready(function () {
         var capacityEnd; 
         var values = $('#slider-capacity').slider("option", "values");
         var filteredEvents = [];
+        var arrayCount = 0; 
 
-        if (preferredEventsLastOverwrittenBy == "capacity") {
+        currentEvents = preferredEvents;
+
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "capacity") {
+                arrayCount ++;
+            }
+        } 
+
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
             currentEvents = allEvents;
-        } else {
-            currentEvents = preferredEvents;
+            console.log("preferredEventsOverwritingSequence is all capacity");
         }
 
         capacityStart = values [0];
         capacityEnd = values [1];
-
-        console.log ("new capacityStart " + capacityStart + " and capacityEnd " + capacityEnd);
 
         filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
@@ -684,7 +692,7 @@ $(document).ready(function () {
             return value.capacity <= capacityEnd;
         }
 
-        console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
 
         updateInfo(filteredEvents, eventsMarkers, function () {
             eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
@@ -695,11 +703,10 @@ $(document).ready(function () {
     $("#slider-density").slider({
       range: true,
       min: 0,
-      max: 500,
-      values: [ 75, 300 ],
-      slide: function( event, ui ) {
-        $( "#people_density" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        }
+      max: 1,
+      step: 0.01,
+      values: [ 0, 1 ],
+      change: function (event, ui) {}
     });
 
     $("#slider-density").on("slidechange", function (event, ui) {
@@ -707,12 +714,24 @@ $(document).ready(function () {
         var densityEnd;
         var values = $("#slider-density").slider("option", "values");
         var filteredEvents = [];
-        var currentEvents = preferredEvents;
+        var arrayCount = 0;
+
+        currentEvents = preferredEvents;
+
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "density") {
+                arrayCount ++;
+            }
+        } 
+
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
+            currentEvents = allEvents;
+            console.log("preferredEventsOverwritingSequence is all density");
+        } 
 
         densityStart = values[0];
         densityEnd = values[1];
 
-        console.log("new densityStart " + densityStart + " and densityEnd " + densityEnd);
 
         filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
@@ -724,12 +743,12 @@ $(document).ready(function () {
             return value.people_density <= densityEnd; 
         }
 
-        console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
         updateInfo(filteredEvents, eventsMarkers, function () {
             eventsMarkers = initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
         });
-        overwritePreferredEvents("density");
+        overwritePreferredEvents(filteredEvents, "density");
     });
 
     $( function() {
