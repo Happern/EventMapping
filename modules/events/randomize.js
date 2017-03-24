@@ -73,13 +73,13 @@ function getRandomPriceValue () {
   var priceProb = Math.random();
   var price;
   if (priceProb <= 0.25) {
-    price = "free";
+    price = 0;
   } else if (priceProb <= 0.5) {
-    price = "one dollar";
+    price = 1;
   } else if (priceProb <= 0.75) {
-    price = "two dollars";
+    price = 2;
   } else if (priceProb <= 1) {
-    price = "three dollars";
+    price = 3;
   }
   return price;
 }

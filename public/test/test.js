@@ -24,6 +24,8 @@ var priceStart = 0;
 var priceEnd = 1;
 var language_tr = true;
 var language_eng = true;
+var event_type = "all";
+
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -197,7 +199,7 @@ function updateInfo(newMarkers, oldMarkers, initFunction) {
 // for each data type.
 // pinImage is a config object for pinImage  it is optional
 // infoMessageFunction is a function that forms an info message from the given data it is optional
-function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageFunction) {
+function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageFunction) { //for zoom level 1 and 2
     markers = [];
     pinArray.forEach(function (data) {
         var position = locationFunction(data);
@@ -362,6 +364,20 @@ function overwritePreferredEvents(newlyFilteredEvents, calledBy) {
     preferredEventsOverwritingSequence.push(calledBy);
     console.log("preferred Events is now " + preferredEvents.length + " long");
     return preferredEvents;
+};
+
+function filterMarkers(
+    event_type, 
+    capacityStart, capacityEnd, 
+    densityStart, densityEnd, 
+    soundStart, soundEnd, 
+    activityStart, activityEnd, 
+    priceStart, priceEnd, 
+    language_tr, language_eng) 
+{
+    if (event_type == "Other") {
+
+    }
 };
 
 // called when the webpage is 'ready', all the html elements are initialized(?)
@@ -678,41 +694,41 @@ $(document).ready(function () {
         var capacityStart;
         var capacityEnd; 
         var values = $('#slider-capacity').slider("option", "values");
-        // var filteredEvents = [];
-        // var arrayCount = 0; 
+        var filteredEvents = [];
+        var arrayCount = 0; 
 
-        // currentEvents = preferredEvents;
+        currentEvents = preferredEvents;
 
-        // for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
-        //     if (preferredEventsOverwritingSequence[i] == "capacity") {
-        //         arrayCount ++;
-        //     }
-        // } 
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "capacity") {
+                arrayCount ++;
+            }
+        } 
 
-        // if (arrayCount == preferredEventsOverwritingSequence.length) {
-        //     currentEvents = allEvents;
-        //     console.log("preferredEventsOverwritingSequence is all capacity");
-        // }
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
+            currentEvents = allEvents;
+            console.log("preferredEventsOverwritingSequence is all capacity");
+        }
 
-        // capacityStart = values [0];
-        // capacityEnd = values [1];
+        capacityStart = values [0];
+        capacityEnd = values [1];
 
-        // filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
-        // function isBigger(value) {
-        //     return capacityStart <= value.capacity;
-        // }
+        function isBigger(value) {
+            return capacityStart <= value.capacity;
+        }
 
-        // function isSmaller(value) {
-        //     return value.capacity <= capacityEnd;
-        // }
+        function isSmaller(value) {
+            return value.capacity <= capacityEnd;
+        }
 
-        // // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
 
-        // updateInfo(filteredEvents, eventsMarkers, function () {
-        //     eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        // }); 
-        // overwritePreferredEvents(filteredEvents, "capacity");
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        }); 
+        overwritePreferredEvents(filteredEvents, "capacity");
     });
 
     $("#slider-density").slider({
@@ -728,42 +744,42 @@ $(document).ready(function () {
         var densityStart;
         var densityEnd;
         var values = $("#slider-density").slider("option", "values");
-        // var filteredEvents = [];
-        // var arrayCount = 0;
+        var filteredEvents = [];
+        var arrayCount = 0;
 
-        // currentEvents = preferredEvents;
+        currentEvents = preferredEvents;
 
-        // for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
-        //     if (preferredEventsOverwritingSequence[i] == "density") {
-        //         arrayCount ++;
-        //     }
-        // } 
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "density") {
+                arrayCount ++;
+            }
+        } 
 
-        // if (arrayCount == preferredEventsOverwritingSequence.length) {
-        //     currentEvents = allEvents;
-        //     console.log("preferredEventsOverwritingSequence is all density");
-        // } 
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
+            currentEvents = allEvents;
+            console.log("preferredEventsOverwritingSequence is all density");
+        } 
 
-        // densityStart = values[0];
-        // densityEnd = values[1];
+        densityStart = values[0];
+        densityEnd = values[1];
 
 
-        // filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
 
-        // function isBigger(value) {
-        //     return densityStart <= value.people_density;
-        // }
+        function isBigger(value) {
+            return densityStart <= value.people_density;
+        }
 
-        // function isSmaller(value){
-        //     return value.people_density <= densityEnd; 
-        // }
+        function isSmaller(value){
+            return value.people_density <= densityEnd; 
+        }
 
-        // // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
-        // updateInfo(filteredEvents, eventsMarkers, function () {
-        //     eventsMarkers = initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        // });
-        // overwritePreferredEvents(filteredEvents, "density");
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers = initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        });
+        overwritePreferredEvents(filteredEvents, "density");
     });
 
     $( "#slider-sound" ).slider({
@@ -779,6 +795,41 @@ $(document).ready(function () {
         var soundStart;
         var soundEnd;
         var values = $("#slider-sound").slider("option", "values");
+        var filteredEvents = [];
+        var arrayCount = 0; 
+
+        currentEvents = preferredEvents;
+
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "sound") {
+                arrayCount ++;
+            }
+        } 
+
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
+            currentEvents = allEvents;
+            console.log("preferredEventsOverwritingSequence is all sound");
+        }
+
+        soundStart = values [0];
+        soundEnd = values [1];
+
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+
+        function isBigger(value) {
+            return soundStart <= value.sound;
+        }
+
+        function isSmaller(value) {
+            return value.sound <= soundEnd;
+        }
+
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        }); 
+        overwritePreferredEvents(filteredEvents, "sound");
     });
 
     $( "#slider-activity" ).slider({
@@ -794,6 +845,42 @@ $(document).ready(function () {
         var activityStart;
         var activityEnd;
         var values = $("#slider-activity").slider("option", "values");
+
+        var filteredEvents = [];
+        var arrayCount = 0; 
+
+        currentEvents = preferredEvents;
+
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "activity") {
+                arrayCount ++;
+            }
+        } 
+
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
+            currentEvents = allEvents;
+            console.log("preferredEventsOverwritingSequence is all activity");
+        }
+
+        activityStart = values [0];
+        activityEnd = values [1];
+
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+
+        function isBigger(value) {
+            return activityStart <= value.activity;
+        }
+
+        function isSmaller(value) {
+            return value.activity <= activityEnd;
+        }
+
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        }); 
+        overwritePreferredEvents(filteredEvents, "activity");        
     });    
 
     $( "#slider-price" ).slider({
@@ -809,6 +896,42 @@ $(document).ready(function () {
         var priceStart;
         var priceEnd;
         var values = $("#slider-price").slider("option", "values");
+
+        var filteredEvents = [];
+        var arrayCount = 0; 
+
+        currentEvents = preferredEvents;
+
+        for (var i = 0; i < preferredEventsOverwritingSequence.length; i ++) {
+            if (preferredEventsOverwritingSequence[i] == "price") {
+                arrayCount ++;
+            }
+        }   
+
+        if (arrayCount == preferredEventsOverwritingSequence.length) {
+            currentEvents = allEvents;
+            console.log("preferredEventsOverwritingSequence is all price");
+        }
+
+        priceStart = values [0];
+        priceEnd = values [1];
+
+        filteredEvents = currentEvents.filter(isBigger).filter(isSmaller);
+
+        function isBigger(value) {
+            return priceStart <= value.price;
+        }
+
+        function isSmaller(value) {
+            return value.price <= priceEnd;
+        }
+
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+
+        updateInfo(filteredEvents, eventsMarkers, function () {
+            eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        }); 
+        overwritePreferredEvents(filteredEvents, "price");
     });
 
     $( "#language_tr").checkboxradio({
