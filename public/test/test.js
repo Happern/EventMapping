@@ -595,7 +595,7 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     content: template({
                         title: data.name,
                         subtitle: 'Location: '+ data.venue_name + ' //// Time: ' + data.start_time + '///// Capacity: '
-                        + data.capacity + '///// Density ' + data.people_density + '////Api ' + data.api ,
+                        + data.capacity + '///// Density ' + data.people_density,
                         bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
                     }),
                     callbacks: {
