@@ -761,6 +761,14 @@ $(document).ready(function () {
 
      $('#entertainment_all').bind('change', function(){
         if(!$(this).is(':checked')){
+
+            $( "#Meetup" ).prop( "checked", false );
+            $( "#Celebration" ).prop( "checked", false );        
+            $( "#Festival" ).prop( "checked", false );
+            $( "#Party" ).prop( "checked", false );
+            $( "#Concert" ).prop( "checked", false );
+            $( "#Sports_event" ).prop( "checked", false );
+
             for (var i = 0; i < eventsMarkers.length; i++) {
                 if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" || 
                     eventsMarkers[i].icon.url == "/assets/event_o_s.png"||
@@ -771,6 +779,14 @@ $(document).ready(function () {
         }
 
         if($(this).is(':checked')){
+
+            $( "#Meetup" ).prop( "checked", true );
+            $( "#Celebration" ).prop( "checked", true );        
+            $( "#Festival" ).prop( "checked", true );
+            $( "#Party" ).prop( "checked", true );
+            $( "#Concert" ).prop( "checked", true );
+            $( "#Sports_event" ).prop( "checked", true );
+
             for (var i = 0; i < eventsMarkers.length; i++) {
                 if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" || 
                     eventsMarkers[i].icon.url == "/assets/event_o_s.png"||
@@ -781,6 +797,121 @@ $(document).ready(function () {
         }        
     })
     ;   
+
+     $('#cultural_all').bind('change', function(){
+        if(!$(this).is(':checked')){
+
+            $( "#Cinema" ).prop( "checked", false );
+            $( "#Theater" ).prop( "checked", false );
+            $( "#Show" ).prop( "checked", false );
+            $( "#Exhibition" ).prop( "checked", false );
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url == "/assets/event_y_b.png" || 
+                    eventsMarkers[i].icon.url == "/assets/event_y_s.png"||
+                    eventsMarkers[i].icon.url == "/assets/event_y_m.png") {
+                    eventsMarkers[i].setMap(null);
+                }
+            }
+        }
+
+        if($(this).is(':checked')){
+
+            $( "#Cinema" ).prop( "checked", true );
+            $( "#Theater" ).prop( "checked", true );
+            $( "#Show" ).prop( "checked", true );
+            $( "#Exhibition" ).prop( "checked", true );
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url == "/assets/event_y_b.png" || 
+                    eventsMarkers[i].icon.url == "/assets/event_y_s.png"||
+                    eventsMarkers[i].icon.url == "/assets/event_y_m.png") {
+                    eventsMarkers[i].setMap(map);
+                }
+            }
+        }        
+    })
+    ;     
+
+    $('#educative_all').bind('change', function(){
+        if(!$(this).is(':checked')){
+
+            $( "#Conference" ).prop( "checked", false );
+            $( "#Meeting" ).prop( "checked", false );
+            $( "#Talk" ).prop( "checked", false );
+            $( "#Workshop" ).prop( "checked", false );  
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url == "/assets/event_g_b.png" || 
+                    eventsMarkers[i].icon.url == "/assets/event_g_s.png"||
+                    eventsMarkers[i].icon.url == "/assets/event_g_m.png") {
+                    eventsMarkers[i].setMap(null);
+                }
+            }
+        }
+
+        if($(this).is(':checked')){
+
+            $( "#Conference" ).prop( "checked", true );
+            $( "#Meeting" ).prop( "checked", true );
+            $( "#Talk" ).prop( "checked", true );
+            $( "#Workshop" ).prop( "checked", true );            
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url == "/assets/event_g_b.png" || 
+                    eventsMarkers[i].icon.url == "/assets/event_g_s.png"||
+                    eventsMarkers[i].icon.url == "/assets/event_g_m.png") {
+                    eventsMarkers[i].setMap(map);
+                }
+            }
+        }        
+    })
+    ; 
+
+    $('#other_all').bind('change', function(){
+        if(!$(this).is(':checked')){
+
+            $( "#Protest" ).prop( "checked", false );
+            $( "#Ceremony" ).prop( "checked", false );
+            $( "#Other" ).prop( "checked", false );   
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url != "/assets/event_o_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_y_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_g_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_g_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_g_s.png") {
+                    eventsMarkers[i].setMap(null);
+                }
+            }
+        }
+
+        if($(this).is(':checked')){    
+
+            $( "#Protest" ).prop( "checked", true );
+            $( "#Ceremony" ).prop( "checked", true );
+            $( "#Other" ).prop( "checked", true );                   
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url != "/assets/event_o_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_y_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_g_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_g_s.png" &&
+                    eventsMarkers[i].icon.url != "/assets/event_g_s.png") {
+                    eventsMarkers[i].setMap(map);
+                }
+            }
+        }        
+    })
+    ; 
 
     $('#crowdCB').bind('change', function(){
         if(!$(this).is(':checked')){
