@@ -26,6 +26,8 @@ var language_tr = true;
 var language_eng = true;
 var event_type = "all";
 
+var allInfoWindows = [];
+
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -370,16 +372,10 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                 // constructWeatherInfoMessage
                 //var infoMessage = infoMessageFunction(data);
 
-                if (Math.random() >= 0.5){
-                    markerOptions.icon = eventImage_medium
-                    // console.log('eventImage_medium used for event marker initiation')
-                } else {
-                    markerOptions.icon = eventImage
-                }
-
-                //uses google map's default info window to create infoWindow
+                //uses SnazzyInfoWindow to create infoWindow
                 //object with the constructed message
                 var infowindow = new SnazzyInfoWindow({
+                    title: data.name,
                     marker: marker,
                     wrapperClass: 'custom-window',
                     offset: {
@@ -422,6 +418,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                         }
                     }
                 });
+
+                allInfoWindows.push(infowindow);
 
                 //adds event listener to the  marker object for 'click event' to open the info window
                 google.maps.event.addListener(marker, 'click', function () {
@@ -469,19 +467,19 @@ function overwritePreferredEvents(newlyFilteredEvents, calledBy) {
     return preferredEvents;
 };
 
-function filterMarkers(
-    event_type, 
-    capacityStart, capacityEnd, 
-    densityStart, densityEnd, 
-    soundStart, soundEnd, 
-    activityStart, activityEnd, 
-    priceStart, priceEnd, 
-    language_tr, language_eng) 
-{
-    if (event_type == "Other") {
+// function filterMarkers(
+//     event_type, 
+//     capacityStart, capacityEnd, 
+//     densityStart, densityEnd, 
+//     soundStart, soundEnd, 
+//     activityStart, activityEnd, 
+//     priceStart, priceEnd, 
+//     language_tr, language_eng) 
+// {
+//     if (event_type == "Other") {
 
-    }
-};
+//     }
+// };
 
 // called when the webpage is 'ready', all the html elements are initialized(?)
 $(document).ready(function () {
@@ -797,6 +795,33 @@ $(document).ready(function () {
         }        
     })
     ;   
+
+    $('#Meetup').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Meetup") {
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Meetup") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    })
 
      $('#cultural_all').bind('change', function(){
         if(!$(this).is(':checked')){
