@@ -8,14 +8,14 @@ var trafficLayer;
 var densityLayer;
 var initialConditionsReceived = false;
 var badAirMarkers;
-var preferredEvents; 
+var preferredEvents;
 var allEvents;
 var preferredEventsOverwritingSequence = [];
 
 var capacityStart = 0;
 var capacityEnd = 1;
 var densityStart = 0;
-var densityEnd = 1; 
+var densityEnd = 1;
 var soundStart = 0;
 var soundEnd = 1;
 var activityStart = 0;
@@ -46,13 +46,13 @@ var istanbulCoordinatesPushRight = {
 };
 
 var badAirQualityCoordinates = [
-    {lat: 40.997040, lng: 29.171562}, //Ümraniye - nova ticaret 
-    {lat: 41.062849, lng: 28.992759}, // Cevahir AVM 
-    {lat: 41.002408, lng: 28.974237}, // Çatladıkapı 
-    {lat: 41.003982, lng: 29.023916}, // Siyami Ersek Hastanesi 
-    {lat: 41.090526, lng: 28.985135}, // Kağıthane Merkez 
-    {lat: 40.991960, lng: 29.036442}, // Söğütlüçeşme  
-    {lat: 41.009925, lng: 29.154930}// Yukarıdudullu 
+    {lat: 40.997040, lng: 29.171562}, //Ümraniye - nova ticaret
+    {lat: 41.062849, lng: 28.992759}, // Cevahir AVM
+    {lat: 41.002408, lng: 28.974237}, // Çatladıkapı
+    {lat: 41.003982, lng: 29.023916}, // Siyami Ersek Hastanesi
+    {lat: 41.090526, lng: 28.985135}, // Kağıthane Merkez
+    {lat: 40.991960, lng: 29.036442}, // Söğütlüçeşme
+    {lat: 41.009925, lng: 29.154930}// Yukarıdudullu
     ];
 
 //an orange dot to represent tweet coordinates
@@ -67,7 +67,7 @@ var eventImage = {
     scaledSize: new google.maps.Size(20,20)
 };
 
-//change -- to do 
+//change -- to do
 var eventImage_medium = {
     url: "/assets/black circle_more transparent.png",
     size: new google.maps.Size(42, 68)
@@ -104,7 +104,7 @@ var weatherImage_very_hot = {
     url: "/assets/weather_very_hot.png",
     scaledSize: new google.maps.Size(100, 100),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(50,50)   
+    anchor: new google.maps.Point(50,50)
 };
 
 var eventImage_o_s = {
@@ -115,7 +115,7 @@ var eventImage_o_s = {
 
 var eventImage_o_m = {
     url: "/assets/event_o_m.png",
-    scaledSize: new google.maps.Size(30, 30), 
+    scaledSize: new google.maps.Size(30, 30),
     anchor: new google.maps.Point(15,15)
 }
 
@@ -330,7 +330,7 @@ function initDensityMarkers(pinArray, locationFunction, pinImage) {
             }
             var eventDensityMarker = new google.maps.Marker(markerOptions);
             eventDensityMarkers.push(eventDensityMarker);
-        }   
+        }
 
         if (position && data.capacity < 0.33 && data.people_density > 0.5
             && (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
@@ -346,7 +346,7 @@ function initDensityMarkers(pinArray, locationFunction, pinImage) {
             }
             var eventDensityMarker = new google.maps.Marker(markerOptions);
             eventDensityMarkers.push(eventDensityMarker);
-        }     
+        }
     })
     return eventDensityMarkers;
 }
@@ -370,7 +370,7 @@ function initSoundMarkers(pinArray, locationFunction, pinImage) {
             }
             var eventSoundMarker = new google.maps.Marker(markerOptions);
             eventSoundMarkers.push(eventSoundMarker);
-        }        
+        }
     })
     return eventSoundMarkers;
 }
@@ -394,7 +394,7 @@ function initActivityMarkers(pinArray, locationFunction, pinImage) {
             }
             var eventActivityMarker = new google.maps.Marker(markerOptions);
             eventActivityMarkers.push(eventActivityMarker);
-        }        
+        }
     })
     return eventActivityMarkers;
 }
@@ -432,7 +432,7 @@ function constructEventInfoMessage(data) {
 
 //similar to above
 function constructWeatherInfoMessage(data) {
-    console.log("Feels Like: " + data.apparentTemperature + "C\n" + "Chance of Rain: " + data.precipProbability + "\n" + "Wind Speed: " + data.windSpeed) 
+    console.log("Feels Like: " + data.apparentTemperature + "C\n" + "Chance of Rain: " + data.precipProbability + "\n" + "Wind Speed: " + data.windSpeed)
 }
 
 //extracts weather locations from weather data and creates google location obj
@@ -499,11 +499,11 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             //Change markerIcon for weather
             if (data.precipProbability > 0.4) {
                 markerIcon = weatherImage_rain
-                console.log('weather marker initiated with rain')                                
-            } 
+                console.log('weather marker initiated with rain')
+            }
             if (data.precipProbability > 0.4 && data.apparentTemperature < -3) {
                 markerIcon = weatherImage_snow
-                console.log('weather marker initiated with snow')                                
+                console.log('weather marker initiated with snow')
             }
             if (data.apparentTemperature >= 40) {
                 markerIcon = weatherImage_very_hot
@@ -594,8 +594,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
                     closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
                     content: template({
                         title: data.name,
-                        subtitle: 'Location: '+ data.venue_name + ' //// Time: ' + data.start_time + '///// Capacity: ' 
-                        + data.capacity + '///// Density ' + data.people_density,
+                        subtitle: 'Location: '+ data.venue_name + ' //// Time: ' + data.start_time + '///// Capacity: '
+                        + data.capacity + '///// Density ' + data.people_density + '////Api ' + data.api ,
                         bgImg: 'https://i.imgsafe.org/cc6abaf3bf.jpg',
                     }),
                     callbacks: {
@@ -672,13 +672,13 @@ function overwritePreferredEvents(newlyFilteredEvents, calledBy) {
 };
 
 // function filterMarkers(
-//     event_type, 
-//     capacityStart, capacityEnd, 
-//     densityStart, densityEnd, 
-//     soundStart, soundEnd, 
-//     activityStart, activityEnd, 
-//     priceStart, priceEnd, 
-//     language_tr, language_eng) 
+//     event_type,
+//     capacityStart, capacityEnd,
+//     densityStart, densityEnd,
+//     soundStart, soundEnd,
+//     activityStart, activityEnd,
+//     priceStart, priceEnd,
+//     language_tr, language_eng)
 // {
 //     if (event_type == "Other") {
 
@@ -703,7 +703,7 @@ $(document).ready(function () {
         preferredEvents = data.events;
         allEvents = data.events;
         eventsMarkers = initMarkers(preferredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        
+
         // for (var i = 0; i < data.events.length; i ++) {
         //     eventsCapacityMarkers[i] = data.events[i].capacity;
         // }
@@ -712,9 +712,9 @@ $(document).ready(function () {
         $( "#language_tr" ).prop( "checked", true );
         $( "#language_eng" ).prop( "checked", true );
 
-        $( "#entertainment_all" ).prop( "checked", true );        
+        $( "#entertainment_all" ).prop( "checked", true );
         $( "#Meetup" ).prop( "checked", true );
-        $( "#Celebration" ).prop( "checked", true );        
+        $( "#Celebration" ).prop( "checked", true );
         $( "#Festival" ).prop( "checked", true );
         $( "#Party" ).prop( "checked", true );
         $( "#Concert" ).prop( "checked", true );
@@ -761,8 +761,8 @@ $(document).ready(function () {
 
                     var marker = new google.maps.Marker({
                         icon: weatherImage_bad_quality,
-                        position: badAirQualityCoordinates[i]                        
-                    }); 
+                        position: badAirQualityCoordinates[i]
+                    });
 
                     marker.setMap(map);
                     badAirMarkers.push(marker);
@@ -786,7 +786,7 @@ $(document).ready(function () {
         if ($('#crowdCB').is(':checked')){
             for (var i = 0; i < densityMarkers.length; i++) {
                 densityMarkers[i].setMap(null);
-            }            
+            }
             densityMarkers =  initMarkers(data.twitter, getTwitterLocation, twitterImage);
         }
 
@@ -803,7 +803,7 @@ $(document).ready(function () {
                 densityMarkers = initMarkers(data.twitter, getTwitterLocation, twitterImage);
             }
         })
-        ;        
+        ;
 
         $('#crowdCB').bind('change', function(){
             if(!$(this).is(':checked')){
@@ -812,7 +812,7 @@ $(document).ready(function () {
                 }
             }
         })
-        ;        
+        ;
 
         // updates density info (old markers are cleared and new ones are created)
         // updateInfo(data.twitter, densityMarkers, function () {
@@ -833,7 +833,7 @@ $(document).ready(function () {
                 weatherMarkers[i].setMap(null);
             }
             // console.log('after update, density markers not shown although there are new ' + weatherMarkers.length + ' weather points')
-        }        
+        }
 
         //logs for debugging purposes
         console.log("updated conditions received");
@@ -947,7 +947,7 @@ $(document).ready(function () {
             trafficLayer.setMap(map);
         }
         if(!$(this).is(':checked')){
-            trafficLayer.setMap(null); 
+            trafficLayer.setMap(null);
         }
     })
     ;
@@ -955,25 +955,25 @@ $(document).ready(function () {
     $('#events_allCB').bind('change', function(){
         if(!$(this).is(':checked')){
 
-            $( "#entertainment_all" ).prop( "checked", false );            
+            $( "#entertainment_all" ).prop( "checked", false );
             $( "#Meetup" ).prop( "checked", false );
-            $( "#Celebration" ).prop( "checked", false );        
+            $( "#Celebration" ).prop( "checked", false );
             $( "#Festival" ).prop( "checked", false );
             $( "#Party" ).prop( "checked", false );
             $( "#Concert" ).prop( "checked", false );
             $( "#Sports_event" ).prop( "checked", false );
 
-            $( "#cultural_all" ).prop( "checked", false );            
+            $( "#cultural_all" ).prop( "checked", false );
             $( "#Cinema" ).prop( "checked", false );
             $( "#Theater" ).prop( "checked", false );
             $( "#Show" ).prop( "checked", false );
-            $( "#Exhibition" ).prop( "checked", false );    
+            $( "#Exhibition" ).prop( "checked", false );
 
-            $( "#educative_all" ).prop( "checked", false );            
+            $( "#educative_all" ).prop( "checked", false );
             $( "#Conference" ).prop( "checked", false );
             $( "#Meeting" ).prop( "checked", false );
             $( "#Talk" ).prop( "checked", false );
-            $( "#Workshop" ).prop( "checked", false ); 
+            $( "#Workshop" ).prop( "checked", false );
 
             $( "#other_all" ).prop( "checked", false );
             $( "#Protest" ).prop( "checked", false );
@@ -982,29 +982,29 @@ $(document).ready(function () {
 
             for (var i = 0; i < eventsMarkers.length; i++) {
               eventsMarkers[i].setMap(null);
-            }   
+            }
         }
 
         if($(this).is(':checked')){
-            $( "#entertainment_all" ).prop( "checked", true );            
+            $( "#entertainment_all" ).prop( "checked", true );
             $( "#Meetup" ).prop( "checked", true );
-            $( "#Celebration" ).prop( "checked", true );        
+            $( "#Celebration" ).prop( "checked", true );
             $( "#Festival" ).prop( "checked", true );
             $( "#Party" ).prop( "checked", true );
             $( "#Concert" ).prop( "checked", true );
             $( "#Sports_event" ).prop( "checked", true );
 
-            $( "#cultural_all" ).prop( "checked", true );            
+            $( "#cultural_all" ).prop( "checked", true );
             $( "#Cinema" ).prop( "checked", true );
             $( "#Theater" ).prop( "checked", true );
             $( "#Show" ).prop( "checked", true );
-            $( "#Exhibition" ).prop( "checked", true );    
+            $( "#Exhibition" ).prop( "checked", true );
 
-            $( "#educative_all" ).prop( "checked", true );            
+            $( "#educative_all" ).prop( "checked", true );
             $( "#Conference" ).prop( "checked", true );
             $( "#Meeting" ).prop( "checked", true );
             $( "#Talk" ).prop( "checked", true );
-            $( "#Workshop" ).prop( "checked", true ); 
+            $( "#Workshop" ).prop( "checked", true );
 
             $( "#other_all" ).prop( "checked", true );
             $( "#Protest" ).prop( "checked", true );
@@ -1013,7 +1013,7 @@ $(document).ready(function () {
 
             for (var i = 0; i < eventsMarkers.length; i++) {
                 eventsMarkers[i].setMap(map);
-            } 
+            }
         }
     });
 
@@ -1023,14 +1023,14 @@ $(document).ready(function () {
             $('#events_allCB').prop('checked', false);
 
             $( "#Meetup" ).prop( "checked", false );
-            $( "#Celebration" ).prop( "checked", false );        
+            $( "#Celebration" ).prop( "checked", false );
             $( "#Festival" ).prop( "checked", false );
             $( "#Party" ).prop( "checked", false );
             $( "#Concert" ).prop( "checked", false );
             $( "#Sports_event" ).prop( "checked", false );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" || 
+                if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" ||
                     eventsMarkers[i].icon.url == "/assets/event_o_s.png"||
                     eventsMarkers[i].icon.url == "/assets/event_o_m.png") {
                     eventsMarkers[i].setMap(null);
@@ -1041,22 +1041,22 @@ $(document).ready(function () {
         if($(this).is(':checked')){
 
             $( "#Meetup" ).prop( "checked", true );
-            $( "#Celebration" ).prop( "checked", true );        
+            $( "#Celebration" ).prop( "checked", true );
             $( "#Festival" ).prop( "checked", true );
             $( "#Party" ).prop( "checked", true );
             $( "#Concert" ).prop( "checked", true );
             $( "#Sports_event" ).prop( "checked", true );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" || 
+                if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" ||
                     eventsMarkers[i].icon.url == "/assets/event_o_s.png"||
                     eventsMarkers[i].icon.url == "/assets/event_o_m.png") {
                     eventsMarkers[i].setMap(map);
                 }
             }
-        }        
+        }
     })
-    ;   
+    ;
 
     $('#Meetup').bind('change', function () {
         if(!$(this).is(':checked')) {
@@ -1147,7 +1147,7 @@ $(document).ready(function () {
                 }
             }
         }
-    });  
+    });
 
     $('#Party').bind('change', function () {
         if(!$(this).is(':checked')) {
@@ -1209,7 +1209,7 @@ $(document).ready(function () {
                 }
             }
         }
-    }); 
+    });
 
     $('#Sports_event').bind('change', function () {
         if(!$(this).is(':checked')) {
@@ -1240,7 +1240,7 @@ $(document).ready(function () {
                 }
             }
         }
-    });    
+    });
 
     $('#Cinema').bind('change', function () {
         if(!$(this).is(':checked')) {
@@ -1271,7 +1271,7 @@ $(document).ready(function () {
                 }
             }
         }
-    }); 
+    });
 
     $('#Theater').bind('change', function () {
         if(!$(this).is(':checked')) {
@@ -1301,7 +1301,7 @@ $(document).ready(function () {
                 }
             }
         }
-    }); 
+    });
 
     $('#Show').bind('change', function () {
         if(!$(this).is(':checked')) {
@@ -1584,7 +1584,7 @@ $(document).ready(function () {
             $( "#Exhibition" ).prop( "checked", false );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url == "/assets/event_y_b.png" || 
+                if (eventsMarkers[i].icon.url == "/assets/event_y_b.png" ||
                     eventsMarkers[i].icon.url == "/assets/event_y_s.png"||
                     eventsMarkers[i].icon.url == "/assets/event_y_m.png") {
                     eventsMarkers[i].setMap(null);
@@ -1600,15 +1600,15 @@ $(document).ready(function () {
             $( "#Exhibition" ).prop( "checked", true );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url == "/assets/event_y_b.png" || 
+                if (eventsMarkers[i].icon.url == "/assets/event_y_b.png" ||
                     eventsMarkers[i].icon.url == "/assets/event_y_s.png"||
                     eventsMarkers[i].icon.url == "/assets/event_y_m.png") {
                     eventsMarkers[i].setMap(map);
                 }
             }
-        }        
+        }
     })
-    ;     
+    ;
 
     $('#educative_all').bind('change', function(){
         if(!$(this).is(':checked')){
@@ -1617,10 +1617,10 @@ $(document).ready(function () {
             $( "#Conference" ).prop( "checked", false );
             $( "#Meeting" ).prop( "checked", false );
             $( "#Talk" ).prop( "checked", false );
-            $( "#Workshop" ).prop( "checked", false );  
+            $( "#Workshop" ).prop( "checked", false );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url == "/assets/event_g_b.png" || 
+                if (eventsMarkers[i].icon.url == "/assets/event_g_b.png" ||
                     eventsMarkers[i].icon.url == "/assets/event_g_s.png"||
                     eventsMarkers[i].icon.url == "/assets/event_g_m.png") {
                     eventsMarkers[i].setMap(null);
@@ -1633,18 +1633,18 @@ $(document).ready(function () {
             $( "#Conference" ).prop( "checked", true );
             $( "#Meeting" ).prop( "checked", true );
             $( "#Talk" ).prop( "checked", true );
-            $( "#Workshop" ).prop( "checked", true );            
+            $( "#Workshop" ).prop( "checked", true );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url == "/assets/event_g_b.png" || 
+                if (eventsMarkers[i].icon.url == "/assets/event_g_b.png" ||
                     eventsMarkers[i].icon.url == "/assets/event_g_s.png"||
                     eventsMarkers[i].icon.url == "/assets/event_g_m.png") {
                     eventsMarkers[i].setMap(map);
                 }
             }
-        }        
+        }
     })
-    ; 
+    ;
 
     $('#other_all').bind('change', function(){
         if(!$(this).is(':checked')){
@@ -1652,16 +1652,16 @@ $(document).ready(function () {
 
             $( "#Protest" ).prop( "checked", false );
             $( "#Ceremony" ).prop( "checked", false );
-            $( "#Other" ).prop( "checked", false );   
+            $( "#Other" ).prop( "checked", false );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url != "/assets/event_o_b.png" && 
+                if (eventsMarkers[i].icon.url != "/assets/event_o_b.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
-                    eventsMarkers[i].icon.url != "/assets/event_y_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_y_b.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
-                    eventsMarkers[i].icon.url != "/assets/event_g_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_g_b.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_g_s.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_g_s.png") {
                     eventsMarkers[i].setMap(null);
@@ -1669,28 +1669,28 @@ $(document).ready(function () {
             }
         }
 
-        if($(this).is(':checked')){    
+        if($(this).is(':checked')){
 
             $( "#Protest" ).prop( "checked", true );
             $( "#Ceremony" ).prop( "checked", true );
-            $( "#Other" ).prop( "checked", true );                   
+            $( "#Other" ).prop( "checked", true );
 
             for (var i = 0; i < eventsMarkers.length; i++) {
-                if (eventsMarkers[i].icon.url != "/assets/event_o_b.png" && 
+                if (eventsMarkers[i].icon.url != "/assets/event_o_b.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_o_s.png" &&
-                    eventsMarkers[i].icon.url != "/assets/event_y_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_y_b.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_y_s.png" &&
-                    eventsMarkers[i].icon.url != "/assets/event_g_b.png" && 
+                    eventsMarkers[i].icon.url != "/assets/event_g_b.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_g_s.png" &&
                     eventsMarkers[i].icon.url != "/assets/event_g_s.png") {
                     eventsMarkers[i].setMap(map);
                 }
             }
-        }        
+        }
     })
-    ; 
+    ;
 
     $('#crowdCB').bind('change', function(){
         if(!$(this).is(':checked')){
@@ -1714,7 +1714,7 @@ $(document).ready(function () {
     })
     ;
 
-    $('.button').button() 
+    $('.button').button()
     .popup({
         on: 'click',
         position: 'right center'
@@ -1725,7 +1725,7 @@ $(document).ready(function () {
     .accordion({
         heightStyle: "content"
     })
-    ;   
+    ;
 
     $('.accordion')
     .accordion({
@@ -1735,7 +1735,7 @@ $(document).ready(function () {
         autoHeight:true,
         animate: 400
     })
-    ; 
+    ;
 
     $('.ui-button.ui-widget.ui-corner-all').click(function(){
         var redirectWindow = window.open('http://happern.ku.edu.tr/projects-2/eventmap/', '_blank');
@@ -1754,10 +1754,10 @@ $(document).ready(function () {
 
     $('#slider-capacity').on("slidechange", function (event, ui){
         var capacityStart;
-        var capacityEnd; 
+        var capacityEnd;
         var values = $('#slider-capacity').slider("option", "values");
         var filteredEvents = [];
-        var arrayCount = 0; 
+        var arrayCount = 0;
 
         currentEvents = preferredEvents;
 
@@ -1765,7 +1765,7 @@ $(document).ready(function () {
             if (preferredEventsOverwritingSequence[i] == "capacity") {
                 arrayCount ++;
             }
-        } 
+        }
 
         if (arrayCount == preferredEventsOverwritingSequence.length) {
             currentEvents = allEvents;
@@ -1785,11 +1785,11 @@ $(document).ready(function () {
             return value.capacity <= capacityEnd;
         }
 
-        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
         updateInfo(filteredEvents, eventsMarkers, function () {
             eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        }); 
+        });
         overwritePreferredEvents(filteredEvents, "capacity");
     });
 
@@ -1815,12 +1815,12 @@ $(document).ready(function () {
             if (preferredEventsOverwritingSequence[i] == "density") {
                 arrayCount ++;
             }
-        } 
+        }
 
         if (arrayCount == preferredEventsOverwritingSequence.length) {
             currentEvents = allEvents;
             console.log("preferredEventsOverwritingSequence is all density");
-        } 
+        }
 
         densityStart = values[0];
         densityEnd = values[1];
@@ -1833,7 +1833,7 @@ $(document).ready(function () {
         }
 
         function isSmaller(value){
-            return value.people_density <= densityEnd; 
+            return value.people_density <= densityEnd;
         }
 
         // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
@@ -1858,7 +1858,7 @@ $(document).ready(function () {
         var soundEnd;
         var values = $("#slider-sound").slider("option", "values");
         var filteredEvents = [];
-        var arrayCount = 0; 
+        var arrayCount = 0;
 
         currentEvents = preferredEvents;
 
@@ -1866,7 +1866,7 @@ $(document).ready(function () {
             if (preferredEventsOverwritingSequence[i] == "sound") {
                 arrayCount ++;
             }
-        } 
+        }
 
         if (arrayCount == preferredEventsOverwritingSequence.length) {
             currentEvents = allEvents;
@@ -1886,11 +1886,11 @@ $(document).ready(function () {
             return value.sound <= soundEnd;
         }
 
-        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
         updateInfo(filteredEvents, eventsMarkers, function () {
             eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        }); 
+        });
         overwritePreferredEvents(filteredEvents, "sound");
     });
 
@@ -1909,7 +1909,7 @@ $(document).ready(function () {
         var values = $("#slider-activity").slider("option", "values");
 
         var filteredEvents = [];
-        var arrayCount = 0; 
+        var arrayCount = 0;
 
         currentEvents = preferredEvents;
 
@@ -1917,7 +1917,7 @@ $(document).ready(function () {
             if (preferredEventsOverwritingSequence[i] == "activity") {
                 arrayCount ++;
             }
-        } 
+        }
 
         if (arrayCount == preferredEventsOverwritingSequence.length) {
             currentEvents = allEvents;
@@ -1937,13 +1937,13 @@ $(document).ready(function () {
             return value.activity <= activityEnd;
         }
 
-        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
         updateInfo(filteredEvents, eventsMarkers, function () {
             eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        }); 
-        overwritePreferredEvents(filteredEvents, "activity");        
-    });    
+        });
+        overwritePreferredEvents(filteredEvents, "activity");
+    });
 
     $( "#slider-price" ).slider({
         range: true,
@@ -1960,7 +1960,7 @@ $(document).ready(function () {
         var values = $("#slider-price").slider("option", "values");
 
         var filteredEvents = [];
-        var arrayCount = 0; 
+        var arrayCount = 0;
 
         currentEvents = preferredEvents;
 
@@ -1968,7 +1968,7 @@ $(document).ready(function () {
             if (preferredEventsOverwritingSequence[i] == "price") {
                 arrayCount ++;
             }
-        }   
+        }
 
         if (arrayCount == preferredEventsOverwritingSequence.length) {
             currentEvents = allEvents;
@@ -1988,11 +1988,11 @@ $(document).ready(function () {
             return value.price <= priceEnd;
         }
 
-        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements"); 
+        // console.log ("new filteredEvents created with " + filteredEvents.length + " elements");
 
         updateInfo(filteredEvents, eventsMarkers, function () {
             eventsMarkers =  initMarkers(filteredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
-        }); 
+        });
         overwritePreferredEvents(filteredEvents, "price");
     });
 
@@ -2035,6 +2035,6 @@ $(document).ready(function () {
            return "<img width = '170' height = '170' src='/assets/weather_air_lejand.png'>";
        }
    }
-});    
+});
 
 });
