@@ -29,7 +29,7 @@ var event_type = "all";
 var allInfoWindows = [];
 
 var eventDensityMarkers = [];
-
+var eventSoundMarkers = [];
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -253,6 +253,12 @@ var sound_o_ent = {
     scaledSize: new google.maps.Size(100,100)
 }
 
+var sound_o_ent_lowCap = {
+    url: "/assets/sound_entertainment.png",
+    scaledSize: new google.maps.Size(100,100),
+    anchor: new google.maps.Point(50,50)
+}
+
 var sound_b_other = {
     url: "/assets/sound_other.png",
     scaledSize: new google.maps.Size(100,100)
@@ -280,11 +286,10 @@ function initMap() {
     }
 
     map.addListener('zoom_changed', function() {
-        console.log("zoom changed, current level is " + map.getZoom());
-
         if (map.getZoom() >= 14) {
+            console.log("zoom level is now bigger than 14; initiate density, sound and activity markers");
             initDensityMarkers(preferredEvents, getEventLocation, eventImage);
-            // initSoundMarkers(preferredEvents, getEventLocation, soundImage, true, constructEventInfoMessage);
+            initSoundMarkers(preferredEvents, getEventLocation, eventImage);
             // initActivityMarkers(preferredEvents, getEventLocation, activityImage, true, constructEventInfoMessage);
         }
 
@@ -338,6 +343,31 @@ function initDensityMarkers(pinArray, locationFunction, pinImage) {
         }     
     })
     return eventDensityMarkers;
+}
+
+function initSoundMarkers(pinArray, locationFunction, pinImage) {
+    eventSoundMarkers = [];
+
+    pinArray.forEach(function (data) {
+        var position = locationFunction(data);
+
+        if (position && data.capacity < 0.33 && data.sound < 0.5
+            && (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
+                data.event_type == "Party" || data.event_type == "Concert" || data.event_type == "Sports event")) {
+            console.log("change markerIcon into sound_o_ent_lowCap");
+
+            var markerIcon = sound_o_ent_lowCap;
+            var markerOptions = {
+                icon: markerIcon,
+                position: position,
+                map: map,
+                opacity: 0.2
+            }
+            var eventSoundMarker = new google.maps.Marker(markerOptions);
+            eventSoundMarkers.push(eventSoundMarker);
+        }        
+    })
+    return eventSoundMarkers;
 }
 
 // To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
