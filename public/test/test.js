@@ -197,6 +197,12 @@ var activity_o_ent = {
     anchor: new google.maps.Point(50,50)
 }
 
+var activity_o_ent_lowCap = {
+    url: "/assets/activity_entertainment.png",
+    scaledSize: new google.maps.Size(100, 100),
+    anchor: new google.maps.Point(50,50)
+}
+
 var activity_b_other = {
     url: "/assets/activity_other.png",
     scaledSize: new google.maps.Size(100, 100),
@@ -290,7 +296,7 @@ function initMap() {
             console.log("zoom level is now bigger than 14; initiate density, sound and activity markers");
             initDensityMarkers(preferredEvents, getEventLocation, eventImage);
             initSoundMarkers(preferredEvents, getEventLocation, eventImage);
-            // initActivityMarkers(preferredEvents, getEventLocation, activityImage, true, constructEventInfoMessage);
+            initActivityMarkers(preferredEvents, getEventLocation, eventImage);
         }
 
         //not functioning properly atm
@@ -320,7 +326,7 @@ function initDensityMarkers(pinArray, locationFunction, pinImage) {
                 icon: markerIcon,
                 position: position,
                 map: map,
-                opacity: 0.2
+                opacity: 0.1
             }
             var eventDensityMarker = new google.maps.Marker(markerOptions);
             eventDensityMarkers.push(eventDensityMarker);
@@ -336,7 +342,7 @@ function initDensityMarkers(pinArray, locationFunction, pinImage) {
                 icon: markerIcon,
                 position: position,
                 map: map,
-                opacity: 0.2
+                opacity: 0.1
             }
             var eventDensityMarker = new google.maps.Marker(markerOptions);
             eventDensityMarkers.push(eventDensityMarker);
@@ -351,7 +357,7 @@ function initSoundMarkers(pinArray, locationFunction, pinImage) {
     pinArray.forEach(function (data) {
         var position = locationFunction(data);
 
-        if (position && data.capacity < 0.33 && data.sound < 0.5
+        if (position && data.capacity < 0.33 && data.sound > 0.45
             && (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
                 data.event_type == "Party" || data.event_type == "Concert" || data.event_type == "Sports event")) {
             console.log("change markerIcon into sound_o_ent_lowCap");
@@ -360,14 +366,37 @@ function initSoundMarkers(pinArray, locationFunction, pinImage) {
             var markerOptions = {
                 icon: markerIcon,
                 position: position,
-                map: map,
-                opacity: 0.2
+                map: map
             }
             var eventSoundMarker = new google.maps.Marker(markerOptions);
             eventSoundMarkers.push(eventSoundMarker);
         }        
     })
     return eventSoundMarkers;
+}
+
+function initActivityMarkers(pinArray, locationFunction, pinImage) {
+    eventActivityMarkers = [];
+
+    pinArray.forEach(function (data) {
+        var position = locationFunction(data);
+
+        if (position && data.capacity < 0.33 && data.activity > 0.45 && data.sound <= 0.45
+            && (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
+                data.event_type == "Party" || data.event_type == "Concert" || data.event_type == "Sports event")) {
+            console.log("change markerIcon into activity_o_ent_lowCap");
+
+            var markerIcon = activity_o_ent_lowCap;
+            var markerOptions = {
+                icon: markerIcon,
+                position: position,
+                map: map
+            }
+            var eventActivityMarker = new google.maps.Marker(markerOptions);
+            eventActivityMarkers.push(eventActivityMarker);
+        }        
+    })
+    return eventActivityMarkers;
 }
 
 // To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
