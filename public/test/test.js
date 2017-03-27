@@ -28,6 +28,8 @@ var event_type = "all";
 
 var allInfoWindows = [];
 
+var eventDensityMarkers = [];
+
 
 //approximately central coordinates for istanbul, should be verified & updated
 var istanbulCoordinates = {
@@ -107,65 +109,156 @@ var weatherImage_very_hot = {
 
 var eventImage_o_s = {
     url: "/assets/event_o_s.png",
-    scaledSize: new google.maps.Size(25, 25)
+    scaledSize: new google.maps.Size(20, 20),
+    anchor: new google.maps.Point(10,10)
 }
 
 var eventImage_o_m = {
     url: "/assets/event_o_m.png",
-    scaledSize: new google.maps.Size(50, 50)
+    scaledSize: new google.maps.Size(30, 30), 
+    anchor: new google.maps.Point(15,15)
 }
 
 var eventImage_o_b = {
     url: "/assets/event_o_b.png",
-    scaledSize: new google.maps.Size(100, 100)
+    scaledSize: new google.maps.Size(40, 40),
+    anchor: new google.maps.Point(20,20)
 }
 
 var eventImage_y_s = {
     url: "/assets/event_y_s.png",
-    scaledSize: new google.maps.Size(25, 25)
+    scaledSize: new google.maps.Size(20, 20),
+    anchor: new google.maps.Point(10,10)
 }
 
 var eventImage_y_m = {
     url: "/assets/event_y_m.png",
-    scaledSize: new google.maps.Size(50, 50)
+    scaledSize: new google.maps.Size(30, 30),
+    anchor: new google.maps.Point(15,15)
 }
 
 var eventImage_y_b = {
     url: "/assets/event_y_b.png",
-    scaledSize: new google.maps.Size(100, 100)
+    scaledSize: new google.maps.Size(40, 40),
+    anchor: new google.maps.Point(20,20)
 }
 
 var eventImage_g_s = {
     url: "/assets/event_g_s.png",
-    scaledSize: new google.maps.Size(25, 25)
+    scaledSize: new google.maps.Size(20, 20),
+    anchor: new google.maps.Point(10,10)
 }
 
 var eventImage_g_m = {
     url: "/assets/event_g_m.png",
-    scaledSize: new google.maps.Size(50, 50)
+    scaledSize: new google.maps.Size(30, 30),
+    anchor: new google.maps.Point(15,15)
 }
 
 var eventImage_g_b = {
     url: "/assets/event_g_b.png",
-    scaledSize: new google.maps.Size(100, 100)
+    scaledSize: new google.maps.Size(40, 40),
+    anchor: new google.maps.Point(20,20)
 }
 
 var eventImage_b_s = {
     url: "/assets/event_b_s.png",
-    scaledSize: new google.maps.Size(25, 25)
+    scaledSize: new google.maps.Size(20, 20),
+    anchor: new google.maps.Point(10,10)
 }
 
 var eventImage_b_m = {
     url: "/assets/event_b_m.png",
-    scaledSize: new google.maps.Size(50, 50)
+    scaledSize: new google.maps.Size(30, 30),
+    anchor: new google.maps.Point(15,15)
 }
 
 var eventImage_b_b = {
     url: "/assets/event_b_b.png",
-    scaledSize: new google.maps.Size(100, 100)
+    scaledSize: new google.maps.Size(40, 40),
+    anchor: new google.maps.Point(20,20)
 }
 
-//converts Date() to DD/MM/YYYY
+var activity_g_edu = {
+    url: "/assets/activity_educative.png",
+    scaledSize: new google.maps.Size(100, 100),
+    anchor: new google.maps.Point(50,50)
+}
+
+var activity_y_cult = {
+    url: "/assets/activity_cultural.png",
+    scaledSize: new google.maps.Size(100, 100),
+    anchor: new google.maps.Point(50,50)
+}
+
+var activity_o_ent = {
+    url: "/assets/activity_entertainment.png",
+    scaledSize: new google.maps.Size(100, 100),
+    anchor: new google.maps.Point(50,50)
+}
+
+var activity_b_other = {
+    url: "/assets/activity_other.png",
+    scaledSize: new google.maps.Size(100, 100),
+    anchor: new google.maps.Point(50,50)
+}
+
+var capacity_y_cult = {
+    url: "/assets/second_cultural.png",
+    scaledSize: new google.maps.Size(100,100),
+    anchor: new google.maps.Point(50,50)
+}
+
+var capacity_g_edu = {
+    url: "/assets/second_educative.png",
+    scaledSize: new google.maps.Size(100,100),
+    anchor: new google.maps.Point(50,50)
+}
+
+var capacity_o_ent = {
+    url: "/assets/second_entertainment.png",
+    scaledSize: new google.maps.Size(70,70),
+    anchor: new google.maps.Point(50,60)
+}
+
+var capacity_o_ent_lowCap_notCrowded = {
+    url: "/assets/second_entertainment.png",
+    scaledSize: new google.maps.Size(50,50),
+    anchor: new google.maps.Point(25,25)
+}
+
+var capacity_o_ent_lowCap_Crowded = {
+    url: "/assets/second_entertainment.png",
+    scaledSize: new google.maps.Size(25,25),
+    anchor: new google.maps.Point(12.5, 12.5)
+}
+
+var capacity_b_other = {
+    url: "/assets/second_other.png",
+    scaledSize: new google.maps.Size(100,100)
+}
+
+var sound_y_cult = {
+    url: "/assets/sound_cultural.png",
+    scaledSize: new google.maps.Size(100,100)
+}
+
+var sound_g_edu = {
+    url: "/assets/sound_educative.png",
+    scaledSize: new google.maps.Size(100,100)
+}
+
+var sound_o_ent = {
+    url: "/assets/sound_entertainment.png",
+    scaledSize: new google.maps.Size(100,100)
+}
+
+var sound_b_other = {
+    url: "/assets/sound_other.png",
+    scaledSize: new google.maps.Size(100,100)
+}
+
+//converts Date() to DD/MM/YY
 function convertDate(inputFormat) {
   function pad(s) {
     return (s < 10) ? '0' + s : s;
@@ -188,12 +281,63 @@ function initMap() {
 
     map.addListener('zoom_changed', function() {
         console.log("zoom changed, current level is " + map.getZoom());
-        //if zoom 14,15,16 show second circles to depict people density -- initDensityMarkers()
-        //means: if the it is a crowded event, the second circle will be about the same size of the capacity-depicting circle
-        //... if it is a deserted event, the second circle will be much bigger than the capacity-depicting circle
 
-        //again, if zoom level is bigger than 14, show sound and activity markers -- initSoundMarkers() & initActivityMarkers()
+        if (map.getZoom() >= 14) {
+            initDensityMarkers(preferredEvents, getEventLocation, eventImage);
+            // initSoundMarkers(preferredEvents, getEventLocation, soundImage, true, constructEventInfoMessage);
+            // initActivityMarkers(preferredEvents, getEventLocation, activityImage, true, constructEventInfoMessage);
+        }
+
+        //not functioning properly atm
+        if (map.getZoom() < 14) {
+            for (i = 0; i < eventDensityMarkers.length; i++) {
+                eventDensityMarkers[i].setMap(null);
+            }
+            // deleteSoundMarkers();
+            // deleteActivityMarkers();
+        }
     });
+}
+
+function initDensityMarkers(pinArray, locationFunction, pinImage) {
+    eventDensityMarkers = [];
+
+    pinArray.forEach(function (data) {
+        var position = locationFunction(data);
+
+        if (position && data.capacity < 0.33 && data.people_density < 0.5
+            && (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
+                data.event_type == "Party" || data.event_type == "Concert" || data.event_type == "Sports event")) {
+            console.log("change markerIcon into capacity_o_ent_lowCap_notCrowded");
+
+            var markerIcon = capacity_o_ent_lowCap_notCrowded;
+            var markerOptions = {
+                icon: markerIcon,
+                position: position,
+                map: map,
+                opacity: 0.2
+            }
+            var eventDensityMarker = new google.maps.Marker(markerOptions);
+            eventDensityMarkers.push(eventDensityMarker);
+        }   
+
+        if (position && data.capacity < 0.33 && data.people_density > 0.5
+            && (data.event_type == "Meetup" || data.event_type == "Celebration" || data.event_type == "Festival" ||
+                data.event_type == "Party" || data.event_type == "Concert" || data.event_type == "Sports event")) {
+            console.log("change markerIcon into capacity_o_ent_lowCap_Crowded");
+
+            var markerIcon = capacity_o_ent_lowCap_Crowded;
+            var markerOptions = {
+                icon: markerIcon,
+                position: position,
+                map: map,
+                opacity: 0.2
+            }
+            var eventDensityMarker = new google.maps.Marker(markerOptions);
+            eventDensityMarkers.push(eventDensityMarker);
+        }     
+    })
+    return eventDensityMarkers;
 }
 
 // To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
@@ -344,7 +488,8 @@ function initMarkers(pinArray, locationFunction, pinImage, addInfo, infoMessageF
             var markerOptions = {
                 icon: markerIcon,
                 position: position,
-                map: map
+                map: map,
+                opacity: 0.5
             }
 
             var marker = new google.maps.Marker(markerOptions);
@@ -534,12 +679,12 @@ $(document).ready(function () {
         $( "#Other" ).prop( "checked", true );
 
 
-        $('#events_allCB').bind('change', function(){
-            if($(this).is(':checked')){
-                eventsMarkers = initMarkers(data.events, getEventLocation, eventImage, true, constructEventInfoMessage);
-            }
-        })
-        ;
+        // $('#events_allCB').bind('change', function(){
+        //     if($(this).is(':checked')){
+        //         eventsMarkers = initMarkers(preferredEvents, getEventLocation, eventImage, true, constructEventInfoMessage);
+        //     }
+        // })
+        // ;
 
         $('#crowdCB').bind('change', function(){
             if($(this).is(':checked')){
