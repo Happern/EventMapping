@@ -36,7 +36,7 @@ function getRandomEventTypeValue() {
     if (subCategoryProb <= 0.25) {
       eventType = "Cinema";
     } else if (subCategoryProb <= 0.5) {
-      eventType = "Theatre";
+      eventType = "Theater";
     } else if (subCategoryProb <= 0.75) {
       eventType = "Show";
     } else if (subCategoryProb <= 1) {

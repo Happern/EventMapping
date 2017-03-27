@@ -821,7 +821,479 @@ $(document).ready(function () {
                 }
             }
         }
-    })
+    });
+
+    $('#Celebration').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Celebration") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Celebration") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+    $('#Festival').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Festival") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Festival") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });  
+
+    $('#Party').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Party") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Party") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Concert').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Concert") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Concert") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    }); 
+
+    $('#Sports_event').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Sports_event") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Sports_event") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });    
+
+    $('#Cinema').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Cinema") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Cinema") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    }); 
+
+    $('#Theater').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Theater") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Theater") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    }); 
+
+    $('#Show').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Show") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Show") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Exhibition').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Exhibition") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Exhibition") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Conference').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Conference") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Conference") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Meeting').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Meeting") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Meeting") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Talk').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Talk") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Talk") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Workshop').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Workshop") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Workshop") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Protest').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Protest") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Protest") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Ceremony').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Ceremony") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Ceremony") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    $('#Other').bind('change', function () {
+        if(!$(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Other") {
+
+                            console.log('delete name: ' + preferredEvents[e].name + " and type: " + preferredEvents[e].event_type);
+
+                            eventsMarkers[i].setMap(null);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($(this).is(':checked')) {
+            for (var e = 0; e < preferredEvents.length; e ++) {
+                for (var i = 0; i < allInfoWindows.length; i++) {
+                    if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
+                        if (preferredEvents[e].event_type == "Other") {
+                            eventsMarkers[i].setMap(map);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
 
      $('#cultural_all').bind('change', function(){
         if(!$(this).is(':checked')){
