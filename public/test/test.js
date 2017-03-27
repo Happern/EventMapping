@@ -178,11 +178,20 @@ function initMap() {
     trafficLayer = new google.maps.TrafficLayer()
     if (d.getHours() < 17) {    //styles map 'lightly' when the local time is earlier than 20.00
         initiateDayMap();
-} else {
-    initiateNightMap();
-    eventImage.url = "/assets/eventmarker-white-medium.png",
-    eventImage.scaledSize = new google.maps.Size(20,20)
-};
+    } else {
+        initiateNightMap();
+        eventImage.url = "/assets/eventmarker-white-medium.png",
+        eventImage.scaledSize = new google.maps.Size(20,20)
+    }
+
+    map.addListener('zoom_changed', function() {
+        console.log("zoom changed, current level is " + map.getZoom());
+        //if zoom 14,15,16 show second circles to depict people density -- initDensityMarkers()
+        //means: if the it is a crowded event, the second circle will be about the same size of the capacity-depicting circle
+        //... if it is a deserted event, the second circle will be much bigger than the capacity-depicting circle
+
+        //again, if zoom level is bigger than 14, show sound and activity markers -- initSoundMarkers() & initActivityMarkers()
+    });
 }
 
 // To do: with submitSnazzyCode(), style should be changed and saved. When there's no submission, the default style (the current ones)
@@ -500,6 +509,32 @@ $(document).ready(function () {
         $('#events_allCB').prop('checked', true);
         $( "#language_tr" ).prop( "checked", true );
         $( "#language_eng" ).prop( "checked", true );
+
+        $( "#entertainment_all" ).prop( "checked", true );        
+        $( "#Meetup" ).prop( "checked", true );
+        $( "#Celebration" ).prop( "checked", true );        
+        $( "#Festival" ).prop( "checked", true );
+        $( "#Party" ).prop( "checked", true );
+        $( "#Concert" ).prop( "checked", true );
+        $( "#Sports_event" ).prop( "checked", true );
+
+        $( "#cultural_all" ).prop( "checked", true );
+        $( "#Cinema" ).prop( "checked", true );
+        $( "#Theater" ).prop( "checked", true );
+        $( "#Show" ).prop( "checked", true );
+        $( "#Exhibition" ).prop( "checked", true );
+
+        $( "#educative_all" ).prop( "checked", true );
+        $( "#Conference" ).prop( "checked", true );
+        $( "#Meeting" ).prop( "checked", true );
+        $( "#Talk" ).prop( "checked", true );
+        $( "#Workshop" ).prop( "checked", true );
+
+        $( "#other_all" ).prop( "checked", true );
+        $( "#Protest" ).prop( "checked", true );
+        $( "#Ceremony" ).prop( "checked", true );
+        $( "#Other" ).prop( "checked", true );
+
 
         $('#events_allCB').bind('change', function(){
             if($(this).is(':checked')){
