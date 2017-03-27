@@ -756,8 +756,31 @@ $(document).ready(function () {
               eventsMarkers[i].setMap(null);
           }
       }
-  })
+    })
     ;
+
+     $('#entertainment_all').bind('change', function(){
+        if(!$(this).is(':checked')){
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" || 
+                    eventsMarkers[i].icon.url == "/assets/event_o_s.png"||
+                    eventsMarkers[i].icon.url == "/assets/event_o_m.png") {
+                    eventsMarkers[i].setMap(null);
+                }
+            }
+        }
+
+        if($(this).is(':checked')){
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                if (eventsMarkers[i].icon.url == "/assets/event_o_b.png" || 
+                    eventsMarkers[i].icon.url == "/assets/event_o_s.png"||
+                    eventsMarkers[i].icon.url == "/assets/event_o_m.png") {
+                    eventsMarkers[i].setMap(map);
+                }
+            }
+        }        
+    })
+    ;   
 
     $('#crowdCB').bind('change', function(){
         if(!$(this).is(':checked')){
