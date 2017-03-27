@@ -750,15 +750,73 @@ $(document).ready(function () {
 
     $('#events_allCB').bind('change', function(){
         if(!$(this).is(':checked')){
+
+            $( "#entertainment_all" ).prop( "checked", false );            
+            $( "#Meetup" ).prop( "checked", false );
+            $( "#Celebration" ).prop( "checked", false );        
+            $( "#Festival" ).prop( "checked", false );
+            $( "#Party" ).prop( "checked", false );
+            $( "#Concert" ).prop( "checked", false );
+            $( "#Sports_event" ).prop( "checked", false );
+
+            $( "#cultural_all" ).prop( "checked", false );            
+            $( "#Cinema" ).prop( "checked", false );
+            $( "#Theater" ).prop( "checked", false );
+            $( "#Show" ).prop( "checked", false );
+            $( "#Exhibition" ).prop( "checked", false );    
+
+            $( "#educative_all" ).prop( "checked", false );            
+            $( "#Conference" ).prop( "checked", false );
+            $( "#Meeting" ).prop( "checked", false );
+            $( "#Talk" ).prop( "checked", false );
+            $( "#Workshop" ).prop( "checked", false ); 
+
+            $( "#other_all" ).prop( "checked", false );
+            $( "#Protest" ).prop( "checked", false );
+            $( "#Ceremony" ).prop( "checked", false );
+            $( "#Other" ).prop( "checked", false );
+
             for (var i = 0; i < eventsMarkers.length; i++) {
               eventsMarkers[i].setMap(null);
-          }
-      }
-    })
-    ;
+            }   
+        }
 
-     $('#entertainment_all').bind('change', function(){
+        if($(this).is(':checked')){
+            $( "#entertainment_all" ).prop( "checked", true );            
+            $( "#Meetup" ).prop( "checked", true );
+            $( "#Celebration" ).prop( "checked", true );        
+            $( "#Festival" ).prop( "checked", true );
+            $( "#Party" ).prop( "checked", true );
+            $( "#Concert" ).prop( "checked", true );
+            $( "#Sports_event" ).prop( "checked", true );
+
+            $( "#cultural_all" ).prop( "checked", true );            
+            $( "#Cinema" ).prop( "checked", true );
+            $( "#Theater" ).prop( "checked", true );
+            $( "#Show" ).prop( "checked", true );
+            $( "#Exhibition" ).prop( "checked", true );    
+
+            $( "#educative_all" ).prop( "checked", true );            
+            $( "#Conference" ).prop( "checked", true );
+            $( "#Meeting" ).prop( "checked", true );
+            $( "#Talk" ).prop( "checked", true );
+            $( "#Workshop" ).prop( "checked", true ); 
+
+            $( "#other_all" ).prop( "checked", true );
+            $( "#Protest" ).prop( "checked", true );
+            $( "#Ceremony" ).prop( "checked", true );
+            $( "#Other" ).prop( "checked", true );
+
+            for (var i = 0; i < eventsMarkers.length; i++) {
+                eventsMarkers[i].setMap(map);
+            } 
+        }
+    });
+
+    $('#entertainment_all').bind('change', function(){
         if(!$(this).is(':checked')){
+
+            $('#events_allCB').prop('checked', false);
 
             $( "#Meetup" ).prop( "checked", false );
             $( "#Celebration" ).prop( "checked", false );        
@@ -798,6 +856,7 @@ $(document).ready(function () {
 
     $('#Meetup').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -825,6 +884,7 @@ $(document).ready(function () {
 
     $('#Celebration').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -856,6 +916,7 @@ $(document).ready(function () {
 
     $('#Festival').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -886,6 +947,7 @@ $(document).ready(function () {
 
     $('#Party').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -916,6 +978,7 @@ $(document).ready(function () {
 
     $('#Concert').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -946,6 +1009,7 @@ $(document).ready(function () {
 
     $('#Sports_event').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -976,6 +1040,7 @@ $(document).ready(function () {
 
     $('#Cinema').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1006,6 +1071,7 @@ $(document).ready(function () {
 
     $('#Theater').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1035,6 +1101,7 @@ $(document).ready(function () {
 
     $('#Show').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1064,6 +1131,7 @@ $(document).ready(function () {
 
     $('#Exhibition').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1093,6 +1161,7 @@ $(document).ready(function () {
 
     $('#Conference').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1122,6 +1191,7 @@ $(document).ready(function () {
 
     $('#Meeting').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1151,6 +1221,7 @@ $(document).ready(function () {
 
     $('#Talk').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1180,6 +1251,7 @@ $(document).ready(function () {
 
     $('#Workshop').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1209,6 +1281,7 @@ $(document).ready(function () {
 
     $('#Protest').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1238,6 +1311,7 @@ $(document).ready(function () {
 
     $('#Ceremony').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1267,6 +1341,7 @@ $(document).ready(function () {
 
     $('#Other').bind('change', function () {
         if(!$(this).is(':checked')) {
+            $('#events_allCB').prop('checked', false);
             for (var e = 0; e < preferredEvents.length; e ++) {
                 for (var i = 0; i < allInfoWindows.length; i++) {
                     if (preferredEvents[e].name == allInfoWindows[i]._opts.title) {
@@ -1297,6 +1372,7 @@ $(document).ready(function () {
 
      $('#cultural_all').bind('change', function(){
         if(!$(this).is(':checked')){
+            $('#events_allCB').prop('checked', false);
 
             $( "#Cinema" ).prop( "checked", false );
             $( "#Theater" ).prop( "checked", false );
@@ -1332,6 +1408,7 @@ $(document).ready(function () {
 
     $('#educative_all').bind('change', function(){
         if(!$(this).is(':checked')){
+            $('#events_allCB').prop('checked', false);
 
             $( "#Conference" ).prop( "checked", false );
             $( "#Meeting" ).prop( "checked", false );
@@ -1367,6 +1444,7 @@ $(document).ready(function () {
 
     $('#other_all').bind('change', function(){
         if(!$(this).is(':checked')){
+            $('#events_allCB').prop('checked', false);
 
             $( "#Protest" ).prop( "checked", false );
             $( "#Ceremony" ).prop( "checked", false );
