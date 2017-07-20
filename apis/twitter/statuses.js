@@ -48,7 +48,7 @@ function getStatuses () {
 function getLatestCoords () {
   return {
     "api": "twitter",
-    "data": twitterStore.getTweets(15)
+    "data": twitterStore.getTweets(60)
   };
 }
 
