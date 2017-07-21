@@ -1,21 +1,18 @@
 function processData(weatherDataObject, fields) {
-    if (weatherDataObject !== null) {
-      isFieldNull = false
-      var processed = {};
-      fields.forEach(function (field){
-        if (weatherDataObject[field]) {
-            processed[field] = weatherDataObject[field];
-        } else {
-          isFieldNull = true
-        }
-      })
-
-      if (isFieldNull) {
-        console.log(weatherDataObject)
+    isFieldNull = false
+    var processed = {};
+    fields.forEach(function (field){
+      if (weatherDataObject[field]) {
+          processed[field] = weatherDataObject[field];
+      } else {
+        isFieldNull = true
       }
-    } else {
+    })
+
+    if (isFieldNull) {
       console.log(weatherDataObject)
     }
+    
     return processed;
 }
 

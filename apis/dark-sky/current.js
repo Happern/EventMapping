@@ -44,13 +44,17 @@ function getCurrentForCoords (coords) {
 
   return new Promise(function (resolve, reject) {
     makeDarkSkyRequest(path, coords, queryParams, function (resp) {
-      var generalData = darkSkyUtils.processData(resp, darkSkyConstants.generalFields);
+      var generalData = {};
       var weatherData = {};
 
-      if (resp.hasOwnProperty("currently")) {
-        weatherData = darkSkyUtils.processData(resp.currently, darkSkyConstants.weatherFields);
+      if (resp) {
+        generalData = darkSkyUtils.processData(resp, darkSkyConstants.generalFields);
+        
+        if (resp.hasOwnProperty("currently")) {
+          weatherData = darkSkyUtils.processData(resp.currently, darkSkyConstants.weatherFields);
+        }
       }
-      
+     
       //TODO implement a processing function to send only the required info
       resolve({
         api: "dark-sky",
