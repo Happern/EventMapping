@@ -47,7 +47,7 @@ function getCurrentForCoords (coords) {
       var generalData = darkSkyUtils.processData(resp, darkSkyConstants.generalFields);
       var weatherData = {};
 
-      if (resp.currently) {
+      if (resp.hasOwnProperty("currently")) {
         weatherData = darkSkyUtils.processData(resp.currently, darkSkyConstants.weatherFields);
       }
       
