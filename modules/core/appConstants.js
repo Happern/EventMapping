@@ -1,7 +1,7 @@
 module.exports = {
   timeValues: {
-    updateInterval: 5 * 60 * 1000, //in ms
-    timeout: 10 * 1000
+    updateInterval: 15 * 60 * 1000, //in ms
+    timeout: 4 * 1000
   },
   date: {
     defaultFormat: "DD/MM/YYYY",
