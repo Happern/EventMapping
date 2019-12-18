@@ -1,0 +1,170 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "bf7433301a3461bccfdcb8c7e7f45f4a",
+      "css": "plus",
+      "code": 59398,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M1000 583.3H583.3V1000H416.7V583.3H0V416.7H416.7V0H583.3V416.7H1000Z",
+        "width": 1000
+      },
+      "search": [
+        "civaricon-03"
+      ]
+    },
+    {
+      "uid": "ceed297fd8773aa2023ed5f45f994027",
+      "css": "line",
+      "code": 59397,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M6000 1000H0V0H6000Z",
+        "width": 6000
+      },
+      "search": [
+        "civaricon-02"
+      ]
+    },
+    {
+      "uid": "e02db7cb1fe1337903da8998f703973d",
+      "css": "hamburger",
+      "code": 59396,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M0 416.7H1500V583.3H0ZM0 1000H1500V833.3H0ZM0 0V166.7H1500V0Z",
+        "width": 1500
+      },
+      "search": [
+        "civaricon-01"
+      ]
+    },
+    {
+      "uid": "35e34c45ee0457b38113e433bc7f8d27",
+      "css": "star-1",
+      "code": 59395,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M723.5 617.6L852.9 1000 523.5 764.7 200 1000 323.5 617.6 0 382.4H400L523.5 0 647.1 382.4H1047.1Z",
+        "width": 1053
+      },
+      "search": [
+        "civaricon-07"
+      ]
+    },
+    {
+      "uid": "1ebc937da8af9c420ed7bade175569d8",
+      "css": "cancel",
+      "code": 59394,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M646.5 494.9L1000 858.6 858.6 1000 494.9 646.5 141.4 1000 0 858.6 353.5 494.9 0 141.4 141.4 0 494.9 353.5 858.6 0 1000 141.4Z",
+        "width": 1000
+      },
+      "search": [
+        "civaricon-06"
+      ]
+    },
+    {
+      "uid": "fdfb5fad9991618aec75f58d076eaf8e",
+      "css": "share",
+      "code": 59393,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M913.3 853.3A146.7 146.7 0 1 1 620 853.3V840L233.3 620A146.7 146.7 0 1 1 226.7 380L620 153.3H620A146.7 146.7 0 1 1 680 273.3L293.3 486.7V500H293.3L686.7 733.3A146.7 146.7 0 0 1 920 853.3Z",
+        "width": 913
+      },
+      "search": [
+        "civaricon-05"
+      ]
+    },
+    {
+      "uid": "aff86efd3cfe94d8f05993a6bbed9ca3",
+      "css": "layer",
+      "code": 59392,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M1090 500A40 40 0 0 0 1070 465L960 410 1070 350A35 35 0 0 0 1090 315 40 40 0 0 0 1070 280L565 5A40 40 0 0 0 525 5L20 280A40 40 0 0 0 20 350L125 410 20 465A40 40 0 0 0 20 535L125 595 20 650A40 40 0 0 0 20 720L525 995H560L1065 720A40 40 0 0 0 1065 650L960 590 1065 530A40 40 0 0 0 1090 500ZM125 315L550 85 975 315 550 545ZM970 685L545 915 125 685 210 640 530 815H565L885 640ZM545 730L125 500 210 455 530 630H565L885 455 970 500Z",
+        "width": 1090
+      },
+      "search": [
+        "civaricon-04"
+      ]
+    },
+    {
+      "uid": "fe6697b391355dec12f3d86d6d490397",
+      "css": "up",
+      "code": 59399,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "ccddff8e8670dcd130e3cb55fdfc2fd0",
+      "css": "down",
+      "code": 59400,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d870630ff8f81e6de3958ecaeac532f2",
+      "css": "left",
+      "code": 59401,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "399ef63b1e23ab1b761dfbb5591fa4da",
+      "css": "right",
+      "code": 59402,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "7686897ce7ec808ff19aec948b5aaf43",
+      "css": "right-1",
+      "code": 59403,
+      "src": "iconic"
+    },
+    {
+      "uid": "a76545bb6ea4e684505da08d26e58467",
+      "css": "left-1",
+      "code": 59404,
+      "src": "iconic"
+    },
+    {
+      "uid": "c2314ed1d2314b89f9285c53bcbf2548",
+      "css": "user",
+      "code": 61870,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "390b505d108d30d0b0d3c903e23f277c",
+      "css": "star",
+      "code": 59406,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M912.5 500L950 653.1 828.1 756.3 768.8 903.1 609.4 915.6 475 1000 340.6 915.6 181.2 903.1 121.9 756.3 0 653.1 37.5 500 0 346.9 121.9 243.8 181.3 96.9 340.6 84.4 475 0 609.4 84.4 768.8 96.9 828.1 243.8 950 346.9 912.5 500Z",
+        "width": 950
+      },
+      "search": [
+        "yildiz"
+      ]
+    },
+    {
+      "uid": "12f4ece88e46abd864e40b35e05b11cd",
+      "css": "ok",
+      "code": 59405,
+      "src": "fontawesome"
+    }
+  ]
+}

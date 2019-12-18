@@ -20,7 +20,27 @@ app.set('port', (process.env.PORT || process.env.EM_PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/public/test/v4.html');
+});
+
+app.get('/v0', function(req, res) {
   res.sendFile(__dirname + '/public/test/index.html');
+});
+
+app.get('/grid', function(req, res) {
+  res.sendFile(__dirname + '/public/test/grid.html');
+});
+
+app.get('/pin', function(req, res) {
+  res.sendFile(__dirname + '/public/test/pin.html');
+});
+
+app.get('/v3pin', function(req, res) {
+  res.sendFile(__dirname + '/public/test/v3pin.html');
+});
+
+app.get('/v3circle', function(req, res) {
+  res.sendFile(__dirname + '/public/test/v3circle.html');
 });
 
 app.get('/swagger/event_mapping.json', function (req, res) {

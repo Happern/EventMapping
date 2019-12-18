@@ -1,0 +1,107 @@
+body 
+{
+    margin:0px;
+}
+#map
+{
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:800px;
+}
+.eventInfo {
+    min-width: 350px;
+    max-width: 550px;
+}
+.eventInfo h1
+{
+    font-size: 16px;
+    margin-bottom: 0px;
+    padding-bottom: 10px;
+}
+.eventInfo .thumb
+{
+    float: left;
+    width: 25%;
+    height: 75px;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.eventInfo .desc
+{
+    float: left;
+    min-height: 75px;
+    width: 75%;
+    padding-left: 10px;
+}
+.eventInfo .venue
+{
+    width: 100%;
+    float: left;
+    margin-top: 6px;
+    font-style: italic;
+}
+.eventInfo .start_time
+{
+    width: 100%;
+    float: left;
+    margin-top: 2px;
+    font-style: italic;
+}
+.markerGrid {
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+	width:50px;
+	height:50px;
+
+	background-repeat:no-repeat;
+	background-position:50% 50%;
+	background-size:contain;
+}
+.markerPin {
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    width: 27px;
+    height: 45px;
+    background-repeat: no-repeat;
+    background-position: 50% 6%;
+	background-size:contain;
+}
+.mapLayer
+{
+
+}
+.mapTile
+{
+	width:50px;
+	height:50px;
+	position:absolute;
+	
+	background-position:0% 0%;
+	background-size:100% 100%;
+
+}
+.mapTile0
+{
+	background-image:url(../img/pattern_weather_sun.svg);
+}
+.mapTile1
+{
+	background-image:url(../img/pattern_weather_rain.svg);
+}
+.mapTile2
+{
+	background-image:url(../img/pattern_weather_snow.svg);
+}
+.mapTile3
+{
+	background-image:url(../img/pattern_weather_rainsnow.svg);
+}

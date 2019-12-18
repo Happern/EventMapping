@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" href="/assets/img/fav/fav.ico">
+	<link rel="apple-touch-icon" sizes="60x60" href="/assets/img/fav/60x60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/fav/76x76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/assets/img/fav/120x120.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/assets/img/fav/152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/fav/180x180.png">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+  <link rel="stylesheet" href="/lib_v4/css/DatePickerX.css" />
+
+  <link rel="stylesheet" href="/lib_v4/css/app.css" />
+	    <link rel="stylesheet" href="/lib_v4/css/main.min.css" />
+	<script type="text/javascript" src="/assets/js/lib.min.js"></script>
+  <script type="text/javascript" src="/lib_v4/js/DatePickerX.min.js"></script>
+  <script type="text/javascript" src="/lib_v4/js/app.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+	<script type="text/javascript" src="/lib/moment-with-locales.min.js"></script>
+	<script type="text/javascript" src="/lib_v4/js/MapLayer.js"></script>
+	<script type="text/javascript" src="/lib_v4/js/WeatherLayer.js"></script>
+	<script type="text/javascript" src="/lib_v4/js/EventLayer.js"></script>
+	<script type="text/javascript" src="/lib_v4/js/CrowdLayer.js"></script>
+	<script type="text/javascript" src="/lib_v4/js/main.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function(){
+
+      var myDatepickers = document.querySelectorAll('input.datepicker');
+      Array.prototype.forEach.call(myDatepickers, myDatepicker => {
+        myDatepicker.DatePickerX.init({
+          weekDayLabels    : ['Pzt', 'Sal', 'Çrş', 'Prş', 'Cum', 'Cts', 'Pzr'],
+          shortMonthLabels : ['Ock', 'Şub', 'Mar', 'Nis', 'May', 'Hzr', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+          singleMonthLabels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+          format           : 'dd/mm/yyyy'
+        });
+
+      });
+    });
+  </script>
+  <title>SITE</title>
+</head>
+<body>
+	<div id="map"></div>
+  <section id="main">
+    <div class="map-type-wrapper">
+      <a href="javascript:;" class="map-type-icon"></a>
+      <ul class="map-type-content">
+        <li class="map-type-content-item" data-value="weather">Weather</li>
+        <li class="map-type-content-item" data-value="traffic">Traffic</li>
+        <li class="map-type-content-item" data-value="people">People</li>
+        <li class="map-type-content-item has-selected" data-value="event">My Events</li>
+        <li class="map-type-content-item" data-value="">Me</li>
+      </ul>
+    </div>
+    <div class="main-search">
+      <a href="javascript:;" class="menu-icon trigger-menu"></a>
+      <input type="text" class="form-control" placeholder="Search an event" />
+    </div>
+    <div class="filter-wrapper">
+      <a href="javascript:;" class="filter-title">FILTERS</a>
+      <div class="filter-content">
+        <div class="filter-dropdown">
+          <div id="filterEventType" class="filter-dropdown-item dropdown-item-selected" data-id="1">
+            <div class="filter-dropdown-title">
+              <span>What type of an event?</span>
+            </div>
+            <div class="filter-dropdown-content">
+              <div class="filter-sub-dropdown">
+                <div class="filter-sub-dropdown-item entertainment">
+                  <div class="filter-sub-dropdown-title">Entertainment</div>
+                  <div class="filter-sub-dropdown-content">
+                    <a href="javascript:;" class="filter-option" data-optclass="entertainment" data-id="ent-1" data-value="Concert">CONCERT</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="entertainment" data-id="ent-2" data-value="Festival">FESTIVAL</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="entertainment" data-id="ent-3" data-value="Party">PARTY</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="entertainment" data-id="ent-4" data-value="Sports event">SPORTS MATCH</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="entertainment" data-id="ent-5" data-value="Meetup">MEETUP</a>
+                  </div>
+                </div><!-- /filter-sub-dropdown-item -->
+                <div class="filter-sub-dropdown-item cultural">
+                  <div class="filter-sub-dropdown-title">Cultural</div>
+                  <div class="filter-sub-dropdown-content">
+                    <a href="javascript:;" class="filter-option" data-optclass="cultural" data-id="cult-1" data-value="Cinema">CINEMA</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="cultural" data-id="cult-2" data-value="Theatre">THEATRE</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="cultural" data-id="cult-3" data-value="Exhibition">EXHIBITION</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="cultural" data-id="cult-4" data-value="Show">SHOW</a>
+                  </div>
+                </div><!-- /filter-sub-dropdown-item -->
+                <div class="filter-sub-dropdown-item educative">
+                  <div class="filter-sub-dropdown-title">Educative</div>
+                  <div class="filter-sub-dropdown-content">
+                    <a href="javascript:;" class="filter-option" data-optclass="educative" data-id="edu-1" data-value="Talk">TALK</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="educative" data-id="edu-2" data-value="Workshop">WORKSHOP</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="educative" data-id="edu-3" data-value="Conference">CONFERENCE</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="educative" data-id="edu-4" data-value="Meeting">MEETING</a>
+                  </div>
+                </div><!-- /filter-sub-dropdown-item -->
+                <div class="filter-sub-dropdown-item other">
+                  <div class="filter-sub-dropdown-title">Other</div>
+                  <div class="filter-sub-dropdown-content">
+                    <a href="javascript:;" class="filter-option" data-optclass="other" data-id="oth-1" data-value="Protest">PROTEST</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="other" data-id="oth-2" data-value="Ceremony">CEREMONY</a>
+                    <a href="javascript:;" class="filter-option" data-optclass="other" data-id="oth-3" data-value="Other">OTHER</a>
+                  </div>
+                </div><!-- /filter-sub-dropdown-item -->
+              </div><!-- /filter-sub-dropdown -->
+            </div>
+          </div><!-- /filter-dropdown-item -->
+          <div class="filter-dropdown-item datepicker-wrap" data-id="2">
+            <div class="filter-dropdown-title">
+              <span>When is the event?</span>
+            </div>
+            <div class="filter-dropdown-content">
+              <div class="filter-option-row">
+                <a href="javascript:;" class="filter-option" data-id="wie-1">TODAY</a>
+                <a href="javascript:;" class="filter-option" data-id="wie-2">TOMORROW</a>
+                <a href="javascript:;" class="filter-option" data-id="wie-3">THIS WEEKEND</a>
+                <a href="javascript:;" class="filter-option" data-id="wie-4">MORNING</a>
+                <a href="javascript:;" class="filter-option" data-id="wie-5">NOON</a>
+                <a href="javascript:;" class="filter-option" data-id="wie-6">EVENING</a>
+                <a href="javascript:;" class="filter-option" data-id="wie-7">NIGHT</a>
+              </div>
+              <div class="filter-option-row">
+                <div class="filter-option-single">
+                  <input type="text" class="datepicker">
+                  <span class="filter-option-seperator"></span>
+                  <input type="text" class="datepicker">
+                </div>
+                <div class="filter-option-single">
+                  <select name="" id="" class="filter-option">
+                    <option value="1">10:00</option>
+                    <option value="1">11:00</option>
+                  </select>
+                  <span class="filter-option-seperator"></span>
+                  <select name="" id="" class="filter-option">
+                    <option value="1">10:00</option>
+                    <option value="1">11:00</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div><!-- /filter-dropdown-item -->
+          <div id="filterEventPrice" class="filter-dropdown-item" data-id="3">
+            <div class="filter-dropdown-title">
+              <span>Price?</span>
+            </div>
+            <div class="filter-dropdown-content">
+              <ul class="filter-pricelist">
+                <li class="filter-pricelist-item free-price" data-id="prc-1" data-value="0">
+                  <div class="filter-pricelist-media">
+                    <span class="pricelist-media-box"></span>
+                  </div>
+                  <div class="filter-pricelist-text">Free</div>
+                </li>
+                <li class="filter-pricelist-item" data-id="prc-2" data-value="1">
+                  <div class="filter-pricelist-media">
+                    <span class="pricelist-media-box">₺</span>
+                  </div>
+                  <div class="filter-pricelist-text">0 - 50 ₺</div>
+                </li>
+                <li class="filter-pricelist-item" data-id="prc-3" data-value="2">
+                  <div class="filter-pricelist-media">
+                    <span class="pricelist-media-box"></span>
+                    <span class="pricelist-media-box">₺</span>
+                  </div>
+                  <div class="filter-pricelist-text">50 - 100 ₺</div>
+                </li>
+                <li class="filter-pricelist-item" data-id="prc-4" data-value="3">
+                  <div class="filter-pricelist-media">
+                    <span class="pricelist-media-box"></span>
+                    <span class="pricelist-media-box"></span>
+                    <span class="pricelist-media-box">₺</span>
+                  </div>
+                  <div class="filter-pricelist-text">+ 100 ₺</div>
+                </li>
+              </ul>
+            </div>
+          </div><!-- /filter-dropdown-item -->
+          <div class="filter-dropdown-item" data-id="4">
+            <div class="filter-dropdown-title">
+              <span>How many people attending?</span>
+              <div  id="filterEventAttending" class="filter-dropdown-content">
+                <ul class="filter-radiallist">
+                  <li class="filter-radiallist-item item-small" data-filter-name="filter-few" data-id="hmp-1" data-value="100">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist-icon"></span>
+                      <div class="filter-radiallist-text">
+                        <span>Few People</span>
+                        <span>(- 100)</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="filter-radiallist-item item-medium" data-filter-name="filter-some" data-id="hmp-2" data-value="500">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist-icon"></span>
+                      <div class="filter-radiallist-text">
+                        <span>Some People</span>
+                        <span>(100 - 500)</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="filter-radiallist-item" data-filter-name="filter-many" data-id="hmp-3" data-value="1000">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist-icon"></span>
+                      <div class="filter-radiallist-text">
+                        <span>Many People</span>
+                        <span>(+500)</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <span>Small or big venue?</span>
+              <div  id="filterEventVenue" class="filter-dropdown-content">
+                <ul class="filter-corneredlist">
+                  <li class="filter-corneredlist-item item-small" data-id="ven-1" data-value="100">
+                    <a href="javascript:;">
+                      <span class="filter-corneredlist-icon"></span>
+                      <div class="filter-corneredlist-text">
+                        <span>Small</span>
+                        <span>(- 100)</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="filter-corneredlist-item item-medium" data-id="ven-2" data-value="500">
+                    <a href="javascript:;">
+                      <span class="filter-corneredlist-icon"></span>
+                      <div class="filter-corneredlist-text">
+                        <span>Medium</span>
+                        <span>(100 - 500)</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="filter-corneredlist-item item-big" data-id="ven-3" data-value="1000">
+                    <a href="javascript:;">
+                      <span class="filter-corneredlist-icon"></span>
+                      <div class="filter-corneredlist-text">
+                        <span>big</span>
+                        <span>(+500)</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div><!-- /filter-dropdown-item -->
+          <div class="filter-dropdown-item" data-id="5">
+            <div class="filter-dropdown-title">
+              <span>Quiet or loud?</span>
+              <div id="filterEventSound" class="filter-dropdown-content">
+                <ul class="filter-radiallist2">
+                  <li class="filter-radiallist2-item item-1" data-id="qol-1" data-value="1">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist2-icon"></span>
+                      <div class="filter-radiallist2-text">
+                        <span>Quiet/Medium</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="filter-radiallist2-item item-2" data-id="qol-2" data-value="3">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist2-icon"></span>
+                      <div class="filter-radiallist2-text">
+                        <span>Loud</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <span>Calm or active?</span>
+              <div id="filterEventActivity" class="filter-dropdown-content">
+                <ul class="filter-radiallist3">
+                  <li class="filter-radiallist3-item item-1" data-id="coa-1" data-value="1">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist3-icon"></span>
+                      <div class="filter-radiallist3-text">
+                        <span>Calm/Medium</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="filter-radiallist3-item item-2" data-id="coa-2" data-value="3">
+                    <a href="javascript:;">
+                      <span class="filter-radiallist3-icon css-ico icon-star"></span>
+                      <div class="filter-radiallist3-text">
+                        <span>Active</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <span>Language?</span>
+              <div class="filter-dropdown-content">
+                <div class="filter-select-group">
+                  <div class="filter-select-item">
+                    <div class="filter-select">
+                      <span class="filter-select-title changed-title">TR</span>
+                    </div>
+                  </div>
+                  <div class="filter-select-item">
+                    <div class="filter-select">
+                      <span class="filter-select-title changed-title">EN</span>
+                    </div>
+                  </div>
+                  <div class="filter-select-item item-selectbox">
+                    <div class="filter-select">
+                      <span class="filter-select-title">Select</span>
+                      <div class="filter-select-list">
+                        <ul>
+                          <li>Seçiniz</li>
+                          <li>ENG</li>
+                          <li>ENG</li>
+                          <li>ENG</li>
+                          <li>ENG</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /filter-dropdown-item -->
+        </div><!-- /filter-dropdown -->
+        <div class="filter-slide-action">
+          <ul class="slide-numbers">
+            <li class="slide-number slide-number-selected" data-id="1"></li>
+            <li class="slide-number" data-id="2"></li>
+            <li class="slide-number" data-id="3"></li>
+            <li class="slide-number" data-id="4"></li>
+            <li class="slide-number" data-id="5"></li>
+          </ul>
+          <a href="javascript:;" class="slide-button prev-button hidden"></a>
+          <a href="javascript:;" class="slide-button next-button"></a>
+          <a href="javascript:;" class="slide-button confirm-button hidden"></a>
+        </div><!-- /filter-slide-action -->
+      </div><!-- /filter-content -->
+    </div><!-- /filter-wrapper -->
+  </section><!-- /main -->
+  <section class="tag">
+  </section>
+  <div class="menu">
+    <div class="menu-header">
+      <a href="javascript:;" class="logo"></a>
+      <a href="javascript:;" class="menu-close trigger-menu"></a>
+    </div>
+    <div class="menu-action-band">
+      <div class="menu-action-media"></div>
+      <a href="javascript:;" class="menu-action-text">Login</a>
+    </div>
+    <ul class="menu-items">
+      <li class="menu-item menu-item-drop">
+        <a href="javascript:;">How to Use</a>
+        <div class="menu-item-content">
+          <img src="lib_v4/img/how-to-use.png" alt="">
+        </div>
+      </li>
+      <li class="menu-item menu-item-drop"><a href="javascript:;">About</a>
+		  
+        <div class="menu-item-content">
+			<div class="content">
+         <h1>Civar.co</h1>
+Live Event Map<br/>
+	<br/>
+<h2>About</h2>
+			<p>
+Civar is a map for event exploration, based on real user needs. Citizens have different preferences when it comes to going out. We sometimes look for a live and crowded party on a Friday night, or a small meetup about science-fiction literature, around where we live. These decisions are also affected by the traffic jam, people density in the area or how the weather is that day.  
+</p><p>
+We started this project by collecting user needs, not data. Our participants from diverse backgrounds had a wide range of criteria for choosing an event. Overall, they wanted to know what, when and where the event is. However, they also wanted to know how loud or active it is, how much it costs, how many people are attending, how big is the venue, what language the event is. Civar visualizes these different dimensions of event data to fulfill diverse user needs about discovering events. We designed a circle glyph that gradually becomes more detailed, to visualize more dimensions of event data without overwhelming the user. At the city level, color coding indicates the type of event and the scale of the circle shows how many users are attending the event. At the district level, a second nested circle means how much room left at the event. At street level, the straight circle indicates if the event is loud and a zig-zagged circle indicates if the event is physically active. These visualized dimensions enable exploration at different levels of detail. 
+</p><p>
+After we got initial feedback from the users on our design, we started collecting data from publicly available sources and social media. We are constantly working to find more accurate, diverse and open data sources for Civar.
+</p><p>
+In addition to event discovery, real-time data layers (traffic, people density, and weather) enable creating rich insights about the city. These insights can be useful for researchers and decision makers to get a deeper understanding of how the city lives. Overall, Civar aims to reflect the city in its intricate, living existence in an explorable way.
+</p><p>
+This project is a part of a Ph.D. research project that focuses on the question “How could we visualize geographical data to support everyday decision making about events?” (<a href="https://happern.ku.edu.tr/projects-2/eventmap/" target="_blank">https://happern.ku.edu.tr/projects-2/eventmap/</a>)
+
+</p>
+
+<h2>Team:</h2>
+				<p>
+Research &amp; Design: <br/>
+Damla Çay (Happern - KUAR, Koç University)<br/>
+</p><p>
+Development: <br/>
+Hüseyin Kuşcu (Kakare Interactive)<br/>
+Ersel Gülyaz<br/>
+Sinem Şemsioğlu (Happern - KUAR, Koç University), <br/>
+Semra Gülce Turan (Happern - KUAR, Koç University)<br/>
+</p><p>
+Supervision: <br/>
+Asım Evren Yantaç (Happern - KUAR, Koç University) <br/>
+Till Nagel (HS Mannheim)<br/>
+</p><p>
+Collaborators: Özge Genç, Beste Özdeşlik, Öykü Çetin, Ayşe Özer, Eren Güleç, Zeynep Dilmin Güden, İdil Bostan, Yağmur Akın Karagöz, Cansu Sayıcı, Esmanur Bayar, Aylin Oral, Nice Uysal, Çağla Yılankaya, Esra Ayhan, Gülben Şanlı, Cansu Gençkırlı<br/>
+</p>
+<h2>Data Sources:</h2>
+			<p>
+Civar is a work in progress and the data types used are based on formative user studies. We are constantly working on finding more accurate and diverse data sources. At the moment, some dimensions of data are synthetic for testing purposes (event categories, sound, price, venue capacity, number of attending people, activity). </p>
+<p>
+Our current live data sources are:<br/>
+Events: Facebook, All Events In, Meetup, Songkick, Eventbrite<br/>
+People Density: Twitter <br/>
+Traffic: Mapbox<br/>
+Weather: DarkWeather<br/>
+</p>
+<h2>Contact:</h2>
+<a href="mailto:dcay13@ku.edu.tr" target="_blank">dcay13@ku.edu.tr</a><br/><br/>
+
+			
+			
+			
+			</div>
+        </div>
+		  
+	  </li>
+      <li class="menu-item"><a href="javascript:;">Send Feedback</a></li>
+      <li class="menu-item"><a href="javascript:;">Terms & Conditions</a></li>
+    </ul>
+  </div><!-- /menu -->
+  <div class="event-detail-panel">
+    <a href="javascript:;" class="event-detail-close css-ico icon-cancel"></a>
+    <div class="event-detail-media"></div>
+    <div class="event-detail-content">
+      <div class="event-detail-title">Jehan Barbur / Power FM Radio Concert</div>
+      <div class="event-detail-location">IF Performance Hall Beşiktaş</div>
+      <div class="event-detail-infos">
+        <span class="event-detail-date">08/02/2018</span>
+        <span class="event-detail-time">20:00</span>
+        <span class="event-detail-people">320 / 400</span>
+      </div>
+      <div class="event-detail-tags">
+        <span class="event-detail-tag">PARTY</span>
+        <span class="event-detail-tag">PARTY</span>
+        <span class="event-detail-tag">PARTY</span>
+        <span class="event-detail-tag">PARTY</span>
+      </div>
+      <div class="event-detail-text">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus ex sint enim doloremque </p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. exercitationem labore. Repudiandae quaerat ea quae. Repellendus doloribus aspernatur nulla assumenda, maiores reprehenderit odio totam at! Dolorem.</p>
+      </div>
+      <div class="event-detail-action">
+        <a href="javascript:;" class="action-btn">SOURCE</a>
+        <div class="icons">
+          <a href="javascript:;" class="icon highlighter-icon css-ico icon-star"></a>
+          <a href="javascript:;" class="icon css-ico icon-share"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="map-zoom">
+    <a href="javascript:;" class="zoom-plus"></a>
+    <a href="javascript:;" class="zoom-minus"></a>
+  </div>
+</body>
+</html>

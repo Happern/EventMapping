@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="tr"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="tr"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie10 lt-ie9" lang="tr"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10" lang="tr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="tr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="og:description" content="">
+	<meta property="og:title" content="">
+	<meta property="og:url" content="http://">
+	<meta property="og:image" content="http://">
+
+	<title>SITE</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Favicons -->
+	<link rel="shortcut icon" href="/assets/img/fav/fav.ico">
+	<link rel="apple-touch-icon" sizes="60x60" href="/assets/img/fav/60x60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/fav/76x76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/assets/img/fav/120x120.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/assets/img/fav/152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/fav/180x180.png">
+	<!-- WEBFONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;subset=latin-ext" rel="stylesheet">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="/assets/plugin/plugin.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/lib_v3pin/css/main.css" />
+	<!-- JS -->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+		
+
+	<script type="text/javascript" src="/lib/moment-with-locales.min.js"></script>
+	<script type="text/javascript" src="/assets/js/lib.min.js"></script>
+	
+	<script type="text/javascript" src="/assets/js/core.js"></script>
+	
+
+	<script type="text/javascript" src="/lib_v3pin/js/MapLayer.js"></script>
+	<script type="text/javascript" src="/lib_v3pin/js/WeatherLayer.js"></script>
+	<script type="text/javascript" src="/lib_v3pin/js/EventLayer.js"></script>
+	<script type="text/javascript" src="/lib_v3pin/js/CrowdLayer.js"></script>
+	<script type="text/javascript" src="/lib_v3pin/js/main.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<div id="map"></div>
+	<aside id="sidebar">
+		<a href="javasript:;" class="action-arrow trigger-sidebar"></a>
+		<div class="logo">
+			<a href="javascript:;"></a>
+		</div>
+		
+		<div class="search">
+		<!--
+			<form>
+				<div class="form-group">
+					<span class="icon"></span>
+					<input type="text" name="searchItem" id="autocomplete">
+				</div>
+			</form>
+				-->
+		</div>
+		
+		<div class="date-selector">
+			<h2 class="title">WHEN?</h2>
+			<ul class="recently-list">
+				<li><a href="javascript:;" data-type="today">Today</a></li>
+				<li><a href="javascript:;" data-type="tomorrow">Tomorrow</a></li>
+				<li><a href="javascript:;" data-type="weekend">This Weekend</a></li>
+			</ul>
+			<div class="range-wrapper">
+				<form>
+					<div class="form-group">
+						<span class="icon"></span>
+						<input type="text" name="searchItem" id="datepicker-1">
+					</div>
+					<div class="form-group">
+						<span class="icon"></span>
+						<input type="text" name="searchItem" id="datepicker-2">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="actions-wrapper">
+			<ul>
+				<li class="has-dropdown">
+					<div class="main-item">
+						<a href="javascript:;" class="icon-events"><span>Events</span></a>
+						<div class="toggle-trigger active" name="event">
+							<input type="checkbox" name="" checked="checked">
+						</div>
+					</div>
+					<div class="dropdown-content">
+						<div class="content-wrapper">
+							<h3 class="highlighter">
+								<span>EVENT TYPES</span>
+								<a href="javascript:;" data-tooltip="event-type" class="tooltip-icon"></a>
+							</h3>
+							<div class="checked-group">
+								<div class="item tone-1 has-selected">
+									<div class="top">
+										<div class="action">
+											<input type="checkbox" name="">
+											<span class="selected"></span>
+										</div>
+										<div class="title"><h4>Entertainment</h4></div>
+										<span class="arrow"></span>
+									</div>
+									<div class="bottom">
+										<ul class="wrap">
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Concert">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Concert</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Festival">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Festival</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Party">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Party</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Meetup">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Meetup</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Sports event">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Sports Match</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="item tone-3 has-selected">
+									<div class="top">
+										<div class="action">
+											<input type="checkbox" name="">
+											<span class="selected"></span>
+										</div>
+										<div class="title"><h4>Cultural</h4></div>
+										<span class="arrow"></span>
+									</div>
+									<div class="bottom">
+										<ul class="wrap">
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Cinema">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Cinema</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Theater">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Theater</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Show">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Show</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Exhibition">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Exhibition</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="item tone-2 has-selected">
+									<div class="top">
+										<div class="action">
+											<input type="checkbox" name="">
+											<span class="selected"></span>
+										</div>
+										<div class="title"><h4>Educative</h4></div>
+										<span class="arrow"></span>
+									</div>
+									<div class="bottom">
+										<ul class="wrap">
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Conference">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Conference</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Meeting">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Meeting</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Talk">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Talk</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Workshop">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Workshop</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="item tone-4 has-selected">
+									<div class="top">
+										<div class="action">
+											<input type="checkbox" name="">
+											<span class="selected"></span>
+										</div>
+										<div class="title"><h4>Other</h4></div>
+										<span class="arrow"></span>
+									</div>
+									<div class="bottom">
+										<ul class="wrap">
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Protest">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Protest</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Ceremony">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Ceremony</div>
+												</div>
+											</li>
+											<li>
+												<div class="sub-item eventTypeFilter selected" data-type="Other">
+													<div class="action">
+														<input type="checkbox" name="">
+														<span class="selected"></span>
+													</div>
+													<div class="title">Other</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="content-wrapper has-arrow">
+							<h3 class="highlighter">
+								<span>ATTENDING PEOPLE</span>
+								<a href="javascript:;" data-tooltip="attending-people" class="tooltip-icon"></a>
+							</h3>
+							<div class="range-wrapper">
+								<div id="slider-range-1"></div>
+							</div>
+						</div>
+						<div class="content-wrapper has-arrow">
+							<h3 class="highlighter">
+								<span>CROWD AT EVENT</span>
+								<a href="javascript:;" data-tooltip="crowd-at-event" class="tooltip-icon"></a>
+								<!-- <a href="javascript:;" class="tooltip-icon"></a> -->
+							</h3>
+							<div class="range-wrapper">
+								<div id="slider-range-5"></div>
+							</div>
+						</div>
+						<div class="content-wrapper has-arrow">
+							<h3 class="highlighter">
+								<span>SOUND</span>
+								<a href="javascript:;" data-tooltip="sound" class="tooltip-icon"></a>
+							</h3>
+							<div class="range-wrapper">
+								<div id="slider-range-2"></div>
+							</div>
+						</div>
+						<div class="content-wrapper has-arrow">
+							<h3 class="highlighter">
+								<span>ACTIVITY</span>
+								<a href="javascript:;" data-tooltip="activity" class="tooltip-icon"></a>
+							</h3>
+							<div class="range-wrapper">
+								<div id="slider-range-3"></div>
+							</div>
+						</div>
+						<div class="content-wrapper has-arrow">
+							<h3 class="highlighter">
+								<span>PRICE</span>
+							</h3>
+							<div class="range-wrapper">
+								<div id="slider-range-4"></div>
+							</div>
+						</div>
+						<div class="content-wrapper has-arrow">
+							<h3 class="highlighter">
+								<span>EVENT LANGUAGE</span>
+							</h3>
+							<div class="language-wrapper">
+								<form>
+									<div class="item eventLangButton selected" data-lang="TR">
+										<input type="radio" name="" />
+										<span class="radio"></span>
+										<span class="title">TR</span>
+									</div>
+									<div class="item eventLangButton" data-lang="EN">
+										<input type="radio" name="" />
+										<span class="radio"></span>
+										<span class="title">EN</span>
+									</div>
+									<div class="item eventLangButton" data-lang="OTHER">
+										<input type="radio" name="" />
+										<span class="radio"></span>
+										<span class="title">OTHER</span>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="main-item">
+						<a href="javascript:;" class="icon-crowd"><span>People</span><i class="tooltip-icon" data-tooltip="people-main"></i></a>
+						<div class="toggle-trigger" name="crowd">
+							<input type="checkbox" name="">
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="main-item">
+						<a href="javascript:;" class="icon-traffic"><span>Traffic</span><i class="tooltip-icon" data-tooltip="traffic-main"></i></a>
+						<div class="toggle-trigger" name="traffic">
+							<input type="checkbox" >
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="main-item">
+						<a href="javascript:;" class="icon-weather"><span>Weather</span><i class="tooltip-icon" data-tooltip="weather-main"></i></a>
+						<div class="toggle-trigger" name="weather">
+							<input type="checkbox" name="">
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<ul class="default-list">
+			<li><a href="javascript:;">About</a></li>
+			<li><a href="javascript:;">Contact</a></li>
+		</ul>
+
+	</aside><!-- /sidebar -->
+	<div id="sidebar-darken">
+		<ul>
+			<li><a href="javascript:;" class="menu trigger-sidebar"></a></li>
+			<li><a href="javascript:;" class="search"></a></li>
+			<li><a href="javascript:;" class="date"></a></li>
+			<li><a href="javascript:;" class="weather"></a></li>
+			<li><a href="javascript:;" class="group"></a></li>
+			<li><a href="javascript:;" class="cars"></a></li>
+			<li><a href="javascript:;" class="weather"></a></li>
+		</ul>
+	</div><!-- /sidebar-darken -->
+	<div class="tooltip-content-wrapper">
+		
+		<div class="tooltip-content" data-selector="event-type">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_eventtype-v2.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="attending-people">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_attending_people-v2.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="crowd-at-event">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_crowd_at_event.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="sound">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_sound-v2.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="activity">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_activity-v2.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="people-main">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_people-v2.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="traffic-main">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_traffic-v2.png" />
+		</div>
+
+		<div class="tooltip-content" data-selector="weather-main">
+			<a href="javascript:;" class="close"></a>
+			<img src="/assets/img/info/info_weather-v2.png" />
+		</div>
+
+	</div><!-- /tooltip-content-wrapper -->
+	<div class="map-zoom">
+		<a href="javascript:;" class="zoom-in"></a>
+		<a href="javascript:;" class="zoom-out"></a>
+	</div><!-- /map-zoom -->
+</body>
+</html>
