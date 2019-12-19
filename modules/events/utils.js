@@ -8,10 +8,11 @@ function formatEvents (events, eventMapping) {
   var processedEvents = [];
   var api = eventMapping.api;
   var apiTimeFormat = appConstants.dateTime[api];
-
-  for (var i = 0; i < events.length; i++) {
-    var event = events[i];
-    processedEvents.push(formatEvent(event, eventMapping, apiTimeFormat));
+  if (events !== null || events !== undefined) {
+    for (var i = 0; i < events.length; i++) {
+      var event = events[i];
+      processedEvents.push(formatEvent(event, eventMapping, apiTimeFormat));
+    }
   }
 
   return processedEvents;

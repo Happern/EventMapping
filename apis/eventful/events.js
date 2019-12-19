@@ -66,13 +66,15 @@ function getOtherPages (pageCount, path, queryParams, events, originalResolve, o
 }
 
 function getEventsFromResponse (response) {
-  var e = response.events.event;
+  if (response.events && response.events.event) {
+    var e = response.events.event;
 
-  if(typeof e === "object" && e.constructor.name !== "Array") {
-    e = [e];
-  }
+    if(typeof e === "object" && e.constructor.name !== "Array") {
+      e = [e];
+    }
 
-  return e;
+    return e;
+  } else return null;
 }
 
 module.exports = {
